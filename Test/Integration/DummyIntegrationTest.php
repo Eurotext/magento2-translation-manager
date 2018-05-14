@@ -5,11 +5,11 @@
  * @see LICENSE.txt
  */
 
-namespace Eurotext\TranslationManager\Test\Unit;
+namespace Eurotext\TranslationManager\Test\Integration;
 
 use PHPUnit\Framework\TestCase;
 
-class DummyUnitTest extends TestCase
+class DummyIntegrationTest extends TestCase
 {
     public function testDummyDoesNothing()
     {
