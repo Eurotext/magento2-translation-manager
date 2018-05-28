@@ -12,6 +12,7 @@ use Eurotext\TranslationManager\Model\ResourceModel\ProjectCollection;
 use Eurotext\TranslationManager\Model\ResourceModel\ProjectCollectionFactory;
 use Magento\Framework\Api\SearchCriteriaInterface;
 use Magento\Framework\Api\SearchResultsInterface;
+use Magento\Framework\Api\SearchResultsInterfaceFactory;
 use Magento\Framework\Api\SortOrder;
 
 class GetProjectListService
