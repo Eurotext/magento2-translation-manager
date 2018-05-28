@@ -22,4 +22,21 @@ interface ProjectInterface
 
     public function getLastError(): ?string;
 
+    public function setExtId(int $extId): void;
+
+    public function setCode(string $code): void;
+
+    public function setName(string $name): void;
+
+    public function setStoreviewSrc(int $storeId): void;
+
+    public function setStoreviewDst(int $storeId): void;
+
+    public function setCustomerComment(string $comment): void;
+
+    public function setCreatedAt(string $createdAt): void;
+
+    public function setUpdatedAt(string $updatedAt): void;
+
+    public function setLastError(string $lastError): void;
 }

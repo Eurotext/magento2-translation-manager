@@ -66,6 +66,51 @@ class Project
         return $this->getData(ProjectSchema::LAST_ERROR);
     }
 
+    public function setExtId(int $extId): void
+    {
+        $this->setData(ProjectSchema::EXT_ID, $extId);
+    }
+
+    public function setCode(string $code): void
+    {
+        $this->setData(ProjectSchema::CODE, $code);
+    }
+
+    public function setName(string $name): void
+    {
+        $this->setData(ProjectSchema::NAME, $name);
+    }
+
+    public function setStoreviewSrc(int $storeId): void
+    {
+        $this->setData(ProjectSchema::STOREVIEW_SRC, $storeId);
+    }
+
+    public function setStoreviewDst(int $storeId): void
+    {
+        $this->setData(ProjectSchema::STOREVIEW_DST, $storeId);
+    }
+
+    public function setCustomerComment(string $comment): void
+    {
+        $this->setData(ProjectSchema::CUSTOMER_COMMENT, $comment);
+    }
+
+    public function setCreatedAt(string $createdAt): void
+    {
+        $this->setData(ProjectSchema::CREATED_AT, $createdAt);
+    }
+
+    public function setUpdatedAt(string $updatedAt): void
+    {
+        $this->setData(ProjectSchema::UPDATED_AT, $updatedAt);
+    }
+
+    public function setLastError(string $lastError): void
+    {
+        $this->setData(ProjectSchema::LAST_ERROR, $lastError);
+    }
+
     public function getIdentities()
     {
         return [self::CACHE_TAG . '_' . $this->getId()];

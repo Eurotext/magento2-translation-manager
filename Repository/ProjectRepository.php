@@ -8,13 +8,19 @@ use Eurotext\TranslationManager\Model\Project;
 use Eurotext\TranslationManager\Model\ProjectFactory;
 use Eurotext\TranslationManager\Repository\Service\GetProjectListService;
 use Magento\Framework\Api\SearchCriteriaInterface;
+use Magento\Framework\Api\SearchResultsInterface;
 use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
 
 class ProjectRepository implements ProjectRepositoryInterface
 {
-    protected $objectFactory;
+    protected const CODE_UNIQUE_ID_PREFIX = 'etm2_project_';
+
+    /**
+     * @var \Eurotext\TranslationManager\Model\ProjectFactory
+     */
+    protected $projectFactory;
 
     /**
      * @var \Eurotext\TranslationManager\Repository\Service\GetProjectListService
@@ -23,9 +29,9 @@ class ProjectRepository implements ProjectRepositoryInterface
 
     public function __construct(
         GetProjectListService $getProjectList,
-        ProjectFactory $objectFactory
+        ProjectFactory $projectFactory
     ) {
-        $this->objectFactory = $objectFactory;
+        $this->projectFactory = $projectFactory;
         $this->getProjectList = $getProjectList;
     }
 
@@ -35,8 +41,12 @@ class ProjectRepository implements ProjectRepositoryInterface
      * @return \Eurotext\TranslationManager\Api\Data\ProjectInterface
      * @throws \Magento\Framework\Exception\CouldNotSaveException
      */
-    public function save(ProjectInterface $project)
+    public function save(ProjectInterface $project): ProjectInterface
     {
+        if($project->getCode() === null){
+            $project->setCode(uniqid(self::CODE_UNIQUE_ID_PREFIX, true));
+        }
+
         try {
             /** @var Project $project */
             $project->save();
@@ -48,21 +58,21 @@ class ProjectRepository implements ProjectRepositoryInterface
     }
 
     /**
-     * @param $id
+     * @param int $id
      *
      * @return mixed
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function getById($id)
+    public function getById(int $id): ProjectInterface
     {
-        /** @var Project $object */
-        $object = $this->objectFactory->create();
-        $object->load($id);
-        if (!$object->getId()) {
+        /** @var Project $project */
+        $project = $this->projectFactory->create();
+        $project->load($id);
+        if (!$project->getId()) {
             throw new NoSuchEntityException(__('Project with id "%1" does not exist.', $id));
         }
 
-        return $object;
+        return $project;
     }
 
     /**
@@ -71,7 +81,7 @@ class ProjectRepository implements ProjectRepositoryInterface
      * @return bool
      * @throws \Magento\Framework\Exception\CouldNotDeleteException
      */
-    public function delete(ProjectInterface $project)
+    public function delete(ProjectInterface $project): bool
     {
         try {
             /** @var Project $project */
@@ -84,20 +94,20 @@ class ProjectRepository implements ProjectRepositoryInterface
     }
 
     /**
-     * @param $id
+     * @param int $id
      *
      * @return bool
      * @throws \Magento\Framework\Exception\CouldNotDeleteException
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function deleteById($id)
+    public function deleteById(int $id): bool
     {
         $project = $this->getById($id);
 
         return $this->delete($project);
     }
 
-    public function getList(SearchCriteriaInterface $criteria)
+    public function getList(SearchCriteriaInterface $criteria): SearchResultsInterface
     {
         return $this->getProjectList->execute($criteria);
     }
