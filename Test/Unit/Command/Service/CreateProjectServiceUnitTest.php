@@ -13,10 +13,10 @@ use Eurotext\TranslationManager\Command\Service\CreateProjectService;
 use Eurotext\TranslationManager\Model\Project;
 use Eurotext\TranslationManager\Model\ProjectFactory;
 use Eurotext\TranslationManager\Seeder\ProjectSeederPool;
+use Eurotext\TranslationManager\Test\Builder\ConsoleMockBuilder;
+use Eurotext\TranslationManager\Test\Builder\ProjectMockBuilder;
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager as ObjectManagerHelper;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
 
 class CreateProjectServiceUnitTest extends TestCase
 {
@@ -38,15 +38,24 @@ class CreateProjectServiceUnitTest extends TestCase
     /** @var ProjectSeederPool */
     protected $projectSeederPool;
 
+    /** @var ProjectMockBuilder */
+    protected $projectMockBuilder;
+
+    /** @var ConsoleMockBuilder */
+    protected $consoleMockBuilder;
+
     protected function setUp()
     {
         parent::setUp();
 
+        $this->projectMockBuilder = new ProjectMockBuilder($this);
+        $this->consoleMockBuilder = new ConsoleMockBuilder($this);
+
         $this->objectManager = new ObjectManagerHelper($this);
 
-        $this->projectFactory = $this->buildProjectFactoryMock();
-        $this->projectRepository = $this->buildProjectRepositoryMock();
-        $this->seederMock = $this->buildProjectSeederMock();
+        $this->projectFactory = $this->projectMockBuilder->buildProjectFactoryMock();
+        $this->projectRepository = $this->projectMockBuilder->buildProjectRepositoryMock();
+        $this->seederMock = $this->projectMockBuilder->buildProjectSeederMock();
 
         $this->projectSeederPool = new ProjectSeederPool([$this->seederMock]);
 
@@ -77,72 +86,14 @@ class CreateProjectServiceUnitTest extends TestCase
 
         $this->seederMock->expects($this->once())->method('seed')->willReturn(true);
 
-        $input = $this->buildConsoleInputMock();
+        $input = $this->consoleMockBuilder->buildConsoleInputMock();
         $input->expects($this->any())->method('getArgument')
             ->willReturnOnConsecutiveCalls($name, $storeSrc, $storeDest);
 
-        $output = $this->buildConsoleOutputMock();
+        $output = $this->consoleMockBuilder->buildConsoleOutputMock();
 
         $this->sut->execute($input, $output);
 
     }
 
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Console\Output\OutputInterface
-     */
-    protected function buildConsoleOutputMock()
-    {
-        /** @var OutputInterface|\PHPUnit\Framework\MockObject\MockObject $output */
-        $output = $this->getMockBuilder(OutputInterface::class)
-            ->setMethods(['writeln'])
-            ->disableOriginalConstructor()
-            ->getMockForAbstractClass();
-
-        return $output;
-    }
-
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|InputInterface
-     */
-    protected function buildConsoleInputMock()
-    {
-        $input = $this->getMockBuilder(InputInterface::class)
-            ->setMethods(['getArgument'])
-            ->disableOriginalConstructor()
-            ->getMockForAbstractClass();
-
-        return $input;
-    }
-
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected function buildProjectSeederMock(): \PHPUnit_Framework_MockObject_MockObject
-    {
-        return $this->getMockBuilder(ProjectSeederInterface::class)
-            ->setMethods(['seed'])
-            ->getMockForAbstractClass();
-    }
-
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected function buildProjectRepositoryMock(): \PHPUnit_Framework_MockObject_MockObject
-    {
-        return $this->getMockBuilder(ProjectRepositoryInterface::class)
-            ->setMethods(['save'])
-            ->disableOriginalConstructor()
-            ->getMockForAbstractClass();
-    }
-
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected function buildProjectFactoryMock(): \PHPUnit_Framework_MockObject_MockObject
-    {
-        return $this->getMockBuilder(ProjectFactory::class)
-            ->setMethods(['create'])
-            ->disableOriginalConstructor()
-            ->getMock();
-    }
 }
