@@ -2,7 +2,7 @@
 
 namespace Eurotext\TranslationManager\Command;
 
-use Eurotext\TranslationManager\Command\Service\CreateProjectService\Proxy as CreateProjectService;
+use Eurotext\TranslationManager\Command\Service\CreateProjectService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
