@@ -46,7 +46,13 @@ class CreateProjectService
         $this->projectSeederPool = $projectSeederPool;
     }
 
-    public function execute(InputInterface $input, OutputInterface $output): ProjectInterface
+    /**
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     *
+     * @return \Eurotext\TranslationManager\Api\Data\ProjectInterface
+     */
+    public function execute(InputInterface $input, OutputInterface $output)
     {
         $name = $input->getArgument(self::ARG_NAME);
         $storeIdSrc = $input->getArgument(self::ARG_STORE_ID_SRC);
