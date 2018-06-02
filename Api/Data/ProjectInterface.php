@@ -4,6 +4,8 @@ namespace Eurotext\TranslationManager\Api\Data;
 
 interface ProjectInterface
 {
+    public function getId();
+
     public function getExtId(): ?int;
 
     public function getCode(): ?string;
