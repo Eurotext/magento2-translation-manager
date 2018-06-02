@@ -7,6 +7,7 @@
 
 namespace Eurotext\TranslationManager\Command\Service;
 
+use Eurotext\TranslationManager\Api\Data\ProjectInterface;
 use Eurotext\TranslationManager\Api\ProjectRepositoryInterface;
 use Eurotext\TranslationManager\Model\Project;
 use Eurotext\TranslationManager\Model\ProjectFactory;
@@ -45,7 +46,7 @@ class CreateProjectService
         $this->projectSeederPool = $projectSeederPool;
     }
 
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): ProjectInterface
     {
         $name = $input->getArgument(self::ARG_NAME);
         $storeIdSrc = $input->getArgument(self::ARG_STORE_ID_SRC);
@@ -67,7 +68,7 @@ class CreateProjectService
         if (count($projectSeeders) === 0) {
             $output->writeln('no seeders found');
 
-            return;
+            return $project;
         }
 
         // Iterate seeders to prefill project config tables
@@ -76,12 +77,13 @@ class CreateProjectService
 
             $seederClass = \get_class($projectSeeder);
 
-            if($result === true) {
+            if ($result === true) {
                 $output->writeln(sprintf('seeding for "%s" successful', $seederClass));
-            }
-            else {
+            } else {
                 $output->writeln(sprintf('seeding for "%s" not successful', $seederClass));
             }
         }
+
+        return $project;
     }
 }
