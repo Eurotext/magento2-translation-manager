@@ -7,9 +7,7 @@
 
 namespace Eurotext\TranslationManager\Test\Integration;
 
-use PHPUnit\Framework\TestCase;
-
-class DummyIntegrationTest extends TestCase
+class DummyIntegrationTest extends IntegrationTestAbstract
 {
     public function testDummyDoesNothing()
     {

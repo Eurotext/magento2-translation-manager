@@ -7,11 +7,9 @@
 
 namespace Eurotext\TranslationManager\Test\Integration\Repository;
 
-use Eurotext\TranslationManager\Model\Project;
-use Eurotext\TranslationManager\Model\ProjectProduct;
 use Eurotext\TranslationManager\Repository\ProjectProductRepository;
-use Eurotext\TranslationManager\Repository\ProjectRepository;
 use Eurotext\TranslationManager\Test\Integration\IntegrationTestAbstract;
+use Eurotext\TranslationManager\Test\Integration\Provider\ProjectProvider;
 use Magento\Framework\Exception\NoSuchEntityException;
 
 class ProjectProductRepositoryIntegrationTest extends IntegrationTestAbstract
@@ -19,11 +17,16 @@ class ProjectProductRepositoryIntegrationTest extends IntegrationTestAbstract
     /** @var ProjectProductRepository */
     protected $sut;
 
+    /** @var ProjectProvider */
+    private $projectProvider;
+
     protected function setUp()
     {
         parent::setUp();
 
         $this->sut = $this->objectManager->get(ProjectProductRepository::class);
+
+        $this->projectProvider = $this->objectManager->get(ProjectProvider::class);
     }
 
     /**
@@ -33,10 +36,11 @@ class ProjectProductRepositoryIntegrationTest extends IntegrationTestAbstract
     public function testItShouldCreateAProjectProductAndGetItById()
     {
         $productId = 1;
-        $project = $this->createProject(__CLASS__ . '-test-getById');
+        $name = __CLASS__ . '-test-getById';
+        $project = $this->projectProvider->createProject($name);
         $projectId = $project->getId();
 
-        $projectProduct = $this->createProjectProduct($projectId, $productId);
+        $projectProduct = $this->projectProvider->createProjectProduct($projectId, $productId);
 
         $id = $projectProduct->getId();
 
@@ -55,10 +59,11 @@ class ProjectProductRepositoryIntegrationTest extends IntegrationTestAbstract
     public function testItShouldDeleteProjectProducts()
     {
         $productId = 1;
-        $project = $this->createProject(__CLASS__ . '-test-delete');
+        $name = __CLASS__ . '-test-delete';
+        $project = $this->projectProvider->createProject($name);
         $projectId = $project->getId();
 
-        $projectProduct = $this->createProjectProduct($projectId, $productId);
+        $projectProduct = $this->projectProvider->createProjectProduct($projectId, $productId);
 
         $id = $projectProduct->getId();
 
@@ -82,12 +87,13 @@ class ProjectProductRepositoryIntegrationTest extends IntegrationTestAbstract
     {
         $productIds = [1, 2, 3];
 
-        $project = $this->createProject(__CLASS__ . '-test-list');
+        $name = __CLASS__ . '-test-list';
+        $project = $this->projectProvider->createProject($name);
         $projectId = $project->getId();
 
         $projectProducts = [];
         foreach ($productIds as $productId) {
-            $projectProduct = $this->createProjectProduct($projectId, $productId);
+            $projectProduct = $this->projectProvider->createProjectProduct($projectId, $productId);
 
             $projectProducts[$productId] = $projectProduct;
         }
@@ -101,41 +107,4 @@ class ProjectProductRepositoryIntegrationTest extends IntegrationTestAbstract
         $this->assertTrue(count($items) >= count($projectProducts));
     }
 
-    /**
-     * @param $name
-     *
-     * @return \Eurotext\TranslationManager\Api\Data\ProjectInterface|Project
-     * @throws \Magento\Framework\Exception\CouldNotSaveException
-     */
-    protected function createProject($name)
-    {
-        /** @var Project $project */
-        $project = $this->objectManager->get(Project::class);
-        $project->setName($name);
-
-        /** @var ProjectRepository $projectRepository */
-        $projectRepository = $this->objectManager->get(ProjectRepository::class);
-        $project = $projectRepository->save($project);
-
-        return $project;
-    }
-
-    /**
-     * @param int $projectId
-     * @param int $productId
-     *
-     * @return \Eurotext\TranslationManager\Api\Data\ProjectProductInterface|\Eurotext\TranslationManager\Model\ProjectProduct
-     * @throws \Magento\Framework\Exception\CouldNotSaveException
-     */
-    protected function createProjectProduct(int $projectId, int $productId)
-    {
-        /** @var ProjectProduct $object */
-        $object = $this->objectManager->create(ProjectProduct::class);
-        $object->setProjectId($projectId);
-        $object->setProductId($productId);
-
-        $object = $this->sut->save($object);
-
-        return $object;
-    }
 }

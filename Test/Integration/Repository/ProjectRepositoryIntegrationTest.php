@@ -10,18 +10,24 @@ namespace Eurotext\TranslationManager\Test\Integration\Repository;
 use Eurotext\TranslationManager\Model\Project;
 use Eurotext\TranslationManager\Repository\ProjectRepository;
 use Eurotext\TranslationManager\Test\Integration\IntegrationTestAbstract;
+use Eurotext\TranslationManager\Test\Integration\Provider\ProjectProvider;
 use Magento\Framework\Exception\NoSuchEntityException;
 
 class ProjectRepositoryIntegrationTest extends IntegrationTestAbstract
 {
     /** @var ProjectRepository */
-    protected $sut;
+    private $sut;
+
+    /** @var ProjectProvider */
+    private $projectProvider;
 
     protected function setUp()
     {
         parent::setUp();
 
         $this->sut = $this->objectManager->get(ProjectRepository::class);
+
+        $this->projectProvider = $this->objectManager->get(ProjectProvider::class);
     }
 
     /**
@@ -31,7 +37,7 @@ class ProjectRepositoryIntegrationTest extends IntegrationTestAbstract
     public function testItShouldCreateAProjectAndGetItById()
     {
         $name = 'integration-test-project-1';
-        $project = $this->createProject($name);
+        $project = $this->projectProvider->createProject($name);
 
         $id = $project->getId();
         $code = $project->getCode();
@@ -53,7 +59,7 @@ class ProjectRepositoryIntegrationTest extends IntegrationTestAbstract
     public function testItShouldDeleteProjects()
     {
         $name = 'integration-test-project-for-deletion';
-        $project = $this->createProject($name);
+        $project = $this->projectProvider->createProject($name);
 
         $id = $project->getId();
 
@@ -79,7 +85,7 @@ class ProjectRepositoryIntegrationTest extends IntegrationTestAbstract
 
         $projects = [];
         foreach ($names as $name) {
-            $project = $this->createProject($name);
+            $project = $this->projectProvider->createProject($name);
 
             $projects[$name] = $project;
         }
@@ -91,22 +97,5 @@ class ProjectRepositoryIntegrationTest extends IntegrationTestAbstract
 
         $items = $searchResults->getItems();
         $this->assertTrue(count($items) >= count($projects));
-    }
-
-    /**
-     * @param $name
-     *
-     * @return \Eurotext\TranslationManager\Api\Data\ProjectInterface|\Eurotext\TranslationManager\Model\Project
-     * @throws \Magento\Framework\Exception\CouldNotSaveException
-     */
-    protected function createProject($name)
-    {
-        /** @var Project $project */
-        $project = $this->objectManager->create(Project::class);
-        $project->setName($name);
-
-        $project = $this->sut->save($project);
-
-        return $project;
     }
 }
