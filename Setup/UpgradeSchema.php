@@ -9,19 +9,22 @@ namespace Eurotext\TranslationManager\Setup;
 
 use Eurotext\TranslationManager\Setup\Service\CreateProjectProductSchema;
 use Eurotext\TranslationManager\Setup\Service\CreateProjectSchema;
-use Magento\Framework\Setup\InstallSchemaInterface;
 use Magento\Framework\Setup\ModuleContextInterface;
 use Magento\Framework\Setup\SchemaSetupInterface;
+use Magento\Framework\Setup\UpgradeSchemaInterface;
 
-class InstallSchema implements InstallSchemaInterface
+/**
+ * UpdateSchema
+ */
+class UpgradeSchema implements UpgradeSchemaInterface
 {
     /**
-     * @var \Eurotext\TranslationManager\Setup\Service\CreateProjectSchema
+     * @var CreateProjectSchema
      */
     private $createProjectSchema;
 
     /**
-     * @var \Eurotext\TranslationManager\Setup\Service\CreateProjectProductSchema
+     * @var CreateProjectProductSchema
      */
     private $createProjectProductSchema;
 
@@ -34,12 +37,15 @@ class InstallSchema implements InstallSchemaInterface
     }
 
     /**
-     * @param \Magento\Framework\Setup\SchemaSetupInterface $setup
-     * @param \Magento\Framework\Setup\ModuleContextInterface $context
+     * Upgrades DB schema for a module
      *
+     * @param SchemaSetupInterface $setup
+     * @param ModuleContextInterface $context
+     *
+     * @return void
      * @throws \Zend_Db_Exception
      */
-    public function install(SchemaSetupInterface $setup, ModuleContextInterface $context)
+    public function upgrade(SchemaSetupInterface $setup, ModuleContextInterface $context)
     {
         $this->createProjectSchema->execute($setup);
         $this->createProjectProductSchema->execute($setup);

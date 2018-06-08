@@ -1,0 +1,13 @@
+<?php
+
+namespace Eurotext\TranslationManager\Model\ResourceModel;
+
+use Eurotext\TranslationManager\Setup\ProjectProductSchema;
+
+class ProjectProductResource extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
+{
+    protected function _construct()
+    {
+        $this->_init(ProjectProductSchema::TABLE_NAME, ProjectProductSchema::ID);
+    }
+}

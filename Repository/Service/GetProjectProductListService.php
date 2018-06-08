@@ -7,17 +7,17 @@
 
 namespace Eurotext\TranslationManager\Repository\Service;
 
-use Eurotext\TranslationManager\Model\ResourceModel\ProjectCollection;
-use Eurotext\TranslationManager\Model\ResourceModel\ProjectCollectionFactory;
+use Eurotext\TranslationManager\Model\ResourceModel\ProjectProductCollection;
+use Eurotext\TranslationManager\Model\ResourceModel\ProjectProductCollectionFactory;
 use Magento\Framework\Api\SearchCriteriaInterface;
 use Magento\Framework\Api\SearchResultsInterface;
 use Magento\Framework\Api\SearchResultsInterfaceFactory;
 use Magento\Framework\Api\SortOrder;
 
-class GetProjectListService
+class GetProjectProductListService
 {
     /**
-     * @var ProjectCollectionFactory
+     * @var ProjectProductCollectionFactory
      */
     private $collectionFactory;
 
@@ -27,7 +27,7 @@ class GetProjectListService
     private $searchResultsFactory;
 
     public function __construct(
-        ProjectCollectionFactory $collectionFactory,
+        ProjectProductCollectionFactory $collectionFactory,
         SearchResultsInterfaceFactory $searchResultsFactory
     ) {
         $this->collectionFactory = $collectionFactory;
@@ -36,7 +36,7 @@ class GetProjectListService
 
     public function execute(SearchCriteriaInterface $criteria): SearchResultsInterface
     {
-        /** @var ProjectCollection $collection */
+        /** @var ProjectProductCollection $collection */
         $collection = $this->collectionFactory->create();
         foreach ($criteria->getFilterGroups() as $filterGroup) {
             $fields = [];

@@ -23,81 +23,81 @@ class CreateProjectSchema
      */
     public function execute(SchemaSetupInterface $setup): void
     {
-        $con = $setup->getConnection();
+        $connection = $setup->getConnection();
 
-        $projectTableName = $setup->getTable(ProjectSchema::TABLE_NAME);
-        $projectTable = $con->newTable($projectTableName);
-        $projectTable->addColumn(
+        $tableName = $setup->getTable(ProjectSchema::TABLE_NAME);
+        $table = $connection->newTable($tableName);
+        $table->addColumn(
             ProjectSchema::ID,
             DbDdlTable::TYPE_BIGINT,
             20,
             ['primary' => true, 'unsigned' => true, 'nullable' => false, 'auto_increment' => true,],
             'Project ID'
         );
-        $projectTable->addColumn(
+        $table->addColumn(
             ProjectSchema::EXT_ID,
             DbDdlTable::TYPE_BIGINT,
             20,
             ['unsigned' => true, 'nullable' => false],
             'External ID provided by Eurotext'
         );
-        $projectTable->addColumn(
+        $table->addColumn(
             ProjectSchema::NAME,
             DbDdlTable::TYPE_TEXT,
             null,
             ['nullable' => false],
             'Project name'
         );
-        $projectTable->addColumn(
+        $table->addColumn(
             ProjectSchema::CODE,
             DbDdlTable::TYPE_TEXT,
             255,
             [],
             'Unique project identifier'
         );
-        $projectTable->addColumn(
+        $table->addColumn(
             ProjectSchema::STOREVIEW_SRC,
             DbDdlTable::TYPE_INTEGER,
             11,
             ['nullable' => false, 'default' => -1],
             'Source Storeview'
         );
-        $projectTable->addColumn(
+        $table->addColumn(
             ProjectSchema::STOREVIEW_DST,
             DbDdlTable::TYPE_INTEGER,
             11,
             ['nullable' => false, 'default' => -1],
             'Destination Storeview'
         );
-        $projectTable->addColumn(
+        $table->addColumn(
             ProjectSchema::STATUS,
             DbDdlTable::TYPE_INTEGER,
             11,
             ['nullable' => false, 'default' => 0],
             'Status'
         );
-        $projectTable->addColumn(
+        $table->addColumn(
             ProjectSchema::CUSTOMER_COMMENT,
             DbDdlTable::TYPE_TEXT,
             null,
             ['nullable' => true],
             'Customer specific comment'
         );
-        $projectTable->addColumn(
+        $table->addColumn(
             ProjectSchema::LAST_ERROR,
             DbDdlTable::TYPE_TEXT,
             null,
             ['nullable' => true],
             'Last error details and message'
         );
-        $projectTable->addColumn(
+        $table->addColumn(
             ProjectSchema::CREATED_AT,
             DbDdlTable::TYPE_TIMESTAMP,
             null,
             [],
             'Created at'
         );
-        $projectTable->addColumn(
+        $table->addColumn(
             ProjectSchema::UPDATED_AT,
             DbDdlTable::TYPE_TIMESTAMP,
             null,
@@ -105,10 +105,10 @@ class CreateProjectSchema
             'Last Update'
         );
 
-        $idxName = $setup->getIdxName($projectTableName, ['ext_id']);
-        $projectTable->addIndex($idxName, ['ext_id']);
+        $idxName = $setup->getIdxName($tableName, ['ext_id']);
+        $table->addIndex($idxName, ['ext_id']);
 
-        $con->createTable($projectTable);
+        $connection->createTable($table);
 
     }
 }

@@ -102,7 +102,7 @@ class ProjectRepositoryIntegrationTest extends IntegrationTestAbstract
     protected function createProject($name)
     {
         /** @var Project $project */
-        $project = $this->objectManager->get(Project::class);
+        $project = $this->objectManager->create(Project::class);
         $project->setName($name);
 
         $project = $this->sut->save($project);
