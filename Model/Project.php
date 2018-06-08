@@ -5,7 +5,7 @@ namespace Eurotext\TranslationManager\Model;
 use Eurotext\TranslationManager\Api\Data\ProjectInterface;
 use Eurotext\TranslationManager\Model\ResourceModel\ProjectCollection;
 use Eurotext\TranslationManager\Model\ResourceModel\ProjectResource;
-use Eurotext\TranslationManager\Setup\ProjectSchema;
+use Eurotext\TranslationManager\Setup\EntitySchema\ProjectSchema;
 use Magento\Framework\DataObject\IdentityInterface;
 use Magento\Framework\Model\AbstractModel;
 

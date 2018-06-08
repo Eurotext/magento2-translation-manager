@@ -5,7 +5,7 @@
  * @see PROJECT_LICENSE.txt
  */
 
-namespace Eurotext\TranslationManager\Setup;
+namespace Eurotext\TranslationManager\Setup\EntitySchema;
 
 /**
  * ProjectSchema

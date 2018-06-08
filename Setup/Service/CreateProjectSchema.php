@@ -7,7 +7,7 @@
 
 namespace Eurotext\TranslationManager\Setup\Service;
 
-use Eurotext\TranslationManager\Setup\ProjectSchema;
+use Eurotext\TranslationManager\Setup\EntitySchema\ProjectSchema;
 use Magento\Framework\DB\Ddl\Table as DbDdlTable;
 use Magento\Framework\Setup\SchemaSetupInterface;
 
