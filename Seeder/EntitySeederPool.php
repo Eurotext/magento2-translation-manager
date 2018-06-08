@@ -10,10 +10,10 @@ namespace Eurotext\TranslationManager\Seeder;
 /**
  * ProjectSeederPool
  */
-class ProjectSeederPool
+class EntitySeederPool
 {
     /**
-     * @var \Eurotext\TranslationManager\Api\ProjectSeederInterface[]
+     * @var \Eurotext\TranslationManager\Api\EntitySeederInterface[]
      */
     private $items;
 
@@ -23,7 +23,7 @@ class ProjectSeederPool
     }
 
     /**
-     * @return \Eurotext\TranslationManager\Api\ProjectSeederInterface[]
+     * @return \Eurotext\TranslationManager\Api\EntitySeederInterface[]
      */
     public function getItems(): array
     {

@@ -10,7 +10,7 @@ namespace Eurotext\TranslationManager\Seeder;
 use Eurotext\TranslationManager\Api\Data\ProjectInterface;
 use Eurotext\TranslationManager\Api\Data\ProjectProductInterface;
 use Eurotext\TranslationManager\Api\ProjectProductRepositoryInterface;
-use Eurotext\TranslationManager\Api\ProjectSeederInterface;
+use Eurotext\TranslationManager\Api\EntitySeederInterface;
 use Eurotext\TranslationManager\Model\ProjectProductFactory;
 use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Catalog\Api\ProductRepositoryInterface;
@@ -20,7 +20,7 @@ use Magento\Framework\Api\SearchCriteriaInterfaceFactory;
 /**
  * ProductSeeder
  */
-class ProductSeeder implements ProjectSeederInterface
+class ProductSeeder implements EntitySeederInterface
 {
     /**
      * @var ProductRepositoryInterface

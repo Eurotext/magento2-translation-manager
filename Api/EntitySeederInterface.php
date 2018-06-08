@@ -9,7 +9,7 @@ namespace Eurotext\TranslationManager\Api;
 
 use Eurotext\TranslationManager\Api\Data\ProjectInterface;
 
-interface ProjectSeederInterface
+interface EntitySeederInterface
 {
     public function seed(ProjectInterface $project): bool;
 }

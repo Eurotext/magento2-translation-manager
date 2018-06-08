@@ -8,7 +8,7 @@
 namespace Eurotext\TranslationManager\Test\Builder;
 
 use Eurotext\TranslationManager\Api\ProjectRepositoryInterface;
-use Eurotext\TranslationManager\Api\ProjectSeederInterface;
+use Eurotext\TranslationManager\Api\EntitySeederInterface;
 use Eurotext\TranslationManager\Model\ProjectFactory;
 use PHPUnit\Framework\TestCase;
 
@@ -29,7 +29,7 @@ class ProjectMockBuilder
      */
     public function buildProjectSeederMock(): \PHPUnit_Framework_MockObject_MockObject
     {
-        return $this->getMockBuilder(ProjectSeederInterface::class)
+        return $this->getMockBuilder(EntitySeederInterface::class)
             ->setMethods(['seed'])
             ->getMockForAbstractClass();
     }

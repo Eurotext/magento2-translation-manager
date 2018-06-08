@@ -11,7 +11,7 @@ use Eurotext\TranslationManager\Api\Data\ProjectInterface;
 use Eurotext\TranslationManager\Api\ProjectRepositoryInterface;
 use Eurotext\TranslationManager\Model\Project;
 use Eurotext\TranslationManager\Model\ProjectFactory;
-use Eurotext\TranslationManager\Seeder\ProjectSeederPool;
+use Eurotext\TranslationManager\Seeder\EntitySeederPool;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -32,14 +32,14 @@ class CreateProjectService
     private $projectRepository;
 
     /**
-     * @var \Eurotext\TranslationManager\Seeder\ProjectSeederPool
+     * @var \Eurotext\TranslationManager\Seeder\EntitySeederPool
      */
     private $projectSeederPool;
 
     public function __construct(
         ProjectFactory $projectFactory,
         ProjectRepositoryInterface $projectRepository,
-        ProjectSeederPool $projectSeederPool
+        EntitySeederPool $projectSeederPool
     ) {
         $this->projectFactory = $projectFactory;
         $this->projectRepository = $projectRepository;

@@ -9,10 +9,26 @@
         </arguments>
     </type>
 
-    <type name="Eurotext\TranslationManager\Seeder\ProjectSeederPool">
+    <type name="Eurotext\TranslationManager\Seeder\EntitySeederPool">
         <arguments>
             <argument name="items" xsi:type="array">
                 <item name="product_seeder" xsi:type="object">Eurotext\TranslationManager\Seeder\ProductSeeder</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Eurotext\TranslationManager\Sender\EntitySenderPool">
+        <arguments>
+            <argument name="items" xsi:type="array">
+                <item name="product_sender" xsi:type="object">Eurotext\TranslationManager\Sender\ProductSender</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Eurotext\TranslationManager\Receiver\EntityReceiverPool">
+        <arguments>
+            <argument name="items" xsi:type="array">
+                <item name="product_receiver" xsi:type="object">Eurotext\TranslationManager\Receiver\ProductReceiver</item>
             </argument>
         </arguments>
     </type>

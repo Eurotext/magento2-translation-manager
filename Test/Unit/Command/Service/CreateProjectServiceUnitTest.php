@@ -8,11 +8,11 @@
 namespace Eurotext\TranslationManager\Test\Unit\Command\Service;
 
 use Eurotext\TranslationManager\Api\ProjectRepositoryInterface;
-use Eurotext\TranslationManager\Api\ProjectSeederInterface;
+use Eurotext\TranslationManager\Api\EntitySeederInterface;
 use Eurotext\TranslationManager\Command\Service\CreateProjectService;
 use Eurotext\TranslationManager\Model\Project;
 use Eurotext\TranslationManager\Model\ProjectFactory;
-use Eurotext\TranslationManager\Seeder\ProjectSeederPool;
+use Eurotext\TranslationManager\Seeder\EntitySeederPool;
 use Eurotext\TranslationManager\Test\Builder\ConsoleMockBuilder;
 use Eurotext\TranslationManager\Test\Builder\ProjectMockBuilder;
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager as ObjectManagerHelper;
@@ -32,10 +32,10 @@ class CreateProjectServiceUnitTest extends TestCase
     /** @var ProjectRepositoryInterface|\PHPUnit\Framework\MockObject\MockObject */
     protected $projectRepository;
 
-    /** @var ProjectSeederInterface|\PHPUnit\Framework\MockObject\MockObject */
+    /** @var EntitySeederInterface|\PHPUnit\Framework\MockObject\MockObject */
     protected $seederMock;
 
-    /** @var ProjectSeederPool */
+    /** @var EntitySeederPool */
     protected $projectSeederPool;
 
     /** @var ProjectMockBuilder */
@@ -57,7 +57,7 @@ class CreateProjectServiceUnitTest extends TestCase
         $this->projectRepository = $this->projectMockBuilder->buildProjectRepositoryMock();
         $this->seederMock = $this->projectMockBuilder->buildProjectSeederMock();
 
-        $this->projectSeederPool = new ProjectSeederPool([$this->seederMock]);
+        $this->projectSeederPool = new EntitySeederPool([$this->seederMock]);
 
         $this->sut = $this->objectManager->getObject(
             CreateProjectService::class,

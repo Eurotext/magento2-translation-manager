@@ -7,8 +7,8 @@
 
 namespace Eurotext\TranslationManager\Test\Unit\Seeder;
 
-use Eurotext\TranslationManager\Api\ProjectSeederInterface;
-use Eurotext\TranslationManager\Seeder\ProjectSeederPool;
+use Eurotext\TranslationManager\Api\EntitySeederInterface;
+use Eurotext\TranslationManager\Seeder\EntitySeederPool;
 use PHPUnit\Framework\TestCase;
 
 class ProjectSeederPoolUnitTest extends TestCase
@@ -18,17 +18,17 @@ class ProjectSeederPoolUnitTest extends TestCase
      */
     public function itShouldReturnAnArrayOfSeeders()
     {
-        $seederMock = $this->getMockBuilder(ProjectSeederInterface::class)
+        $seederMock = $this->getMockBuilder(EntitySeederInterface::class)
             ->setMethods(['seed'])
             ->getMockForAbstractClass();
 
-        $sut = new ProjectSeederPool([$seederMock]);
+        $sut = new EntitySeederPool([$seederMock]);
 
         $items = $sut->getItems();
 
         $item = array_shift($items);
 
-        $this->assertInstanceOf(ProjectSeederInterface::class, $item);
+        $this->assertInstanceOf(EntitySeederInterface::class, $item);
     }
 
 }
