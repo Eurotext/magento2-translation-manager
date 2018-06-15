@@ -5,7 +5,7 @@
  * @see PROJECT_LICENSE.txt
  */
 
-namespace Eurotext\TranslationManager\Test\Unit\Command\Service;
+namespace Eurotext\TranslationManager\Test\Integration\Command\Service;
 
 use Eurotext\TranslationManager\Command\Service\CreateProjectService;
 use Eurotext\TranslationManager\Test\Builder\ConsoleMockBuilder;
