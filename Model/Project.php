@@ -22,6 +22,11 @@ class Project
         $this->_setResourceModel(ProjectResource::class, ProjectCollection::class);
     }
 
+    public function getId()
+    {
+        return (int)parent::getId();
+    }
+
     public function getExtId(): int
     {
         return $this->getData(ProjectSchema::EXT_ID) ?: 0;
