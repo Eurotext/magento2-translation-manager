@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * @copyright see PROJECT_LICENSE.txt
  *
@@ -7,7 +8,6 @@
 
 namespace Eurotext\TranslationManager\Command\Service;
 
-use Eurotext\TranslationManager\Api\Data\ProjectInterface;
 use Eurotext\TranslationManager\Api\ProjectRepositoryInterface;
 use Eurotext\TranslationManager\Model\Project;
 use Eurotext\TranslationManager\Model\ProjectFactory;
@@ -17,8 +17,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class CreateProjectService
 {
-    const ARG_NAME = 'name';
-    const ARG_STORE_ID_SRC = 'store_id_src';
+    const ARG_NAME          = 'name';
+    const ARG_STORE_ID_SRC  = 'store_id_src';
     const ARG_STORE_ID_DEST = 'store_id_dest';
 
     /**
@@ -41,7 +41,7 @@ class CreateProjectService
         ProjectRepositoryInterface $projectRepository,
         EntitySeederPool $projectSeederPool
     ) {
-        $this->projectFactory = $projectFactory;
+        $this->projectFactory    = $projectFactory;
         $this->projectRepository = $projectRepository;
         $this->projectSeederPool = $projectSeederPool;
     }
@@ -54,8 +54,8 @@ class CreateProjectService
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $name = $input->getArgument(self::ARG_NAME);
-        $storeIdSrc = $input->getArgument(self::ARG_STORE_ID_SRC);
+        $name        = $input->getArgument(self::ARG_NAME);
+        $storeIdSrc  = $input->getArgument(self::ARG_STORE_ID_SRC);
         $storeIdDest = $input->getArgument(self::ARG_STORE_ID_DEST);
 
         /** @var Project $project */
