@@ -16,7 +16,7 @@ use Magento\Framework\Exception\NoSuchEntityException;
 
 class ProjectRepository implements ProjectRepositoryInterface
 {
-    protected const CODE_UNIQUE_ID_PREFIX = 'etm2_project_';
+    const CODE_UNIQUE_ID_PREFIX = 'etm2_project_';
 
     /**
      * @var \Eurotext\TranslationManager\Model\ProjectFactory
@@ -44,7 +44,7 @@ class ProjectRepository implements ProjectRepositoryInterface
      */
     public function save(ProjectInterface $project): ProjectInterface
     {
-        if($project->getCode() === null){
+        if ($project->getCode() === null) {
             $project->setCode(uniqid(self::CODE_UNIQUE_ID_PREFIX, true));
         }
 
