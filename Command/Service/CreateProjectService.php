@@ -17,9 +17,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class CreateProjectService
 {
-    public const ARG_NAME = 'name';
-    public const ARG_STORE_ID_SRC = 'store_id_src';
-    public const ARG_STORE_ID_DEST = 'store_id_dest';
+    const ARG_NAME = 'name';
+    const ARG_STORE_ID_SRC = 'store_id_src';
+    const ARG_STORE_ID_DEST = 'store_id_dest';
 
     /**
      * @var \Eurotext\TranslationManager\Model\ProjectFactory

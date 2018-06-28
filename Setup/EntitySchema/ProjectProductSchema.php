@@ -9,13 +9,13 @@ namespace Eurotext\TranslationManager\Setup\EntitySchema;
 
 class ProjectProductSchema
 {
-    public const TABLE_NAME = 'eurotext_project_products';
+    const TABLE_NAME = 'eurotext_project_products';
 
-    public const ID = 'id';
-    public const EXT_ID = 'ext_id';
-    public const PROJECT_ID = 'project_id';
-    public const PRODUCT_ID = 'product_id';
-    public const LAST_ERROR = 'last_error';
-    public const CREATED_AT = 'created_at';
-    public const UPDATED_AT = 'updated_at';
+    const ID = 'id';
+    const EXT_ID = 'ext_id';
+    const PROJECT_ID = 'project_id';
+    const PRODUCT_ID = 'product_id';
+    const LAST_ERROR = 'last_error';
+    const CREATED_AT = 'created_at';
+    const UPDATED_AT = 'updated_at';
 }

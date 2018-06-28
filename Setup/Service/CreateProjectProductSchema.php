@@ -18,7 +18,7 @@ class CreateProjectProductSchema
      *
      * @throws \Zend_Db_Exception
      */
-    public function execute(SchemaSetupInterface $setup): void
+    public function execute(SchemaSetupInterface $setup)
     {
         $connection = $setup->getConnection();
 

@@ -13,7 +13,7 @@ class ProjectProduct
     extends AbstractModel
     implements ProjectProductInterface, IdentityInterface
 {
-    public const CACHE_TAG = 'eurotext_project';
+    const CACHE_TAG = 'eurotext_project';
 
     protected function _construct()
     {
@@ -21,62 +21,62 @@ class ProjectProduct
         $this->_setResourceModel(ProjectProductResource::class, ProjectProductCollection::class);
     }
 
-    public function getProjectId(): ?int
+    public function getProjectId(): int
     {
         return $this->getData(ProjectProductSchema::PROJECT_ID);
     }
 
-    public function setProjectId(int $projectId): void
+    public function setProjectId(int $projectId)
     {
         $this->setData(ProjectProductSchema::PROJECT_ID, $projectId);
     }
 
-    public function getProductId(): ?int
+    public function getProductId(): int
     {
         return $this->getData(ProjectProductSchema::PRODUCT_ID);
     }
 
-    public function setProductId(int $productId): void
+    public function setProductId(int $productId)
     {
         $this->setData(ProjectProductSchema::PRODUCT_ID, $productId);
     }
 
-    public function getExtId(): ?int
+    public function getExtId(): int
     {
         return $this->getData(ProjectProductSchema::EXT_ID);
     }
 
-    public function setExtId(int $extId): void
+    public function setExtId(int $extId)
     {
         $this->setData(ProjectProductSchema::EXT_ID, $extId);
     }
 
-    public function getCreatedAt(): ?string
+    public function getCreatedAt(): string
     {
         return $this->getData(ProjectProductSchema::CREATED_AT);
     }
 
-    public function setCreatedAt(string $createdAt): void
+    public function setCreatedAt(string $createdAt)
     {
         $this->setData(ProjectProductSchema::CREATED_AT, $createdAt);
     }
 
-    public function getUpdatedAt(): ?string
+    public function getUpdatedAt(): string
     {
         return $this->getData(ProjectProductSchema::UPDATED_AT);
     }
 
-    public function setUpdatedAt(string $updatedAt): void
+    public function setUpdatedAt(string $updatedAt)
     {
         $this->setData(ProjectProductSchema::UPDATED_AT, $updatedAt);
     }
 
-    public function getLastError(): ?string
+    public function getLastError(): string
     {
         return $this->getData(ProjectProductSchema::LAST_ERROR);
     }
 
-    public function setLastError(string $lastError): void
+    public function setLastError(string $lastError)
     {
         $this->setData(ProjectProductSchema::LAST_ERROR, $lastError);
     }
