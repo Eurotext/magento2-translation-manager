@@ -24,47 +24,47 @@ class Project
 
     public function getExtId(): int
     {
-        return $this->getData(ProjectSchema::EXT_ID);
+        return $this->getData(ProjectSchema::EXT_ID) ?: 0;
     }
 
     public function getCode(): string
     {
-        return $this->getData(ProjectSchema::CODE);
+        return $this->getData(ProjectSchema::CODE) ?: '';
     }
 
     public function getName(): string
     {
-        return $this->getData(ProjectSchema::NAME);
+        return $this->getData(ProjectSchema::NAME) ?: '';
     }
 
     public function getStoreviewSrc(): int
     {
-        return $this->getData(ProjectSchema::STOREVIEW_SRC);
+        return $this->getData(ProjectSchema::STOREVIEW_SRC) ?: 0;
     }
 
     public function getStoreviewDst(): int
     {
-        return $this->getData(ProjectSchema::STOREVIEW_DST);
+        return $this->getData(ProjectSchema::STOREVIEW_DST) ?: 0;
     }
 
     public function getCustomerComment(): string
     {
-        return $this->getData(ProjectSchema::CUSTOMER_COMMENT);
+        return $this->getData(ProjectSchema::CUSTOMER_COMMENT) ?: '';
     }
 
     public function getCreatedAt(): string
     {
-        return $this->getData(ProjectSchema::CREATED_AT);
+        return $this->getData(ProjectSchema::CREATED_AT) ?: '';
     }
 
     public function getUpdatedAt(): string
     {
-        return $this->getData(ProjectSchema::UPDATED_AT);
+        return $this->getData(ProjectSchema::UPDATED_AT) ?: '';
     }
 
     public function getLastError(): string
     {
-        return $this->getData(ProjectSchema::LAST_ERROR);
+        return $this->getData(ProjectSchema::LAST_ERROR) ?: '';
     }
 
     public function setExtId(int $extId)

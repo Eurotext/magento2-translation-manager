@@ -24,7 +24,7 @@ class ProjectProduct
 
     public function getProjectId(): int
     {
-        return $this->getData(ProjectProductSchema::PROJECT_ID);
+        return $this->getData(ProjectProductSchema::PROJECT_ID) ?: 0;
     }
 
     public function setProjectId(int $projectId)
@@ -34,7 +34,7 @@ class ProjectProduct
 
     public function getProductId(): int
     {
-        return $this->getData(ProjectProductSchema::PRODUCT_ID);
+        return $this->getData(ProjectProductSchema::PRODUCT_ID) ?: 0;
     }
 
     public function setProductId(int $productId)
@@ -44,7 +44,7 @@ class ProjectProduct
 
     public function getExtId(): int
     {
-        return $this->getData(ProjectProductSchema::EXT_ID);
+        return $this->getData(ProjectProductSchema::EXT_ID) ?: 0;
     }
 
     public function setExtId(int $extId)
@@ -54,7 +54,7 @@ class ProjectProduct
 
     public function getCreatedAt(): string
     {
-        return $this->getData(ProjectProductSchema::CREATED_AT);
+        return $this->getData(ProjectProductSchema::CREATED_AT) ?: '';
     }
 
     public function setCreatedAt(string $createdAt)
@@ -64,7 +64,7 @@ class ProjectProduct
 
     public function getUpdatedAt(): string
     {
-        return $this->getData(ProjectProductSchema::UPDATED_AT);
+        return $this->getData(ProjectProductSchema::UPDATED_AT) ?: '';
     }
 
     public function setUpdatedAt(string $updatedAt)
@@ -74,7 +74,7 @@ class ProjectProduct
 
     public function getLastError(): string
     {
-        return $this->getData(ProjectProductSchema::LAST_ERROR);
+        return $this->getData(ProjectProductSchema::LAST_ERROR) ?: '';
     }
 
     public function setLastError(string $lastError)
