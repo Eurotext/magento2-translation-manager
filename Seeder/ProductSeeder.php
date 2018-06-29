@@ -70,7 +70,7 @@ class ProductSeeder implements EntitySeederInterface
         $projectId = $project->getId();
         foreach ($products as $product) {
             /** @var $product ProductInterface */
-            $productId = $product->getId();
+            $productId = (int)$product->getId();
 
             /** @var ProjectProductInterface $projectProduct */
             $projectProduct = $this->projectProductFactory->create();

@@ -44,7 +44,7 @@ class ProjectRepository implements ProjectRepositoryInterface
      */
     public function save(ProjectInterface $project): ProjectInterface
     {
-        if ($project->getCode() === null) {
+        if ($project->getCode() === '') {
             $project->setCode(uniqid(self::CODE_UNIQUE_ID_PREFIX, true));
         }
 

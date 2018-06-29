@@ -24,7 +24,7 @@ class Project
 
     public function getId()
     {
-        return (int)parent::getId();
+        return parent::getId() === null ? null : (int)parent::getId();
     }
 
     public function getExtId(): int

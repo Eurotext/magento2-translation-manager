@@ -22,6 +22,11 @@ class ProjectProduct
         $this->_setResourceModel(ProjectProductResource::class, ProjectProductCollection::class);
     }
 
+    public function getId()
+    {
+        return parent::getId() === null ? null : (int)parent::getId();
+    }
+
     public function getProjectId(): int
     {
         return $this->getData(ProjectProductSchema::PROJECT_ID) ?: 0;
