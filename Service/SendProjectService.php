@@ -104,13 +104,13 @@ class SendProjectService
                 $sender->send($project);
 
                 $result[$senderClass] = 1;
-                $this->logger->info(sprintf('%s => success', $sender));
+                $this->logger->info(sprintf('%s => success', $senderClass));
             } catch (\Exception $e) {
                 $message = $e->getMessage();
 
                 $result[$senderClass] = $message;
 
-                $this->logger->error(sprintf('%s => %s', $sender, $message));
+                $this->logger->error(sprintf('%s => %s', $senderClass, $message));
             }
         }
 
