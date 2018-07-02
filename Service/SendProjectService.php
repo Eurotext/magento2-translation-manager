@@ -38,14 +38,14 @@ class SendProjectService
         $this->createProjectEntities = $createProjectEntities;
     }
 
-    public function executeById(int $id): array
+    public function executeById(int $id)
     {
         $project = $this->projectRepository->getById($id);
 
         return $this->execute($project);
     }
 
-    public function execute(ProjectInterface $project): array
+    public function execute(ProjectInterface $project)
     {
         $result = [];
 
