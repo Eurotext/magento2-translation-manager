@@ -25,7 +25,7 @@ class NewProjectCommand extends Command
 
     protected function configure()
     {
-        $this->setName('etm:project-new');
+        $this->setName('etm:project:new');
         $this->setDescription('Create Project for ETM2');
 
         $this->addArgument(NewProjectService::ARG_NAME, InputArgument::REQUIRED);
