@@ -9,6 +9,12 @@
         </arguments>
     </type>
 
+    <type name="\Eurotext\TranslationManager\Command\SendProjectCommand">
+        <arguments>
+            <argument name="sendProject" xsi:type="object">Eurotext\TranslationManager\Command\Service\SendProjectService\Proxy</argument>
+        </arguments>
+    </type>
+
     <type name="Eurotext\TranslationManager\Seeder\EntitySeederPool">
         <arguments>
             <argument name="items" xsi:type="array">
@@ -36,7 +42,8 @@
     <type name="Magento\Framework\Console\CommandList">
         <arguments>
             <argument name="commands" xsi:type="array">
-                <item name="eurotext_createproject" xsi:type="object">Eurotext\TranslationManager\Command\NewProjectCommand</item>
+                <item name="eurotext_project_new" xsi:type="object">Eurotext\TranslationManager\Command\NewProjectCommand</item>
+                <item name="eurotext_project_send" xsi:type="object">Eurotext\TranslationManager\Command\SendProjectCommand</item>
             </argument>
         </arguments>
     </type>
