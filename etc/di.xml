@@ -5,7 +5,7 @@
 
     <type name="\Eurotext\TranslationManager\Command\NewProjectCommand">
         <arguments>
-            <argument name="createProject" xsi:type="object">Eurotext\TranslationManager\Command\Service\CreateProjectService\Proxy</argument>
+            <argument name="newProject" xsi:type="object">Eurotext\TranslationManager\Command\Service\NewProjectService\Proxy</argument>
         </arguments>
     </type>
 

@@ -13,10 +13,10 @@ use Eurotext\TranslationManager\Command\Service\NewProjectService;
 use Eurotext\TranslationManager\Test\Builder\ConsoleMockBuilder;
 use PHPUnit\Framework\TestCase;
 
-class CreateProjectCommandUnitTest extends TestCase
+class NewProjectCommandUnitTest extends TestCase
 {
-    /** @var \Eurotext\TranslationManager\Command\Service\NewProjectService|\PHPUnit\Framework\MockObject\MockObject */
-    protected $createProjectService;
+    /** @var \Eurotext\TranslationManager\Command\Service\NewProjectService|\PHPUnit_Framework_MockObject_MockObject */
+    protected $newProjectService;
 
     /** @var NewProjectCommand */
     protected $sut;
@@ -28,14 +28,15 @@ class CreateProjectCommandUnitTest extends TestCase
     {
         parent::setUp();
 
-        $this->builder  = new ConsoleMockBuilder($this);
+        $this->builder = new ConsoleMockBuilder($this);
 
-        $this->createProjectService = $this->getMockBuilder(NewProjectService::class)
-            ->setMethods(['execute'])
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->newProjectService =
+            $this->getMockBuilder(NewProjectService::class)
+                 ->setMethods(['execute'])
+                 ->disableOriginalConstructor()
+                 ->getMock();
 
-        $this->sut = new NewProjectCommand($this->createProjectService);
+        $this->sut = new NewProjectCommand($this->newProjectService);
     }
 
     /**
@@ -45,9 +46,9 @@ class CreateProjectCommandUnitTest extends TestCase
      */
     public function itShouldExecuteTheCreateProjectService()
     {
-        $this->createProjectService->expects($this->once())->method('execute');
+        $this->newProjectService->expects($this->once())->method('execute');
 
-        $input = $this->builder->buildConsoleInputMock();
+        $input  = $this->builder->buildConsoleInputMock();
         $output = $this->builder->buildConsoleOutputMock();
 
         $this->sut->run($input, $output);

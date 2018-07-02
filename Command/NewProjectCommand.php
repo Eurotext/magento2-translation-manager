@@ -12,15 +12,15 @@ use Symfony\Component\Console\Output\OutputInterface;
 class NewProjectCommand extends Command
 {
     /**
-     * @var \Eurotext\TranslationManager\Command\Service\NewProjectService
+     * @var NewProjectService
      */
     private $createProject;
 
-    public function __construct(NewProjectService $createProject)
+    public function __construct(NewProjectService $sendProject)
     {
         parent::__construct();
 
-        $this->createProject = $createProject;
+        $this->createProject = $sendProject;
     }
 
     protected function configure()
