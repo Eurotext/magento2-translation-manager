@@ -23,7 +23,7 @@ class ConsoleMockBuilder
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Console\Output\OutputInterface
+     * @return \Symfony\Component\Console\Output\OutputInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     public function buildConsoleOutputMock()
     {
@@ -37,7 +37,7 @@ class ConsoleMockBuilder
     }
 
     /**
-     * @return \Symfony\Component\Console\Input\InputInterface|\PHPUnit\Framework\MockObject\MockObject
+     * @return \Symfony\Component\Console\Input\InputInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     public function buildConsoleInputMock()
     {
