@@ -104,4 +104,37 @@ class SendProjectServiceTest extends UnitTestAbstract
         $this->assertArrayHasKey(\get_class($this->entitySender), $result);
     }
 
+    /**
+     * @throws \Eurotext\RestApiClient\Exception\ProjectApiException
+     */
+    public function testItShouldSendProjectPostRequestAndCatchEntitySenderException()
+    {
+        $projectId    = 1;
+        $projectExtId = 100;
+
+        /** @var ProjectInterface $project */
+        $project = $this->getMockBuilder(Project::class)
+                        ->disableOriginalConstructor()
+                        ->getMock();
+
+        $this->projectRepository->expects($this->once())->method('getById')->with($projectId)->willReturn($project);
+        $this->projectRepository->expects($this->once())->method('save')->with($project);
+
+        $response = new ProjectPostResponse();
+        $response->setId($projectExtId);
+
+        $this->projectApi->expects($this->once())->method('post')->willReturn($response);
+
+        $this->entitySender->expects($this->once())
+                           ->method('send')
+                           ->with($project)
+                           ->willThrowException(new \Exception());
+
+        $result = $this->sut->executeById($projectId);
+
+        $this->assertInternalType('array', $result);
+        $this->assertCount(1, $result);
+        $this->assertArrayHasKey(\get_class($this->entitySender), $result);
+    }
+
 }
