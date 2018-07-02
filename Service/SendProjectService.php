@@ -83,15 +83,30 @@ class SendProjectService
             $id = $project->getId();
             $this->logger->info(sprintf('send project post for id:%d', $id));
 
-            $request  = $this->projectPostMapper->map($project);
-            $response = $this->projectApi->post($request);
+            $request = $this->projectPostMapper->map($project);
+
+            try {
+                $response = $this->projectApi->post($request);
+
+                $result['project'] = 1;
+
+                $this->logger->info(sprintf('project id:%d => success', $id));
+            } catch (\Exception $e) {
+                $message = $e->getMessage();
+
+                $result['project'] = $message;
+
+                $this->logger->error(sprintf('project id:%d => %s', $id, $message));
+
+                return $result;
+            }
 
             // save project ext_id
             $extId = $response->getId();
             $project->setExtId($extId);
 
-            $this->logger->info(sprintf('save project id:%d ext-id:%d', $id, $extId));
             $this->projectRepository->save($project);
+            $this->logger->info(sprintf('project id:%d ext-id:%d saved', $id, $extId));
         }
 
         // create project items dynamically by internal project entities

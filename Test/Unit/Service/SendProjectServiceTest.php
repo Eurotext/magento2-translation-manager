@@ -100,8 +100,42 @@ class SendProjectServiceTest extends UnitTestAbstract
         $result = $this->sut->executeById($projectId);
 
         $this->assertInternalType('array', $result);
+        $this->assertCount(2, $result);
+
+        $this->assertArrayHasKey('project', $result);
+        $this->assertEquals(1, $result['project']);
+
+        $senderClass = \get_class($this->entitySender);
+        $this->assertArrayHasKey($senderClass, $result);
+        $this->assertEquals(1, $result[$senderClass]);
+    }
+
+    /**
+     * @throws \Eurotext\RestApiClient\Exception\ProjectApiException
+     */
+    public function testItShouldStopOnErrorDuringProjectPost()
+    {
+        $projectId = 1;
+
+        /** @var ProjectInterface $project */
+        $project = $this->getMockBuilder(Project::class)
+                        ->disableOriginalConstructor()
+                        ->getMock();
+
+        $this->projectRepository->expects($this->once())->method('getById')->with($projectId)->willReturn($project);
+        $this->projectRepository->expects($this->never())->method('save')->with($project);
+
+        $this->projectApi->expects($this->once())->method('post')->willThrowException(new \Exception);
+
+        $this->entitySender->expects($this->never())->method('send')->with($project);
+
+        $result = $this->sut->executeById($projectId);
+
+        $this->assertInternalType('array', $result);
         $this->assertCount(1, $result);
-        $this->assertArrayHasKey(\get_class($this->entitySender), $result);
+
+        $this->assertArrayHasKey('project', $result);
+        $this->assertNotEquals(1, $result['project']);
     }
 
     /**
@@ -133,8 +167,14 @@ class SendProjectServiceTest extends UnitTestAbstract
         $result = $this->sut->executeById($projectId);
 
         $this->assertInternalType('array', $result);
-        $this->assertCount(1, $result);
-        $this->assertArrayHasKey(\get_class($this->entitySender), $result);
+        $this->assertCount(2, $result);
+
+        $this->assertArrayHasKey('project', $result);
+        $this->assertEquals(1, $result['project']);
+
+        $senderClass = \get_class($this->entitySender);
+        $this->assertArrayHasKey($senderClass, $result);
+        $this->assertNotEquals(1, $result[$senderClass]);
     }
 
 }
