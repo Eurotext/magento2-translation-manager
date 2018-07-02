@@ -8,58 +8,36 @@ declare(strict_types=1);
 
 namespace Eurotext\TranslationManager\Service;
 
-use Eurotext\RestApiClient\Api\ProjectV1Api;
 use Eurotext\TranslationManager\Api\Data\ProjectInterface;
 use Eurotext\TranslationManager\Api\ProjectRepositoryInterface;
-use Eurotext\TranslationManager\Mapper\ProjectPostMapper;
-use Eurotext\TranslationManager\Sender\EntitySenderPool;
+use Eurotext\TranslationManager\Service\Project\CreateProjectEntitiesService;
+use Eurotext\TranslationManager\Service\Project\CreateProjectService;
 use Psr\Log\LoggerInterface;
 
 class SendProjectService
 {
-    /** @var ProjectPostMapper */
-    private $projectPostMapper;
-
     /**
      * @var \Eurotext\TranslationManager\Api\ProjectRepositoryInterface
      */
     private $projectRepository;
 
-    /**
-     * @var \Eurotext\TranslationManager\Sender\EntitySenderPool
-     */
-    private $entitySenderPool;
+    /** @var CreateProjectService */
+    private $createProject;
 
-    /**
-     * @var ProjectV1Api
-     */
-    private $projectApi;
-
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
+    /** @var CreateProjectEntitiesService */
+    private $createProjectEntities;
 
     public function __construct(
         ProjectRepositoryInterface $projectRepository,
-        ProjectPostMapper $projectPostMapper,
-        ProjectV1Api $projectApi,
-        EntitySenderPool $entitySenderPool,
+        CreateProjectService $createProject,
+        CreateProjectEntitiesService $createProjectEntities,
         LoggerInterface $logger
     ) {
-        $this->projectRepository = $projectRepository;
-        $this->projectApi        = $projectApi;
-        $this->entitySenderPool  = $entitySenderPool;
-        $this->projectPostMapper = $projectPostMapper;
-        $this->logger            = $logger;
+        $this->projectRepository     = $projectRepository;
+        $this->createProject         = $createProject;
+        $this->createProjectEntities = $createProjectEntities;
     }
 
-    /**
-     * @param int $id
-     *
-     * @return array
-     * @throws \Eurotext\RestApiClient\Exception\ProjectApiException
-     */
     public function executeById(int $id): array
     {
         $project = $this->projectRepository->getById($id);
@@ -67,67 +45,23 @@ class SendProjectService
         return $this->execute($project);
     }
 
-    /**
-     * @param ProjectInterface $project
-     *
-     * @return array
-     *
-     * @throws \Eurotext\RestApiClient\Exception\ProjectApiException
-     */
     public function execute(ProjectInterface $project): array
     {
         $result = [];
 
-        if ($project->getExtId() === 0) {
-            // create project via ApiClient
-            $id = $project->getId();
-            $this->logger->info(sprintf('send project post for id:%d', $id));
+        // Create Project
+        $projectCreated    = $this->createProject->execute($project);
+        $result['project'] = 1;
+        if ($projectCreated === false) {
+            $result['project'] = 'error creating project';
 
-            $request = $this->projectPostMapper->map($project);
-
-            try {
-                $response = $this->projectApi->post($request);
-
-                $result['project'] = 1;
-
-                $this->logger->info(sprintf('project id:%d => success', $id));
-            } catch (\Exception $e) {
-                $message = $e->getMessage();
-
-                $result['project'] = $message;
-
-                $this->logger->error(sprintf('project id:%d => %s', $id, $message));
-
-                return $result;
-            }
-
-            // save project ext_id
-            $extId = $response->getId();
-            $project->setExtId($extId);
-
-            $this->projectRepository->save($project);
-            $this->logger->info(sprintf('project id:%d ext-id:%d saved', $id, $extId));
+            return $result;
         }
 
-        // create project items dynamically by internal project entities
-        $senders = $this->entitySenderPool->getItems();
+        // Create Entities
+        $entitiesCreated = $this->createProjectEntities->execute($project);
 
-        foreach ($senders as $sender) {
-            $senderClass = \get_class($sender);
-
-            try {
-                $sender->send($project);
-
-                $result[$senderClass] = 1;
-                $this->logger->info(sprintf('%s => success', $senderClass));
-            } catch (\Exception $e) {
-                $message = $e->getMessage();
-
-                $result[$senderClass] = $message;
-
-                $this->logger->error(sprintf('%s => %s', $senderClass, $message));
-            }
-        }
+        $result = array_merge($result, $entitiesCreated);
 
         return $result;
     }
