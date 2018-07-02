@@ -8,7 +8,7 @@ declare(strict_types=1);
 
 namespace Eurotext\TranslationManager\Test\Integration\Command\Service;
 
-use Eurotext\TranslationManager\Command\Service\CreateProjectService;
+use Eurotext\TranslationManager\Command\Service\NewProjectService;
 use Eurotext\TranslationManager\Test\Builder\ConsoleMockBuilder;
 use Magento\TestFramework\Helper\Bootstrap;
 use PHPUnit\Framework\TestCase;
@@ -18,7 +18,7 @@ class CreateProjectServiceIntegrationTest extends TestCase
     /** @var \Magento\Framework\ObjectManagerInterface */
     protected $objectManager;
 
-    /** @var CreateProjectService */
+    /** @var NewProjectService */
     protected $sut;
 
     /** @var ConsoleMockBuilder */
@@ -32,7 +32,7 @@ class CreateProjectServiceIntegrationTest extends TestCase
 
         $this->objectManager = Bootstrap::getObjectManager();
 
-        $this->sut = $this->objectManager->get(CreateProjectService::class);
+        $this->sut = $this->objectManager->get(NewProjectService::class);
     }
 
     /**

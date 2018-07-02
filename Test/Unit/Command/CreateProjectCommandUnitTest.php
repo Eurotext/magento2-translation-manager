@@ -8,17 +8,17 @@ declare(strict_types=1);
 
 namespace Eurotext\TranslationManager\Test\Unit\Command;
 
-use Eurotext\TranslationManager\Command\CreateProjectCommand;
-use Eurotext\TranslationManager\Command\Service\CreateProjectService;
+use Eurotext\TranslationManager\Command\NewProjectCommand;
+use Eurotext\TranslationManager\Command\Service\NewProjectService;
 use Eurotext\TranslationManager\Test\Builder\ConsoleMockBuilder;
 use PHPUnit\Framework\TestCase;
 
 class CreateProjectCommandUnitTest extends TestCase
 {
-    /** @var \Eurotext\TranslationManager\Command\Service\CreateProjectService|\PHPUnit\Framework\MockObject\MockObject */
+    /** @var \Eurotext\TranslationManager\Command\Service\NewProjectService|\PHPUnit\Framework\MockObject\MockObject */
     protected $createProjectService;
 
-    /** @var CreateProjectCommand */
+    /** @var NewProjectCommand */
     protected $sut;
 
     /** @var ConsoleMockBuilder */
@@ -30,12 +30,12 @@ class CreateProjectCommandUnitTest extends TestCase
 
         $this->builder  = new ConsoleMockBuilder($this);
 
-        $this->createProjectService = $this->getMockBuilder(CreateProjectService::class)
+        $this->createProjectService = $this->getMockBuilder(NewProjectService::class)
             ->setMethods(['execute'])
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->sut = new CreateProjectCommand($this->createProjectService);
+        $this->sut = new NewProjectCommand($this->createProjectService);
     }
 
     /**

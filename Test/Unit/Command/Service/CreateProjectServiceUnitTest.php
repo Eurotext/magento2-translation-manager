@@ -10,7 +10,7 @@ namespace Eurotext\TranslationManager\Test\Unit\Command\Service;
 
 use Eurotext\TranslationManager\Api\EntitySeederInterface;
 use Eurotext\TranslationManager\Api\ProjectRepositoryInterface;
-use Eurotext\TranslationManager\Command\Service\CreateProjectService;
+use Eurotext\TranslationManager\Command\Service\NewProjectService;
 use Eurotext\TranslationManager\Model\Project;
 use Eurotext\TranslationManager\Model\ProjectFactory;
 use Eurotext\TranslationManager\Seeder\EntitySeederPool;
@@ -27,7 +27,7 @@ class CreateProjectServiceUnitTest extends TestCase
     /** @var ProjectFactory|\PHPUnit_Framework_MockObject_MockObject */
     protected $projectFactory;
 
-    /** @var CreateProjectService */
+    /** @var NewProjectService */
     protected $sut;
 
     /** @var ProjectRepositoryInterface|\PHPUnit_Framework_MockObject_MockObject */
@@ -61,7 +61,7 @@ class CreateProjectServiceUnitTest extends TestCase
         $this->projectSeederPool = new EntitySeederPool([$this->seederMock]);
 
         $this->sut = $this->objectManager->getObject(
-            CreateProjectService::class,
+            NewProjectService::class,
             [
                 'projectFactory'    => $this->projectFactory,
                 'projectRepository' => $this->projectRepository,

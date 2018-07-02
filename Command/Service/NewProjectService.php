@@ -15,7 +15,7 @@ use Eurotext\TranslationManager\Seeder\EntitySeederPool;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class CreateProjectService
+class NewProjectService
 {
     const ARG_NAME          = 'name';
     const ARG_STORE_ID_SRC  = 'store_id_src';

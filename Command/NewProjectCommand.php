@@ -3,20 +3,20 @@ declare(strict_types=1);
 
 namespace Eurotext\TranslationManager\Command;
 
-use Eurotext\TranslationManager\Command\Service\CreateProjectService;
+use Eurotext\TranslationManager\Command\Service\NewProjectService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class CreateProjectCommand extends Command
+class NewProjectCommand extends Command
 {
     /**
-     * @var \Eurotext\TranslationManager\Command\Service\CreateProjectService
+     * @var \Eurotext\TranslationManager\Command\Service\NewProjectService
      */
     private $createProject;
 
-    public function __construct(CreateProjectService $createProject)
+    public function __construct(NewProjectService $createProject)
     {
         parent::__construct();
 
@@ -25,12 +25,12 @@ class CreateProjectCommand extends Command
 
     protected function configure()
     {
-        $this->setName('etm:create-project');
+        $this->setName('etm:project-new');
         $this->setDescription('Create Project for ETM2');
 
-        $this->addArgument(CreateProjectService::ARG_NAME, InputArgument::REQUIRED);
-        $this->addArgument(CreateProjectService::ARG_STORE_ID_SRC, InputArgument::REQUIRED);
-        $this->addArgument(CreateProjectService::ARG_STORE_ID_DEST, InputArgument::REQUIRED);
+        $this->addArgument(NewProjectService::ARG_NAME, InputArgument::REQUIRED);
+        $this->addArgument(NewProjectService::ARG_STORE_ID_SRC, InputArgument::REQUIRED);
+        $this->addArgument(NewProjectService::ARG_STORE_ID_DEST, InputArgument::REQUIRED);
 
         parent::configure();
     }

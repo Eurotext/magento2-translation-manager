@@ -3,7 +3,7 @@
     <preference for="Eurotext\TranslationManager\Api\ProjectRepositoryInterface" type="Eurotext\TranslationManager\Repository\ProjectRepository" />
     <preference for="Eurotext\TranslationManager\Api\ProjectProductRepositoryInterface" type="Eurotext\TranslationManager\Repository\ProjectProductRepository" />
 
-    <type name="\Eurotext\TranslationManager\Command\CreateProjectCommand">
+    <type name="\Eurotext\TranslationManager\Command\NewProjectCommand">
         <arguments>
             <argument name="createProject" xsi:type="object">Eurotext\TranslationManager\Command\Service\CreateProjectService\Proxy</argument>
         </arguments>
@@ -36,7 +36,7 @@
     <type name="Magento\Framework\Console\CommandList">
         <arguments>
             <argument name="commands" xsi:type="array">
-                <item name="eurotext_createproject" xsi:type="object">Eurotext\TranslationManager\Command\CreateProjectCommand</item>
+                <item name="eurotext_createproject" xsi:type="object">Eurotext\TranslationManager\Command\NewProjectCommand</item>
             </argument>
         </arguments>
     </type>
