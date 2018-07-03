@@ -14,13 +14,13 @@ class NewProjectCommand extends Command
     /**
      * @var NewProjectService
      */
-    private $createProject;
+    private $newProject;
 
-    public function __construct(NewProjectService $sendProject)
+    public function __construct(NewProjectService $newProject)
     {
         parent::__construct();
 
-        $this->createProject = $sendProject;
+        $this->newProject = $newProject;
     }
 
     protected function configure()
@@ -37,6 +37,6 @@ class NewProjectCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->createProject->execute($input, $output);
+        $this->newProject->execute($input, $output);
     }
 } 
