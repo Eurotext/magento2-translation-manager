@@ -34,6 +34,8 @@ class CreateProjectEntitiesService
 
     public function execute(ProjectInterface $project): array
     {
+        $result = [];
+
         // create project items dynamically by internal project entities
         $senders = $this->entitySenderPool->getItems();
 
