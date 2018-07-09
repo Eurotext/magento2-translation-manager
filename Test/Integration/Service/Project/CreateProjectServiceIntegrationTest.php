@@ -26,12 +26,6 @@ class CreateProjectServiceIntegrationTest extends IntegrationTestAbstract
     {
         parent::setUp();
 
-//        /** @var ConfigResource $config */
-//        $config = $this->objectManager->get(ConfigResource::class);
-//        $config->saveConfig(Configuration::CONFIG_PATH_API_KEY, \constant('EUROTEXT_API_KEY'), 'default', 0);
-//        $config->saveConfig(Configuration::CONFIG_PATH_API_HOST, 'https://sandbox.api.eurotext.de', 'default', 0);
-//        $config->saveConfig(Configuration::CONFIG_PATH_API_DEBUG_MODE, '0', 'default', 0);
-
         $config = $this->getMockBuilder(Configuration::class)
                        ->disableOriginalConstructor()
                        ->setMethods(['getApiKey','getHost', 'getDebug'])
@@ -48,7 +42,6 @@ class CreateProjectServiceIntegrationTest extends IntegrationTestAbstract
             $projectApi,
             $this->objectManager->get(LoggerInterface::class)
         );
-        // $this->sut = $this->objectManager->get(CreateProjectService::class);
     }
 
     /**
