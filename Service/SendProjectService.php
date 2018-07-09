@@ -12,7 +12,6 @@ use Eurotext\TranslationManager\Api\Data\ProjectInterface;
 use Eurotext\TranslationManager\Api\ProjectRepositoryInterface;
 use Eurotext\TranslationManager\Service\Project\CreateProjectEntitiesService;
 use Eurotext\TranslationManager\Service\Project\CreateProjectService;
-use Psr\Log\LoggerInterface;
 
 class SendProjectService
 {
@@ -30,22 +29,21 @@ class SendProjectService
     public function __construct(
         ProjectRepositoryInterface $projectRepository,
         CreateProjectService $createProject,
-        CreateProjectEntitiesService $createProjectEntities,
-        LoggerInterface $logger
+        CreateProjectEntitiesService $createProjectEntities
     ) {
         $this->projectRepository     = $projectRepository;
         $this->createProject         = $createProject;
         $this->createProjectEntities = $createProjectEntities;
     }
 
-    public function executeById(int $id) /** return-types not supported by magento code-generator */
+    public function executeById(int $id) // return-types not supported by magento code-generator
     {
         $project = $this->projectRepository->getById($id);
 
         return $this->execute($project);
     }
 
-    public function execute(ProjectInterface $project) /** return-types not supported by magento code-generator */
+    public function execute(ProjectInterface $project) // return-types not supported by magento code-generator
     {
         $result = [];
 
