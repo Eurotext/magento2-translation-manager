@@ -15,6 +15,6 @@ class ProductSender implements EntitySenderInterface
 {
     public function send(ProjectInterface $project): bool
     {
-
+        return true;
     }
 }
