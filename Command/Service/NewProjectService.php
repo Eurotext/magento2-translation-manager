@@ -54,9 +54,9 @@ class NewProjectService
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $name        = $input->getArgument(self::ARG_NAME);
-        $storeIdSrc  = $input->getArgument(self::ARG_STORE_ID_SRC);
-        $storeIdDest = $input->getArgument(self::ARG_STORE_ID_DEST);
+        $name        = (string) $input->getArgument(self::ARG_NAME);
+        $storeIdSrc  = (int) $input->getArgument(self::ARG_STORE_ID_SRC);
+        $storeIdDest = (int) $input->getArgument(self::ARG_STORE_ID_DEST);
 
         /** @var Project $project */
         $project = $this->projectFactory->create();
