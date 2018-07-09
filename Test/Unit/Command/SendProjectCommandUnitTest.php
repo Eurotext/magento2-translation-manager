@@ -48,7 +48,9 @@ class SendProjectCommandUnitTest extends TestCase
     {
         $projectId = 1;
 
-        $this->sendProjectService->expects($this->once())->method('executeById')->with($projectId);
+        $this->sendProjectService->expects($this->once())->method('executeById')
+                                 ->with($projectId)
+                                 ->willReturn(['project' => 1]);
 
         $input = $this->builder->buildConsoleInputMock();
         $input->expects($this->once())->method('getArgument')->willReturn($projectId);
