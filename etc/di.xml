@@ -20,6 +20,18 @@
         </arguments>
     </type>
 
+    <type name="Eurotext\TranslationManager\Service\Project\CreateProjectService">
+        <arguments>
+            <argument name="logger" xsi:type="object">Eurotext\TranslationManager\Logger\ApiLogger</argument>
+        </arguments>
+    </type>
+
+    <type name="Eurotext\TranslationManager\Service\Project\CreateProjectEntitiesService">
+        <arguments>
+            <argument name="logger" xsi:type="object">Eurotext\TranslationManager\Logger\ApiLogger</argument>
+        </arguments>
+    </type>
+
     <type name="Eurotext\TranslationManager\Seeder\EntitySeederPool">
         <arguments>
             <argument name="items" xsi:type="array">
