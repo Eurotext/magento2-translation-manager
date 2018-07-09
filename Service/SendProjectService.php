@@ -38,14 +38,14 @@ class SendProjectService
         $this->createProjectEntities = $createProjectEntities;
     }
 
-    public function executeById(int $id)
+    public function executeById(int $id) /** return-types not supported by magento code-generator */
     {
         $project = $this->projectRepository->getById($id);
 
         return $this->execute($project);
     }
 
-    public function execute(ProjectInterface $project)
+    public function execute(ProjectInterface $project) /** return-types not supported by magento code-generator */
     {
         $result = [];
 
