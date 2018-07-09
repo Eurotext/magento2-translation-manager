@@ -2,6 +2,13 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <preference for="Eurotext\TranslationManager\Api\ProjectRepositoryInterface" type="Eurotext\TranslationManager\Repository\ProjectRepository" />
     <preference for="Eurotext\TranslationManager\Api\ProjectProductRepositoryInterface" type="Eurotext\TranslationManager\Repository\ProjectProductRepository" />
+    <preference for="Eurotext\RestApiClient\ConfigurationInterface" type="Eurotext\TranslationManager\ApiClient\Configuration" />
+
+    <type name="\Eurotext\RestApiClient\Api\ProjectV1Api">
+        <arguments>
+            <argument name="config" xsi:type="object">Eurotext\TranslationManager\ApiClient\Configuration</argument>
+        </arguments>
+    </type>
 
     <type name="Eurotext\TranslationManager\Command\NewProjectCommand">
         <arguments>
