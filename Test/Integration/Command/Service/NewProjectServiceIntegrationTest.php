@@ -10,10 +10,10 @@ namespace Eurotext\TranslationManager\Test\Integration\Command\Service;
 
 use Eurotext\TranslationManager\Command\Service\NewProjectService;
 use Eurotext\TranslationManager\Test\Builder\ConsoleMockBuilder;
+use Eurotext\TranslationManager\Test\Integration\IntegrationTestAbstract;
 use Magento\TestFramework\Helper\Bootstrap;
-use PHPUnit\Framework\TestCase;
 
-class CreateProjectServiceIntegrationTest extends TestCase
+class NewProjectServiceIntegrationTest extends IntegrationTestAbstract
 {
     /** @var \Magento\Framework\ObjectManagerInterface */
     protected $objectManager;
@@ -40,13 +40,13 @@ class CreateProjectServiceIntegrationTest extends TestCase
      */
     public function itShouldCreateANewProject()
     {
-        $name = 'my first project with a name';
-        $storeSrc = 1;
+        $name      = 'my first project with a name';
+        $storeSrc  = 1;
         $storeDest = 2;
 
         $input = $this->builder->buildConsoleInputMock();
         $input->expects($this->exactly(3))
-            ->method('getArgument')->willReturnOnConsecutiveCalls($name, $storeSrc, $storeDest);
+              ->method('getArgument')->willReturnOnConsecutiveCalls($name, $storeSrc, $storeDest);
 
         $output = new \Symfony\Component\Console\Tests\Fixtures\DummyOutput();
 
