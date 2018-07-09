@@ -51,7 +51,6 @@ class ConfigurationFactoryUnitTest extends UnitTestAbstract
         $this->scopeConfig->expects($this->any())
                           ->method('getValue')
                           ->willReturnMap($valueMap);
-        // ->willReturnOnConsecutiveCalls($apikey, $host, $debug);
 
         $configuration = $this->sut->create();
 
