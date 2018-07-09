@@ -45,6 +45,7 @@ class ConfigurationFactory
         $configuration->setSystemName(self::SYSTEM_NAME); // @todo get complete Magento Name incl. Dist Type
         $configuration->setSystemVersion('2.2.4'); // @todo get current system version
 
+        return $configuration;
     }
 
 }
