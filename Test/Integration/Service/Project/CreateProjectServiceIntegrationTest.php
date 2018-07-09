@@ -9,8 +9,8 @@ declare(strict_types=1);
 namespace Eurotext\TranslationManager\Test\Integration\Service\Project;
 
 use Eurotext\RestApiClient\Api\ProjectV1Api;
+use Eurotext\RestApiClient\Configuration;
 use Eurotext\TranslationManager\Api\ProjectRepositoryInterface;
-use Eurotext\TranslationManager\ApiClient\Configuration;
 use Eurotext\TranslationManager\Mapper\ProjectPostMapper;
 use Eurotext\TranslationManager\Model\Project;
 use Eurotext\TranslationManager\Service\Project\CreateProjectService;
