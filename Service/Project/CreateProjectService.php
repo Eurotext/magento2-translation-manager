@@ -9,6 +9,7 @@ declare(strict_types=1);
 namespace Eurotext\TranslationManager\Service\Project;
 
 use Eurotext\RestApiClient\Api\ProjectV1Api;
+use Eurotext\RestApiClient\Api\ProjectV1ApiInterface;
 use Eurotext\RestApiClient\Exception\ProjectApiException;
 use Eurotext\TranslationManager\Api\Data\ProjectInterface;
 use Eurotext\TranslationManager\Api\ProjectRepositoryInterface;
@@ -38,7 +39,7 @@ class CreateProjectService
     public function __construct(
         ProjectRepositoryInterface $projectRepository,
         ProjectPostMapper $projectPostMapper,
-        ProjectV1Api $projectApi,
+        ProjectV1ApiInterface $projectApi,
         LoggerInterface $logger
     ) {
         $this->projectRepository = $projectRepository;
