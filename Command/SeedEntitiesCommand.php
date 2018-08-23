@@ -3,8 +3,7 @@ declare(strict_types=1);
 
 namespace Eurotext\TranslationManager\Command;
 
-use Eurotext\TranslationManager\Api\ProjectRepositoryInterface;
-use Eurotext\TranslationManager\Seeder\EntitySeederPool;
+use Eurotext\TranslationManager\Command\Service\SeedEntitiesService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -12,37 +11,30 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class SeedEntitiesCommand extends Command
 {
-    const ARG_PROJECT_ID = 'project-id';
-    const ARG_ENTITIES   = 'entities';
+    const NAME        = 'etm:entity:seed';
+    const DESCRIPTION = 'Seed entites for a given project';
 
     /**
-     * @var EntitySeederPool
+     * @var SeedEntitiesService
      */
-    private $projectSeederPool;
+    private $seedEntitiesService;
 
-    /**
-     * @var ProjectRepositoryInterface
-     */
-    private $projectRepository;
-
-    public function __construct(
-        ProjectRepositoryInterface $projectRepository,
-        EntitySeederPool $projectSeederPool
-    ) {
+    public function __construct(SeedEntitiesService $seedEntitiesService)
+    {
         parent::__construct();
-        $this->projectSeederPool = $projectSeederPool;
-        $this->projectRepository = $projectRepository;
+        $this->seedEntitiesService = $seedEntitiesService;
     }
 
     protected function configure()
     {
-        $this->setName('etm:entity:seed');
-        $this->setDescription('Seed entites for a given project');
+        $this->setName(self::NAME);
+        $this->setDescription(self::DESCRIPTION);
 
-        $this->addArgument(self::ARG_PROJECT_ID, InputArgument::REQUIRED);
+        $this->addArgument(SeedEntitiesService::ARG_PROJECT_ID, InputArgument::REQUIRED);
         $this->addArgument(
-            self::ARG_ENTITIES, InputArgument::REQUIRED,
-            'Comma seperated list of entity-types, type overview with command etm:entity:types'
+            SeedEntitiesService::ARG_ENTITIES,
+            InputArgument::REQUIRED,
+            SeedEntitiesService::ARG_ENTITY_DESC
         );
 
         parent::configure();
@@ -50,27 +42,6 @@ class SeedEntitiesCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $projectId = (int) $input->getArgument(self::ARG_PROJECT_ID);
-        $entities  = explode(',', $input->getArgument(self::ARG_ENTITIES));
-
-        $project = $this->projectRepository->getById($projectId);
-
-        foreach ($entities as $entityCode) {
-            try {
-                $projectSeeder = $this->projectSeederPool->getByCode($entityCode);
-            } catch (\Exception $e) {
-                $output->writeln(sprintf('%s: seeder not found', $entityCode));
-                continue;
-            }
-
-            $result = $projectSeeder->seed($project);
-
-            if ($result === true) {
-                $output->writeln(sprintf('%s: seeding successful', $entityCode));
-            } else {
-                $output->writeln(sprintf('%s: seeding not successful', $entityCode));
-            }
-        }
-
+        $this->seedEntitiesService->execute($input, $output);
     }
 } 
