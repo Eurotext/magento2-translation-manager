@@ -11,7 +11,6 @@ namespace Eurotext\TranslationManager\Command\Service;
 use Eurotext\TranslationManager\Api\ProjectRepositoryInterface;
 use Eurotext\TranslationManager\Model\Project;
 use Eurotext\TranslationManager\Model\ProjectFactory;
-use Eurotext\TranslationManager\Seeder\EntitySeederPool;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -31,19 +30,12 @@ class NewProjectService
      */
     private $projectRepository;
 
-    /**
-     * @var \Eurotext\TranslationManager\Seeder\EntitySeederPool
-     */
-    private $projectSeederPool;
-
     public function __construct(
         ProjectFactory $projectFactory,
-        ProjectRepositoryInterface $projectRepository,
-        EntitySeederPool $projectSeederPool
+        ProjectRepositoryInterface $projectRepository
     ) {
         $this->projectFactory    = $projectFactory;
         $this->projectRepository = $projectRepository;
-        $this->projectSeederPool = $projectSeederPool;
     }
 
     /**
@@ -54,9 +46,9 @@ class NewProjectService
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $name        = (string) $input->getArgument(self::ARG_NAME);
-        $storeIdSrc  = (int) $input->getArgument(self::ARG_STORE_ID_SRC);
-        $storeIdDest = (int) $input->getArgument(self::ARG_STORE_ID_DEST);
+        $name        = (string)$input->getArgument(self::ARG_NAME);
+        $storeIdSrc  = (int)$input->getArgument(self::ARG_STORE_ID_SRC);
+        $storeIdDest = (int)$input->getArgument(self::ARG_STORE_ID_DEST);
 
         /** @var Project $project */
         $project = $this->projectFactory->create();
@@ -69,26 +61,6 @@ class NewProjectService
         $id = $project->getId();
 
         $output->writeln(sprintf('project "%s" created, id: %d', $name, $id));
-
-        $projectSeeders = $this->projectSeederPool->getItems();
-        if (count($projectSeeders) === 0) {
-            $output->writeln('no seeders found');
-
-            return $project;
-        }
-
-        // Iterate seeders to prefill project config tables
-        foreach ($projectSeeders as $projectSeeder) {
-            $result = $projectSeeder->seed($project);
-
-            $seederClass = \get_class($projectSeeder);
-
-            if ($result === true) {
-                $output->writeln(sprintf('seeding for "%s" successful', $seederClass));
-            } else {
-                $output->writeln(sprintf('seeding for "%s" not successful', $seederClass));
-            }
-        }
 
         return $project;
     }

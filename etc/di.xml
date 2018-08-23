@@ -33,7 +33,7 @@
     <type name="Eurotext\TranslationManager\Seeder\EntitySeederPool">
         <arguments>
             <argument name="items" xsi:type="array">
-                <item name="product_seeder" xsi:type="object">Eurotext\TranslationManager\Seeder\ProductSeeder</item>
+                <item name="product" xsi:type="object">Eurotext\TranslationManager\Seeder\ProductSeeder</item>
             </argument>
         </arguments>
     </type>
@@ -41,7 +41,7 @@
     <type name="Eurotext\TranslationManager\Sender\EntitySenderPool">
         <arguments>
             <argument name="items" xsi:type="array">
-                <item name="product_sender" xsi:type="object">Eurotext\TranslationManager\Sender\ProductSender</item>
+                <item name="product" xsi:type="object">Eurotext\TranslationManager\Sender\ProductSender</item>
             </argument>
         </arguments>
     </type>
@@ -49,7 +49,7 @@
     <type name="Eurotext\TranslationManager\Receiver\EntityReceiverPool">
         <arguments>
             <argument name="items" xsi:type="array">
-                <item name="product_receiver" xsi:type="object">Eurotext\TranslationManager\Receiver\ProductReceiver</item>
+                <item name="product" xsi:type="object">Eurotext\TranslationManager\Receiver\ProductReceiver</item>
             </argument>
         </arguments>
     </type>
@@ -65,9 +65,10 @@
     <type name="Magento\Framework\Console\CommandList">
         <arguments>
             <argument name="commands" xsi:type="array">
-                <item name="eurotext_project_new" xsi:type="object">Eurotext\TranslationManager\Command\NewProjectCommand</item>
-                <item name="eurotext_project_send" xsi:type="object">Eurotext\TranslationManager\Command\SendProjectCommand</item>
-                <item name="eurotext_entity_types" xsi:type="object">Eurotext\TranslationManager\Command\ListEntitiesCommand</item>
+                <item name="etm_project_new" xsi:type="object">Eurotext\TranslationManager\Command\NewProjectCommand</item>
+                <item name="etm_project_send" xsi:type="object">Eurotext\TranslationManager\Command\SendProjectCommand</item>
+                <item name="etm_entity_types" xsi:type="object">Eurotext\TranslationManager\Command\ListEntitiesCommand</item>
+                <item name="etm_entity_seed" xsi:type="object">Eurotext\TranslationManager\Command\SeedEntitiesCommand</item>
             </argument>
         </arguments>
     </type>

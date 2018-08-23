@@ -8,13 +8,15 @@ declare(strict_types=1);
 
 namespace Eurotext\TranslationManager\Seeder;
 
+use Eurotext\TranslationManager\Api\EntitySeederInterface;
+
 /**
  * ProjectSeederPool
  */
 class EntitySeederPool
 {
     /**
-     * @var \Eurotext\TranslationManager\Api\EntitySeederInterface[]
+     * @var EntitySeederInterface[]
      */
     private $items;
 
@@ -24,10 +26,27 @@ class EntitySeederPool
     }
 
     /**
-     * @return \Eurotext\TranslationManager\Api\EntitySeederInterface[]
+     * @return EntitySeederInterface[]
      */
     public function getItems(): array
     {
         return $this->items;
+    }
+
+    /**
+     * @param $code
+     *
+     * @return EntitySeederInterface
+     *
+     * @throws \InvalidArgumentException
+     */
+    public function getByCode($code): EntitySeederInterface
+    {
+        if (!array_key_exists($code, $this->items)) {
+            $msg = sprintf('unknown seeder with code: %s', $code);
+            throw new \InvalidArgumentException($msg);
+        }
+
+        return $this->items[$code];
     }
 }
