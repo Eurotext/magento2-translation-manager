@@ -56,16 +56,12 @@ class CreateProjectServiceUnitTest extends TestCase
 
         $this->projectFactory    = $this->projectMockBuilder->buildProjectFactoryMock();
         $this->projectRepository = $this->projectMockBuilder->buildProjectRepositoryMock();
-        $this->seederMock        = $this->projectMockBuilder->buildProjectSeederMock();
-
-        $this->projectSeederPool = new EntitySeederPool([$this->seederMock]);
 
         $this->sut = $this->objectManager->getObject(
             NewProjectService::class,
             [
                 'projectFactory'    => $this->projectFactory,
                 'projectRepository' => $this->projectRepository,
-                'projectSeederPool' => $this->projectSeederPool,
             ]
         );
     }
@@ -84,8 +80,6 @@ class CreateProjectServiceUnitTest extends TestCase
         $this->projectFactory->expects($this->once())->method('create')->willReturn($project);
 
         $this->projectRepository->expects($this->once())->method('save')->willReturn($project);
-
-        $this->seederMock->expects($this->once())->method('seed')->willReturn(true);
 
         $input = $this->consoleMockBuilder->buildConsoleInputMock();
         $input->expects($this->any())
