@@ -10,11 +10,13 @@ namespace Eurotext\TranslationManager\Seeder;
 
 use Eurotext\TranslationManager\Api\Data\ProjectInterface;
 use Eurotext\TranslationManager\Api\Data\ProjectProductInterface;
-use Eurotext\TranslationManager\Api\ProjectProductRepositoryInterface;
 use Eurotext\TranslationManager\Api\EntitySeederInterface;
+use Eurotext\TranslationManager\Api\ProjectProductRepositoryInterface;
 use Eurotext\TranslationManager\Model\ProjectProductFactory;
+use Eurotext\TranslationManager\Setup\EntitySchema\ProjectProductSchema;
 use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Catalog\Api\ProductRepositoryInterface;
+use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\Api\SearchCriteriaInterface;
 use Magento\Framework\Api\SearchCriteriaInterfaceFactory;
 
@@ -43,16 +45,23 @@ class ProductSeeder implements EntitySeederInterface
      */
     private $projectProductRepository;
 
+    /**
+     * @var SearchCriteriaBuilder
+     */
+    private $searchCriteriaBuilder;
+
     public function __construct(
         ProductRepositoryInterface $productRepository,
         SearchCriteriaInterfaceFactory $searchCriteriaFactory,
         ProjectProductFactory $projectProductFactory,
-        ProjectProductRepositoryInterface $projectProductRepository
+        ProjectProductRepositoryInterface $projectProductRepository,
+        SearchCriteriaBuilder $searchCriteriaBuilder
     ) {
-        $this->productRepository = $productRepository;
-        $this->searchCriteriaFactory = $searchCriteriaFactory;
-        $this->projectProductFactory = $projectProductFactory;
+        $this->productRepository        = $productRepository;
+        $this->searchCriteriaFactory    = $searchCriteriaFactory;
+        $this->projectProductFactory    = $projectProductFactory;
         $this->projectProductRepository = $projectProductRepository;
+        $this->searchCriteriaBuilder    = $searchCriteriaBuilder;
     }
 
     public function seed(ProjectInterface $project): bool
@@ -62,7 +71,7 @@ class ProductSeeder implements EntitySeederInterface
         // get product collection
         /** @var $searchCriteria SearchCriteriaInterface */
         $searchCriteria = $this->searchCriteriaFactory->create();
-        $searchResult = $this->productRepository->getList($searchCriteria);
+        $searchResult   = $this->productRepository->getList($searchCriteria);
 
         // create project product configurations
         $products = $searchResult->getItems();
@@ -71,6 +80,17 @@ class ProductSeeder implements EntitySeederInterface
         foreach ($products as $product) {
             /** @var $product ProductInterface */
             $productId = (int)$product->getId();
+
+            $this->searchCriteriaBuilder
+                ->addFilter(ProjectProductSchema::PRODUCT_ID, $productId)
+                ->addFilter(ProjectProductSchema::PROJECT_ID, $projectId);
+            $searchCriteria = $this->searchCriteriaBuilder->create();
+
+            $searchResults = $this->projectProductRepository->getList($searchCriteria);
+
+            if ($searchResults->getTotalCount() >= 1) {
+                continue;
+            }
 
             /** @var ProjectProductInterface $projectProduct */
             $projectProduct = $this->projectProductFactory->create();
