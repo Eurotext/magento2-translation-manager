@@ -39,19 +39,17 @@ class CreateProjectEntitiesService
         // create project items dynamically by internal project entities
         $senders = $this->entitySenderPool->getItems();
 
-        foreach ($senders as $sender) {
-            $senderClass = \get_class($sender);
-
+        foreach ($senders as $senderKey => $sender) {
             try {
                 $sender->send($project);
 
-                $result[$senderClass] = 1;
-                $this->logger->info(sprintf('%s => success', $senderClass));
+                $result[$senderKey] = 1;
+                $this->logger->info(sprintf('%s => success', $senderKey));
             } catch (\Exception $e) {
                 $message = $e->getMessage();
 
-                $result[$senderClass] = $message;
-                $this->logger->error(sprintf('%s => %s', $senderClass, $message));
+                $result[$senderKey] = $message;
+                $this->logger->error(sprintf('%s => %s', $senderKey, $message));
             }
         }
 

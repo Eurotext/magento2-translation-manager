@@ -48,7 +48,8 @@ class SendProjectService
         $result = [];
 
         // Create Project
-        $projectCreated    = $this->createProject->execute($project);
+        $projectCreated = $this->createProject->execute($project);
+
         $result['project'] = 1;
         if ($projectCreated === false) {
             $result['project'] = 'error creating project';
