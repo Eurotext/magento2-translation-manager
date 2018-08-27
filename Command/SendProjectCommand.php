@@ -42,8 +42,8 @@ class SendProjectCommand extends Command
         $result = $this->sendProject->executeById($projectId);
 
         foreach ($result as $typeKey => $transferStatus) {
-            $status = $transferStatus === 0 ?: 'success';
-            $output->writeln(sprintf('Create %s %s', $typeKey, $status));
+            $status = $transferStatus === 1 ? 'success' : $transferStatus;
+            $output->writeln(sprintf('Create %s: %s', $typeKey, $status));
         }
 
     }
