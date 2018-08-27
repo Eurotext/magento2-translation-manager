@@ -64,9 +64,6 @@ class SendProjectServiceTest extends UnitTestAbstract
         );
     }
 
-    /**
-     * @throws \Eurotext\RestApiClient\Exception\ProjectApiException
-     */
     public function testItShouldSendProject()
     {
         $projectId = 1;
@@ -93,9 +90,6 @@ class SendProjectServiceTest extends UnitTestAbstract
         $this->assertEquals(1, $result['project']);
     }
 
-    /**
-     * @throws \Eurotext\RestApiClient\Exception\ProjectApiException
-     */
     public function testItShouldStopOnErrorDuringCreateProject()
     {
         $projectId = 1;
