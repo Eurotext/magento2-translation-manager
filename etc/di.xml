@@ -4,6 +4,7 @@
     <preference for="Eurotext\TranslationManager\Api\ProjectProductRepositoryInterface" type="Eurotext\TranslationManager\Repository\ProjectProductRepository" />
 
     <preference for="Eurotext\RestApiClient\Api\ProjectV1ApiInterface" type="Eurotext\TranslationManager\ApiClient\ProjectV1Api" />
+    <preference for="Eurotext\RestApiClient\Api\Project\ItemV1ApiInterface" type="Eurotext\TranslationManager\ApiClient\ItemV1Api" />
     <preference for="Eurotext\RestApiClient\ConfigurationInterface" type="Eurotext\TranslationManager\ApiClient\Configuration" />
 
     <type name="Eurotext\TranslationManager\Command\NewProjectCommand">
@@ -25,6 +26,12 @@
     </type>
 
     <type name="Eurotext\TranslationManager\Service\Project\CreateProjectService">
+        <arguments>
+            <argument name="logger" xsi:type="object">Eurotext\TranslationManager\Logger\ApiLogger</argument>
+        </arguments>
+    </type>
+
+    <type name="Eurotext\TranslationManager\Service\Project\CreateProjectEntitiesService">
         <arguments>
             <argument name="logger" xsi:type="object">Eurotext\TranslationManager\Logger\ApiLogger</argument>
         </arguments>
