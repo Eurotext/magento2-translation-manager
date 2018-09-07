@@ -17,14 +17,9 @@ class ProjectPostMapper
 {
     public function map(ProjectInterface $project): ProjectDataRequest
     {
-        $request = new ProjectDataRequest();
+        $data = new ProjectData($project->getCustomerComment());
 
-        $request->setName($project->getName());
-        $request->setType(ProjectTypeEnum::QUOTE());
-
-        $data = new ProjectData();
-        $data->setDescription($project->getCustomerComment());
-        $request->setData($data);
+        $request = new ProjectDataRequest($project->getName(), $data, ProjectTypeEnum::QUOTE());
 
         return $request;
     }
