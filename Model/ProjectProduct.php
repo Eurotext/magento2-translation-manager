@@ -29,7 +29,7 @@ class ProjectProduct
 
     public function getProjectId(): int
     {
-        return $this->getData(ProjectProductSchema::PROJECT_ID) ?: 0;
+        return (int) $this->getData(ProjectProductSchema::PROJECT_ID) ?: 0;
     }
 
     public function setProjectId(int $projectId)
@@ -39,7 +39,7 @@ class ProjectProduct
 
     public function getProductId(): int
     {
-        return $this->getData(ProjectProductSchema::PRODUCT_ID) ?: 0;
+        return (int) $this->getData(ProjectProductSchema::PRODUCT_ID) ?: 0;
     }
 
     public function setProductId(int $productId)
@@ -49,7 +49,7 @@ class ProjectProduct
 
     public function getExtId(): int
     {
-        return $this->getData(ProjectProductSchema::EXT_ID) ?: 0;
+        return (int) $this->getData(ProjectProductSchema::EXT_ID) ?: 0;
     }
 
     public function setExtId(int $extId)
