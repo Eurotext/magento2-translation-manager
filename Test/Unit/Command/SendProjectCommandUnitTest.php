@@ -11,6 +11,7 @@ namespace Eurotext\TranslationManager\Test\Unit\Command;
 use Eurotext\TranslationManager\Command\SendProjectCommand;
 use Eurotext\TranslationManager\Service\SendProjectService;
 use Eurotext\TranslationManager\Test\Builder\ConsoleMockBuilder;
+use Magento\Framework\App\State;
 use PHPUnit\Framework\TestCase;
 
 class SendProjectCommandUnitTest extends TestCase
@@ -24,6 +25,9 @@ class SendProjectCommandUnitTest extends TestCase
     /** @var ConsoleMockBuilder */
     protected $builder;
 
+    /** @var State */
+    protected $appState;
+
     protected function setUp()
     {
         parent::setUp();
@@ -36,7 +40,9 @@ class SendProjectCommandUnitTest extends TestCase
                  ->disableOriginalConstructor()
                  ->getMock();
 
-        $this->sut = new SendProjectCommand($this->sendProjectService);
+        $this->appState = $this->getMockBuilder(State::class)->disableOriginalConstructor()->getMock();
+
+        $this->sut = new SendProjectCommand($this->sendProjectService, $this->appState);
     }
 
     /**
