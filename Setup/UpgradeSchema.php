@@ -8,7 +8,6 @@ declare(strict_types=1);
 
 namespace Eurotext\TranslationManager\Setup;
 
-use Eurotext\TranslationManager\Setup\Service\CreateProjectProductSchema;
 use Eurotext\TranslationManager\Setup\Service\CreateProjectSchema;
 use Magento\Framework\Setup\ModuleContextInterface;
 use Magento\Framework\Setup\SchemaSetupInterface;
@@ -24,17 +23,10 @@ class UpgradeSchema implements UpgradeSchemaInterface
      */
     private $createProjectSchema;
 
-    /**
-     * @var CreateProjectProductSchema
-     */
-    private $createProjectProductSchema;
-
     public function __construct(
-        CreateProjectSchema $createProjectSchema,
-        CreateProjectProductSchema $createProjectProductSchema
+        CreateProjectSchema $createProjectSchema
     ) {
         $this->createProjectSchema = $createProjectSchema;
-        $this->createProjectProductSchema = $createProjectProductSchema;
     }
 
     /**
@@ -49,6 +41,5 @@ class UpgradeSchema implements UpgradeSchemaInterface
     public function upgrade(SchemaSetupInterface $setup, ModuleContextInterface $context)
     {
         $this->createProjectSchema->execute($setup);
-        $this->createProjectProductSchema->execute($setup);
     }
 }

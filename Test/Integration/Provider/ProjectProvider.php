@@ -9,8 +9,6 @@ declare(strict_types=1);
 namespace Eurotext\TranslationManager\Test\Integration\Provider;
 
 use Eurotext\TranslationManager\Model\Project;
-use Eurotext\TranslationManager\Model\ProjectProduct;
-use Eurotext\TranslationManager\Repository\ProjectProductRepository;
 use Eurotext\TranslationManager\Repository\ProjectRepository;
 use Magento\TestFramework\Helper\Bootstrap;
 
@@ -22,14 +20,10 @@ class ProjectProvider
     /** @var ProjectRepository */
     private $projectRepository;
 
-    /** @var $projectProductRepository ProjectProductRepository */
-    private $projectProductRepository;
-
     public function __construct()
     {
-        $this->objectManager = Bootstrap::getObjectManager();
+        $this->objectManager     = Bootstrap::getObjectManager();
         $this->projectRepository = $this->objectManager->get(ProjectRepository::class);
-        $this->projectProductRepository = $this->objectManager->get(ProjectProductRepository::class);
     }
 
     /**
@@ -47,20 +41,4 @@ class ProjectProvider
         return $this->projectRepository->save($project);
     }
 
-    /**
-     * @param int $projectId
-     * @param int $productId
-     *
-     * @return \Eurotext\TranslationManager\Api\Data\ProjectProductInterface|\Eurotext\TranslationManager\Model\ProjectProduct
-     * @throws \Magento\Framework\Exception\CouldNotSaveException
-     */
-    public function createProjectProduct(int $projectId, int $productId)
-    {
-        /** @var ProjectProduct $object */
-        $object = $this->objectManager->create(ProjectProduct::class);
-        $object->setProjectId($projectId);
-        $object->setProductId($productId);
-
-        return $this->projectProductRepository->save($object);
-    }
 }

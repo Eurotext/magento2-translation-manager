@@ -8,7 +8,6 @@ declare(strict_types=1);
 
 namespace Eurotext\TranslationManager\Setup;
 
-use Eurotext\TranslationManager\Setup\Service\CreateProjectProductSchema;
 use Eurotext\TranslationManager\Setup\Service\CreateProjectSchema;
 use Magento\Framework\Setup\InstallSchemaInterface;
 use Magento\Framework\Setup\ModuleContextInterface;
@@ -21,17 +20,10 @@ class InstallSchema implements InstallSchemaInterface
      */
     private $createProjectSchema;
 
-    /**
-     * @var \Eurotext\TranslationManager\Setup\Service\CreateProjectProductSchema
-     */
-    private $createProjectProductSchema;
-
     public function __construct(
-        CreateProjectSchema $createProjectSchema,
-        CreateProjectProductSchema $createProjectProductSchema
+        CreateProjectSchema $createProjectSchema
     ) {
         $this->createProjectSchema = $createProjectSchema;
-        $this->createProjectProductSchema = $createProjectProductSchema;
     }
 
     /**
@@ -43,6 +35,5 @@ class InstallSchema implements InstallSchemaInterface
     public function install(SchemaSetupInterface $setup, ModuleContextInterface $context)
     {
         $this->createProjectSchema->execute($setup);
-        $this->createProjectProductSchema->execute($setup);
     }
 }

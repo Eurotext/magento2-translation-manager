@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <preference for="Eurotext\TranslationManager\Api\ProjectRepositoryInterface" type="Eurotext\TranslationManager\Repository\ProjectRepository" />
-    <preference for="Eurotext\TranslationManager\Api\ProjectProductRepositoryInterface" type="Eurotext\TranslationManager\Repository\ProjectProductRepository" />
 
     <preference for="Eurotext\RestApiClient\Api\ProjectV1ApiInterface" type="Eurotext\TranslationManager\ApiClient\ProjectV1Api" />
     <preference for="Eurotext\RestApiClient\Api\Project\ItemV1ApiInterface" type="Eurotext\TranslationManager\ApiClient\ItemV1Api" />
@@ -37,16 +36,9 @@
         </arguments>
     </type>
 
-    <type name="Eurotext\TranslationManager\Service\Project\CreateProjectEntitiesService">
-        <arguments>
-            <argument name="logger" xsi:type="object">Eurotext\TranslationManager\Logger\ApiLogger</argument>
-        </arguments>
-    </type>
-
     <type name="Eurotext\TranslationManager\Seeder\EntitySeederPool">
         <arguments>
             <argument name="items" xsi:type="array">
-                <item name="product" xsi:type="object">Eurotext\TranslationManager\Seeder\ProductSeeder</item>
             </argument>
         </arguments>
     </type>
@@ -54,7 +46,6 @@
     <type name="Eurotext\TranslationManager\Sender\EntitySenderPool">
         <arguments>
             <argument name="items" xsi:type="array">
-                <item name="product" xsi:type="object">Eurotext\TranslationManager\Sender\ProductSender</item>
             </argument>
         </arguments>
     </type>
@@ -62,7 +53,6 @@
     <type name="Eurotext\TranslationManager\Receiver\EntityReceiverPool">
         <arguments>
             <argument name="items" xsi:type="array">
-                <item name="product" xsi:type="object">Eurotext\TranslationManager\Receiver\ProductReceiver</item>
             </argument>
         </arguments>
     </type>
@@ -70,7 +60,6 @@
     <type name="Eurotext\TranslationManager\Entity\EntityTypePool">
         <arguments>
             <argument name="items" xsi:type="array">
-                <item name="product" xsi:type="object">Eurotext\TranslationManager\Entity\ProductEntityType</item>
             </argument>
         </arguments>
     </type>
