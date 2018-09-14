@@ -9,11 +9,11 @@ declare(strict_types=1);
 namespace Eurotext\TranslationManager\Test\Integration\Service\Project;
 
 use Eurotext\RestApiClient\Api\ProjectV1Api;
-use Eurotext\RestApiClient\Configuration;
 use Eurotext\TranslationManager\Api\ProjectRepositoryInterface;
 use Eurotext\TranslationManager\Mapper\ProjectPostMapper;
 use Eurotext\TranslationManager\Model\Project;
 use Eurotext\TranslationManager\Service\Project\CreateProjectService;
+use Eurotext\TranslationManager\Test\Builder\ConfigurationMockBuilder;
 use Eurotext\TranslationManager\Test\Integration\IntegrationTestAbstract;
 use Psr\Log\LoggerInterface;
 
@@ -26,13 +26,8 @@ class CreateProjectServiceIntegrationTest extends IntegrationTestAbstract
     {
         parent::setUp();
 
-        $config = $this->getMockBuilder(Configuration::class)
-                       ->disableOriginalConstructor()
-                       ->setMethods(['getApiKey','getHost', 'getDebug'])
-                       ->getMock();
-        $config->expects($this->once())->method('getApiKey')->willReturn(\constant('EUROTEXT_API_KEY'));
-        $config->expects($this->once())->method('getHost')->willReturn('https://sandbox.api.eurotext.de');
-        $config->expects($this->once())->method('getDebug')->willReturn(false);
+        $configBuiler = new ConfigurationMockBuilder($this);
+        $config = $configBuiler->buildConfiguration();
 
         $projectApi = new ProjectV1Api($config);
 
