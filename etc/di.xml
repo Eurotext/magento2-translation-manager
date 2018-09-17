@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Eurotext\TranslationManager\Api\ScopeConfigReaderInterface" type="Eurotext\TranslationManager\ScopeConfig\ScopeConfigReader" />
     <preference for="Eurotext\TranslationManager\Api\ProjectRepositoryInterface" type="Eurotext\TranslationManager\Repository\ProjectRepository" />
 
     <preference for="Eurotext\RestApiClient\Api\ProjectV1ApiInterface" type="Eurotext\TranslationManager\ApiClient\ProjectV1Api" />
