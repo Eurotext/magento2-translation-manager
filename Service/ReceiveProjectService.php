@@ -57,7 +57,8 @@ class ReceiveProjectService
 
         $result = array_merge($result, $entities);
 
-        // @todo set project to status imported
+        $project->setStatus(ProjectInterface::STATUS_IMPORTED);
+        $this->projectRepository->save($project);
 
         return $result;
     }

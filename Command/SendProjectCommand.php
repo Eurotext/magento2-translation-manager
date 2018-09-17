@@ -61,6 +61,5 @@ class SendProjectCommand extends Command
             $status = $transferStatus === 1 ? 'success' : $transferStatus;
             $output->writeln(sprintf('Create %s: %s', $typeKey, $status));
         }
-
     }
 } 

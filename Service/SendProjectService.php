@@ -70,7 +70,8 @@ class SendProjectService
 
         $result = array_merge($result, $entities);
 
-        // @todo set Project Status to new
+        $project->setStatus(ProjectInterface::STATUS_EXPORTED);
+        $this->projectRepository->save($project);
 
         return $result;
     }
