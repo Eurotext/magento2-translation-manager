@@ -70,6 +70,8 @@ class SendProjectService
 
         $result = array_merge($result, $entities);
 
+        // @todo set Project Status to new
+
         return $result;
     }
 }

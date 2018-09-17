@@ -57,6 +57,8 @@ class ReceiveProjectService
 
         $result = array_merge($result, $entities);
 
+        // @todo set project to status imported
+
         return $result;
     }
 }
