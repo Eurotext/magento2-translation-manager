@@ -8,7 +8,6 @@ declare(strict_types=1);
 
 namespace Eurotext\TranslationManager\Service\Project;
 
-use Eurotext\RestApiClient\Api\ProjectV1Api;
 use Eurotext\RestApiClient\Api\ProjectV1ApiInterface;
 use Eurotext\RestApiClient\Exception\ProjectApiException;
 use Eurotext\TranslationManager\Api\Data\ProjectInterface;
@@ -22,12 +21,12 @@ class CreateProjectService
     private $projectPostMapper;
 
     /**
-     * @var \Eurotext\TranslationManager\Api\ProjectRepositoryInterface
+     * @var ProjectRepositoryInterface
      */
     private $projectRepository;
 
     /**
-     * @var ProjectV1Api
+     * @var ProjectV1ApiInterface
      */
     private $projectApi;
 

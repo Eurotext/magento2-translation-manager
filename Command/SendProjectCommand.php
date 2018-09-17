@@ -13,7 +13,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class SendProjectCommand extends Command
 {
-    const ARG_ID = 'id';
+    const ARG_ID              = 'id';
+    const COMMAND_NAME        = 'etm:project:send';
+    const COMMAND_DESCRIPTION = 'Send Project to ETM2';
 
     /**
      * @var SendProjectService
@@ -30,13 +32,13 @@ class SendProjectCommand extends Command
         parent::__construct();
 
         $this->sendProject = $sendProject;
-        $this->appState = $appState;
+        $this->appState    = $appState;
     }
 
     protected function configure()
     {
-        $this->setName('etm:project:send');
-        $this->setDescription('Send Project to ETM2');
+        $this->setName(self::COMMAND_NAME);
+        $this->setDescription(self::COMMAND_DESCRIPTION);
 
         $this->addArgument(self::ARG_ID, InputArgument::REQUIRED);
 

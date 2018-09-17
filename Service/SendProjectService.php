@@ -16,7 +16,7 @@ use Eurotext\TranslationManager\Service\Project\CreateProjectService;
 class SendProjectService
 {
     /**
-     * @var \Eurotext\TranslationManager\Api\ProjectRepositoryInterface
+     * @var ProjectRepositoryInterface
      */
     private $projectRepository;
 
@@ -36,6 +36,11 @@ class SendProjectService
         $this->createProjectEntities = $createProjectEntities;
     }
 
+    /**
+     * @param int $id
+     *
+     * @return array
+     */
     public function executeById(int $id) // return-types not supported by magento code-generator
     {
         $project = $this->projectRepository->getById($id);
@@ -43,11 +48,15 @@ class SendProjectService
         return $this->execute($project);
     }
 
+    /**
+     * @param ProjectInterface $project
+     *
+     * @return array
+     */
     public function execute(ProjectInterface $project) // return-types not supported by magento code-generator
     {
         $result = [];
 
-        // Create Project
         $projectCreated = $this->createProject->execute($project);
 
         $result['project'] = 1;
@@ -57,10 +66,9 @@ class SendProjectService
             return $result;
         }
 
-        // Create Entities
-        $entitiesCreated = $this->createProjectEntities->execute($project);
+        $entities = $this->createProjectEntities->execute($project);
 
-        $result = array_merge($result, $entitiesCreated);
+        $result = array_merge($result, $entities);
 
         return $result;
     }
