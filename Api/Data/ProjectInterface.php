@@ -5,7 +5,12 @@ namespace Eurotext\TranslationManager\Api\Data;
 
 interface ProjectInterface
 {
-    const STATUS_NEW = 'new';
+    const STATUS_NEW        = 'new';
+    const STATUS_TRANSFER   = 'transfer';
+    const STATUS_EXPORTED   = 'exported';
+    const STATUS_TRANSLATED = 'translated';
+    const STATUS_ACCEPTED   = 'accepted';
+    const STATUS_IMPORTED   = 'imported';
 
     public function getId();
 
