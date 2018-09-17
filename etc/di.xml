@@ -70,6 +70,7 @@
             <argument name="commands" xsi:type="array">
                 <item name="etm_project_new" xsi:type="object">Eurotext\TranslationManager\Command\NewProjectCommand</item>
                 <item name="etm_project_send" xsi:type="object">Eurotext\TranslationManager\Command\SendProjectCommand</item>
+                <item name="etm_project_receive" xsi:type="object">Eurotext\TranslationManager\Command\ReceiveProjectCommand</item>
                 <item name="etm_entity_types" xsi:type="object">Eurotext\TranslationManager\Command\ListEntitiesCommand</item>
                 <item name="etm_entity_seed" xsi:type="object">Eurotext\TranslationManager\Command\SeedEntitiesCommand</item>
             </argument>

@@ -1,0 +1,58 @@
+<?php
+declare(strict_types=1);
+/**
+ * @copyright see PROJECT_LICENSE.txt
+ *
+ * @see PROJECT_LICENSE.txt
+ */
+
+namespace Eurotext\TranslationManager\Service\Project;
+
+use Eurotext\TranslationManager\Api\Data\ProjectInterface;
+use Eurotext\TranslationManager\Receiver\EntityReceiverPool;
+use Psr\Log\LoggerInterface;
+
+class FetchProjectEntitiesService
+{
+    /**
+     * @var EntityReceiverPool
+     */
+    private $entityReceiverPool;
+
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    public function __construct(
+        EntityReceiverPool $entityReceiverPool,
+        LoggerInterface $logger
+    ) {
+        $this->entityReceiverPool = $entityReceiverPool;
+        $this->logger             = $logger;
+    }
+
+    public function execute(ProjectInterface $project): array
+    {
+        $result = [];
+
+        // receive project items dynamically by internal project entities
+        $receivers = $this->entityReceiverPool->getItems();
+
+        foreach ($receivers as $receiverKey => $receiver) {
+            try {
+                $receiver->receive($project);
+
+                $result[$receiverKey] = 1;
+                $this->logger->info(sprintf('%s => success', $receiverKey));
+            } catch (\Exception $e) {
+                $message = $e->getMessage();
+
+                $result[$receiverKey] = $message;
+                $this->logger->error(sprintf('%s => %s', $receiverKey, $message));
+            }
+        }
+
+        return $result;
+    }
+}
