@@ -10,13 +10,13 @@ namespace Eurotext\TranslationManager\Test\Unit\Service;
 
 use Eurotext\TranslationManager\Api\Data\ProjectInterface;
 use Eurotext\TranslationManager\Api\EntityReceiverInterface;
-use Eurotext\TranslationManager\Api\EntitySenderInterface;
 use Eurotext\TranslationManager\Model\Project;
 use Eurotext\TranslationManager\Receiver\EntityReceiverPool;
 use Eurotext\TranslationManager\Sender\EntitySenderPool;
-use Eurotext\TranslationManager\Service\Project\CreateProjectEntitiesService;
 use Eurotext\TranslationManager\Service\Project\FetchProjectEntitiesService;
 use Eurotext\TranslationManager\Test\Unit\UnitTestAbstract;
+use Magento\Store\Api\Data\StoreInterface;
+use Magento\Store\Model\StoreManagerInterface;
 
 class FetchProjectEntitesUnitTest extends UnitTestAbstract
 {
@@ -31,6 +31,12 @@ class FetchProjectEntitesUnitTest extends UnitTestAbstract
     /** @var EntityReceiverInterface|\PHPUnit_Framework_MockObject_MockObject */
     private $entityReceiver;
 
+    /** @var StoreManagerInterface|\PHPUnit_Framework_MockObject_MockObject */
+    private $storeManager;
+
+    /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject */
+    private $store;
+
     protected function setUp()
     {
         parent::setUp();
@@ -42,15 +48,21 @@ class FetchProjectEntitesUnitTest extends UnitTestAbstract
 
         $this->entitySenderPool = new EntityReceiverPool([self::ENTITY_RECEIVER_KEY => $this->entityReceiver]);
 
+        $this->store = $this->getMockBuilder(StoreInterface::class)->getMock();
+
+        $this->storeManager = $this->getMockBuilder(StoreManagerInterface::class)->getMock();
+        $this->storeManager->expects($this->once())->method('getStore')->willReturn($this->store);
+
         $this->sut = $this->objectManager->getObject(
             FetchProjectEntitiesService::class,
             [
                 'entityReceiverPool' => $this->entitySenderPool,
+                'storeManager'       => $this->storeManager,
             ]
         );
     }
 
-    public function testItShouldSendProjectPostRequestWithEntitySenders()
+    public function testItShouldReceiveItemGetRequestWithEntityReceivers()
     {
         /** @var ProjectInterface $project */
         $project = $this->getMockBuilder(Project::class)
@@ -68,7 +80,7 @@ class FetchProjectEntitesUnitTest extends UnitTestAbstract
         $this->assertEquals(1, $result[self::ENTITY_RECEIVER_KEY]);
     }
 
-    public function testItShouldSendProjectPostRequestAndCatchEntitySenderException()
+    public function testItShouldReceiveItemGetRequestAndCatchEntityReceiverException()
     {
         $exceptionMessage = 'There was was an error during Receiver exceution';
 
