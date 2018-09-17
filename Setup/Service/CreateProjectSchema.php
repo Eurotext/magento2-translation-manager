@@ -71,18 +71,18 @@ class CreateProjectSchema
             'Destination Storeview'
         );
         $table->addColumn(
-            ProjectSchema::STATUS,
-            DbDdlTable::TYPE_INTEGER,
-            11,
-            ['nullable' => false, 'default' => 0],
-            'Status'
-        );
-        $table->addColumn(
             ProjectSchema::CUSTOMER_COMMENT,
             DbDdlTable::TYPE_TEXT,
             null,
             ['nullable' => true],
             'Customer specific comment'
+        );
+        $table->addColumn(
+            ProjectSchema::STATUS,
+            DbDdlTable::TYPE_TEXT,
+            20,
+            ['nullable' => false],
+            'Status'
         );
         $table->addColumn(
             ProjectSchema::LAST_ERROR,

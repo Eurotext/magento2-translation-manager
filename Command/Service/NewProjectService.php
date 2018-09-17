@@ -8,6 +8,7 @@ declare(strict_types=1);
 
 namespace Eurotext\TranslationManager\Command\Service;
 
+use Eurotext\TranslationManager\Api\Data\ProjectInterface;
 use Eurotext\TranslationManager\Api\ProjectRepositoryInterface;
 use Eurotext\TranslationManager\Model\Project;
 use Eurotext\TranslationManager\Model\ProjectFactory;
@@ -55,6 +56,7 @@ class NewProjectService
         $project->setName($name);
         $project->setStoreviewSrc($storeIdSrc);
         $project->setStoreviewDst($storeIdDest);
+        $project->setStatus(ProjectInterface::STATUS_NEW);
 
         $project = $this->projectRepository->save($project);
 

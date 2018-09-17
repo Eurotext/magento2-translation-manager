@@ -29,7 +29,7 @@ class Project
 
     public function getExtId(): int
     {
-        return (int) $this->getData(ProjectSchema::EXT_ID) ?: 0;
+        return (int)$this->getData(ProjectSchema::EXT_ID) ?: 0;
     }
 
     public function getCode(): string
@@ -42,14 +42,19 @@ class Project
         return $this->getData(ProjectSchema::NAME) ?: '';
     }
 
+    public function getStatus(): string
+    {
+        return $this->getData(ProjectSchema::STATUS) ?: '';
+    }
+
     public function getStoreviewSrc(): int
     {
-        return (int) $this->getData(ProjectSchema::STOREVIEW_SRC) ?: 0;
+        return (int)$this->getData(ProjectSchema::STOREVIEW_SRC) ?: 0;
     }
 
     public function getStoreviewDst(): int
     {
-        return (int) $this->getData(ProjectSchema::STOREVIEW_DST) ?: 0;
+        return (int)$this->getData(ProjectSchema::STOREVIEW_DST) ?: 0;
     }
 
     public function getCustomerComment(): string
@@ -85,6 +90,11 @@ class Project
     public function setName(string $name)
     {
         $this->setData(ProjectSchema::NAME, $name);
+    }
+
+    public function setStatus(string $status)
+    {
+        $this->setData(ProjectSchema::STATUS, $status);
     }
 
     public function setStoreviewSrc(int $storeId)

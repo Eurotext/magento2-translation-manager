@@ -5,6 +5,8 @@ namespace Eurotext\TranslationManager\Api\Data;
 
 interface ProjectInterface
 {
+    const STATUS_NEW = 'new';
+
     public function getId();
 
     public function getExtId(): int;
@@ -12,6 +14,8 @@ interface ProjectInterface
     public function getCode(): string;
 
     public function getName(): string;
+
+    public function getStatus(): string;
 
     public function getStoreviewSrc(): int;
 
@@ -30,6 +34,8 @@ interface ProjectInterface
     public function setCode(string $code);
 
     public function setName(string $name);
+
+    public function setStatus(string $name);
 
     public function setStoreviewSrc(int $storeId);
 
