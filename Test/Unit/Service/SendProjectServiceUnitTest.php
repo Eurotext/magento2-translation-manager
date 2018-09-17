@@ -18,7 +18,7 @@ use Eurotext\TranslationManager\Service\Project\CreateProjectService;
 use Eurotext\TranslationManager\Service\SendProjectService;
 use Eurotext\TranslationManager\Test\Unit\UnitTestAbstract;
 
-class SendProjectServiceTest extends UnitTestAbstract
+class SendProjectServiceUnitTest extends UnitTestAbstract
 {
 
     /** @var SendProjectService */
