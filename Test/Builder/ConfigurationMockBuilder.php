@@ -31,9 +31,9 @@ class ConfigurationMockBuilder
             ->setMethods(['getApiKey', 'getHost', 'getDebug'])
             ->getMock();
 
-        $config->expects($this->testCase::once())->method('getApiKey')->willReturn(\constant('EUROTEXT_API_KEY'));
-        $config->expects($this->testCase::once())->method('getHost')->willReturn('https://sandbox.api.eurotext.de');
-        $config->expects($this->testCase::once())->method('getDebug')->willReturn(false);
+        $config->method('getApiKey')->willReturn(\constant('EUROTEXT_API_KEY'));
+        $config->method('getHost')->willReturn('https://sandbox.api.eurotext.de');
+        $config->method('getDebug')->willReturn(false);
 
         return $config;
     }
