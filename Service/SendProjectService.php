@@ -57,6 +57,12 @@ class SendProjectService
     {
         $result = [];
 
+        // Projects may only be created if they are in status transfer
+        if ($project->getStatus() !== ProjectInterface::STATUS_TRANSFER) {
+            return $result;
+        }
+
+        // Send Project to Api
         $projectCreated = $this->createProject->execute($project);
 
         $result['project'] = 1;
@@ -66,10 +72,12 @@ class SendProjectService
             return $result;
         }
 
+        // Send Entities to Api
         $entities = $this->createProjectEntities->execute($project);
 
         $result = array_merge($result, $entities);
 
+        // Transfer finished, set Status to exported
         $project->setStatus(ProjectInterface::STATUS_EXPORTED);
         $this->projectRepository->save($project);
 
