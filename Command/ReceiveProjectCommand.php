@@ -55,6 +55,8 @@ class ReceiveProjectCommand extends Command
             // the area code is already set
         }
 
+        // @todo Service: check API Project Status === finished
+
         $result = $this->receiveProject->executeById($projectId);
 
         foreach ($result as $typeKey => $transferStatus) {
