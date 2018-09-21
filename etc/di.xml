@@ -13,6 +13,12 @@
         </arguments>
     </type>
 
+    <type name="Eurotext\TranslationManager\Command\SeedEntitiesCommand">
+        <arguments>
+            <argument name="seedEntitiesService" xsi:type="object">\Eurotext\TranslationManager\Command\Service\SeedEntitiesService\Proxy</argument>
+        </arguments>
+    </type>
+
     <type name="Eurotext\TranslationManager\Command\SendProjectCommand">
         <arguments>
             <argument name="sendProject" xsi:type="object">Eurotext\TranslationManager\Service\SendProjectService\Proxy</argument>
@@ -24,12 +30,6 @@
         <arguments>
             <argument name="receiveProject" xsi:type="object">Eurotext\TranslationManager\Service\ReceiveProjectService\Proxy</argument>
             <argument name="appState" xsi:type="object">Magento\Framework\App\State\Proxy</argument>
-        </arguments>
-    </type>
-
-    <type name="Eurotext\TranslationManager\Command\SeedEntitiesCommand">
-        <arguments>
-            <argument name="seedEntitiesService" xsi:type="object">\Eurotext\TranslationManager\Command\Service\SeedEntitiesService\Proxy</argument>
         </arguments>
     </type>
 
