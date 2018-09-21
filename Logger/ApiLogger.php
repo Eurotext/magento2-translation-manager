@@ -14,7 +14,7 @@ class ApiLogger extends Logger
 {
     public function __construct(ApiLogHandler $apiLogHandler)
     {
-        $handlers = ['api_log_handler' => $apiLogHandler];
+        $handlers = ['file' => $apiLogHandler];
 
         parent::__construct('eurotext_api_logger', $handlers);
     }
