@@ -53,12 +53,19 @@ class ReceiveProjectService
     {
         $result = [];
 
+        // Projects need to be in status accepted otherwise they will not be received
+        if ($project->getStatus() !== ProjectInterface::STATUS_ACCEPTED) {
+            return [];
+        }
+
         $entities = $this->fetchProjectEntities->execute($project);
 
         $result = array_merge($result, $entities);
 
         $project->setStatus(ProjectInterface::STATUS_IMPORTED);
         $this->projectRepository->save($project);
+
+        // @todo set API Project Status === imported
 
         return $result;
     }
