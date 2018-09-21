@@ -56,18 +56,19 @@ class CreateProjectService
 
     public function execute(ProjectInterface $project): bool
     {
+        $id    = $project->getId();
         $extId = $project->getExtId();
+
         if ($extId > 0) {
             return true;
         }
 
-        // create project via ApiClient
-        $id = $project->getId();
         $this->logger->info(sprintf('send project post for id:%d', $id));
 
         $request = $this->projectPostMapper->map($project);
 
         try {
+            // create project via ApiClient
             $response = $this->projectApi->post($request);
 
             $this->logger->info(sprintf('project id:%d => success', $id));
