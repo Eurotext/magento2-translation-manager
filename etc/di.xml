@@ -45,6 +45,8 @@
         </arguments>
     </type>
 
+    <type name="Eurotext\TranslationManager\Logger\ApiLogger" shared="true" />
+
     <type name="Eurotext\TranslationManager\Seeder\EntitySeederPool">
         <arguments>
             <argument name="items" xsi:type="array">
