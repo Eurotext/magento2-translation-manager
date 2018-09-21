@@ -35,7 +35,7 @@ class ReceiveProjectService
     /**
      * @param int $id
      *
-     * @return array
+     * @return bool
      */
     public function executeById(int $id) // return-types not supported by magento code-generator
     {
@@ -47,26 +47,22 @@ class ReceiveProjectService
     /**
      * @param ProjectInterface $project
      *
-     * @return array
+     * @return bool
      */
     public function execute(ProjectInterface $project) // return-types not supported by magento code-generator
     {
-        $result = [];
-
         // Projects need to be in status accepted otherwise they will not be received
         if ($project->getStatus() !== ProjectInterface::STATUS_ACCEPTED) {
-            return [];
+            return false;
         }
 
         $entities = $this->fetchProjectEntities->execute($project);
-
-        $result = array_merge($result, $entities);
 
         $project->setStatus(ProjectInterface::STATUS_IMPORTED);
         $this->projectRepository->save($project);
 
         // @todo set API Project Status === imported
 
-        return $result;
+        return true;
     }
 }

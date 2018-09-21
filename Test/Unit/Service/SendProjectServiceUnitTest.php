@@ -57,8 +57,8 @@ class SendProjectServiceUnitTest extends UnitTestAbstract
         $this->sut = $this->objectManager->getObject(
             SendProjectService::class,
             [
-                'projectRepository' => $this->projectRepository,
-                'createProject' => $this->createProject,
+                'projectRepository'     => $this->projectRepository,
+                'createProject'         => $this->createProject,
                 'createProjectEntities' => $this->createProjectEntities,
             ]
         );
@@ -68,10 +68,12 @@ class SendProjectServiceUnitTest extends UnitTestAbstract
     {
         $projectId = 1;
 
-        /** @var ProjectInterface $project */
+        /** @var ProjectInterface|\PHPUnit_Framework_MockObject_MockObject $project */
         $project = $this->getMockBuilder(Project::class)
+                        ->setMethods(['getStatus'])
                         ->disableOriginalConstructor()
                         ->getMock();
+        $project->method('getStatus')->willReturn(ProjectInterface::STATUS_TRANSFER);
 
         $this->projectRepository->expects($this->once())->method('getById')->with($projectId)->willReturn($project);
 
@@ -83,33 +85,54 @@ class SendProjectServiceUnitTest extends UnitTestAbstract
 
         $result = $this->sut->executeById($projectId);
 
-        $this->assertInternalType('array', $result);
-        $this->assertCount(2, $result);
+        $this->assertInternalType('bool', $result);
+        $this->assertTrue($result);
+    }
 
-        $this->assertArrayHasKey('project', $result);
-        $this->assertEquals(1, $result['project']);
+    public function testItShouldNotSendProjectOnlyForStatusTransfer()
+    {
+        $projectId = 1;
+
+        /** @var ProjectInterface|\PHPUnit_Framework_MockObject_MockObject $project */
+        $project = $this->getMockBuilder(Project::class)
+                        ->setMethods(['getStatus'])
+                        ->disableOriginalConstructor()
+                        ->getMock();
+        $project->method('getStatus')->willReturn(ProjectInterface::STATUS_NEW);
+
+        $this->projectRepository->expects($this->once())
+                                ->method('getById')->with($projectId)->willReturn($project);
+
+        $this->createProject->expects($this->never())->method('execute');
+
+        $this->createProjectEntities->expects($this->never())->method('execute');
+
+        $result = $this->sut->executeById($projectId);
+
+        $this->assertInternalType('bool', $result);
+        $this->assertFalse($result);
     }
 
     public function testItShouldStopOnErrorDuringCreateProject()
     {
         $projectId = 1;
 
-        /** @var ProjectInterface $project */
+        /** @var ProjectInterface|\PHPUnit_Framework_MockObject_MockObject $project */
         $project = $this->getMockBuilder(Project::class)
+                        ->setMethods(['getStatus'])
                         ->disableOriginalConstructor()
                         ->getMock();
+        $project->method('getStatus')->willReturn(ProjectInterface::STATUS_TRANSFER);
 
-        $this->projectRepository->expects($this->once())->method('getById')->with($projectId)->willReturn($project);
+        $this->projectRepository->expects($this->once())
+                                ->method('getById')->with($projectId)->willReturn($project);
 
         $this->createProject->expects($this->once())->method('execute')->willReturn(false);
 
         $result = $this->sut->executeById($projectId);
 
-        $this->assertInternalType('array', $result);
-        $this->assertCount(1, $result);
-
-        $this->assertArrayHasKey('project', $result);
-        $this->assertNotEquals(1, $result['project']);
+        $this->assertInternalType('bool', $result);
+        $this->assertFalse($result);
     }
 
 }

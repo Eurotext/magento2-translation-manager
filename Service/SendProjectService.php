@@ -39,7 +39,7 @@ class SendProjectService
     /**
      * @param int $id
      *
-     * @return array
+     * @return bool
      */
     public function executeById(int $id) // return-types not supported by magento code-generator
     {
@@ -51,36 +51,29 @@ class SendProjectService
     /**
      * @param ProjectInterface $project
      *
-     * @return array
+     * @return bool
      */
     public function execute(ProjectInterface $project) // return-types not supported by magento code-generator
     {
-        $result = [];
-
         // Projects may only be created if they are in status transfer
         if ($project->getStatus() !== ProjectInterface::STATUS_TRANSFER) {
-            return $result;
+            return false;
         }
 
         // Send Project to Api
         $projectCreated = $this->createProject->execute($project);
 
-        $result['project'] = 1;
         if ($projectCreated === false) {
-            $result['project'] = 'error creating project';
-
-            return $result;
+            return false;
         }
 
         // Send Entities to Api
         $entities = $this->createProjectEntities->execute($project);
 
-        $result = array_merge($result, $entities);
-
         // Transfer finished, set Status to exported
         $project->setStatus(ProjectInterface::STATUS_EXPORTED);
         $this->projectRepository->save($project);
 
-        return $result;
+        return true;
     }
 }

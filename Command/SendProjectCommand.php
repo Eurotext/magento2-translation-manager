@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Eurotext\TranslationManager\Command;
 
+use Eurotext\TranslationManager\Logger\PushConsoleLogHandler;
 use Eurotext\TranslationManager\Service\SendProjectService;
 use Magento\Framework\App\State as AppState;
 use Magento\Framework\Exception\LocalizedException;
@@ -27,12 +28,21 @@ class SendProjectCommand extends Command
      */
     private $appState;
 
-    public function __construct(SendProjectService $sendProject, AppState $appState)
-    {
+    /**
+     * @var PushConsoleLogHandler
+     */
+    private $pushConsoleLog;
+
+    public function __construct(
+        SendProjectService $sendProject,
+        PushConsoleLogHandler $pushConsoleLog,
+        AppState $appState
+    ) {
         parent::__construct();
 
-        $this->sendProject = $sendProject;
-        $this->appState    = $appState;
+        $this->sendProject    = $sendProject;
+        $this->pushConsoleLog = $pushConsoleLog;
+        $this->appState       = $appState;
     }
 
     protected function configure()
@@ -55,11 +65,15 @@ class SendProjectCommand extends Command
             // the area code is already set
         }
 
-        $result = $this->sendProject->executeById($projectId);
+        // Push the ConsoleLogger to the EurotextLogger so we directly see console output
+        $this->pushConsoleLog->push($output);
 
-        foreach ($result as $typeKey => $transferStatus) {
-            $status = $transferStatus === 1 ? 'success' : $transferStatus;
-            $output->writeln(sprintf('Create %s: %s', $typeKey, $status));
-        }
+        // @todo Set status Transfer, because services are checking for the correct workflow
+//        $project->setStatus(ProjectInterface::STATUS_TRANSFER);
+//        $this->projectRepository->save($project);
+
+        $this->sendProject->executeById($projectId);
+
     }
+
 } 

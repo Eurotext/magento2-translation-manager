@@ -27,16 +27,18 @@ class ProjectProvider
     }
 
     /**
-     * @param $name
+     * @param string $name
+     * @param string $status
      *
      * @return \Eurotext\TranslationManager\Api\Data\ProjectInterface|Project
      * @throws \Magento\Framework\Exception\CouldNotSaveException
      */
-    public function createProject($name)
+    public function createProject(string $name, string $status = Project::STATUS_TRANSFER)
     {
         /** @var Project $project */
         $project = $this->objectManager->get(Project::class);
         $project->setName($name);
+        $project->setStatus($status);
 
         return $this->projectRepository->save($project);
     }

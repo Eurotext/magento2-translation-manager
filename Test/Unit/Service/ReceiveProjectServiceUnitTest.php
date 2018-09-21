@@ -56,10 +56,12 @@ class ReceiveProjectServiceUnitTest extends UnitTestAbstract
     {
         $projectId = 1;
 
-        /** @var ProjectInterface $project */
+        /** @var ProjectInterface|\PHPUnit_Framework_MockObject_MockObject $project */
         $project = $this->getMockBuilder(Project::class)
+                        ->setMethods(['getStatus'])
                         ->disableOriginalConstructor()
                         ->getMock();
+        $project->method('getStatus')->willReturn(ProjectInterface::STATUS_ACCEPTED);
 
         $this->projectRepository->expects($this->once())->method('getById')->with($projectId)->willReturn($project);
 
@@ -69,8 +71,29 @@ class ReceiveProjectServiceUnitTest extends UnitTestAbstract
 
         $result = $this->sut->executeById($projectId);
 
-        $this->assertInternalType('array', $result);
-        $this->assertCount(1, $result);
+        $this->assertInternalType('bool', $result);
+        $this->assertTrue($result);
+    }
+
+    public function testItShouldNotReceiveProjectForStatusOtherThanAccepted()
+    {
+        $projectId = 1;
+
+        /** @var ProjectInterface|\PHPUnit_Framework_MockObject_MockObject $project */
+        $project = $this->getMockBuilder(Project::class)
+                        ->setMethods(['getStatus'])
+                        ->disableOriginalConstructor()
+                        ->getMock();
+        $project->method('getStatus')->willReturn(ProjectInterface::STATUS_EXPORTED);
+
+        $this->projectRepository->expects($this->once())->method('getById')->with($projectId)->willReturn($project);
+
+        $this->fetchProjectEntities->expects($this->never())->method('execute');
+
+        $result = $this->sut->executeById($projectId);
+
+        $this->assertInternalType('bool', $result);
+        $this->assertFalse($result);
     }
 
 }

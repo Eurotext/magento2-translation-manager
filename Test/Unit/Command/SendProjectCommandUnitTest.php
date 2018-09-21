@@ -9,12 +9,13 @@ declare(strict_types=1);
 namespace Eurotext\TranslationManager\Test\Unit\Command;
 
 use Eurotext\TranslationManager\Command\SendProjectCommand;
+use Eurotext\TranslationManager\Logger\PushConsoleLogHandler;
 use Eurotext\TranslationManager\Service\SendProjectService;
 use Eurotext\TranslationManager\Test\Builder\ConsoleMockBuilder;
+use Eurotext\TranslationManager\Test\Unit\UnitTestAbstract;
 use Magento\Framework\App\State;
-use PHPUnit\Framework\TestCase;
 
-class SendProjectCommandUnitTest extends TestCase
+class SendProjectCommandUnitTest extends UnitTestAbstract
 {
     /** @var \Eurotext\TranslationManager\Service\SendProjectService|\PHPUnit_Framework_MockObject_MockObject */
     protected $sendProjectService;
@@ -28,6 +29,8 @@ class SendProjectCommandUnitTest extends TestCase
     /** @var State */
     protected $appState;
 
+    protected $pushConsoleLog;
+
     protected function setUp()
     {
         parent::setUp();
@@ -40,9 +43,20 @@ class SendProjectCommandUnitTest extends TestCase
                  ->disableOriginalConstructor()
                  ->getMock();
 
+        $this->pushConsoleLog =
+            $this->getMockBuilder(PushConsoleLogHandler::class)
+                 ->disableOriginalConstructor()
+                 ->getMock();
+
         $this->appState = $this->getMockBuilder(State::class)->disableOriginalConstructor()->getMock();
 
-        $this->sut = new SendProjectCommand($this->sendProjectService, $this->appState);
+        $this->sut = $this->objectManager->getObject(
+            SendProjectCommand::class, [
+                'sendProject'    => $this->sendProjectService,
+                'pushConsoleLog' => $this->pushConsoleLog,
+                'appState'       => $this->appState,
+            ]
+        );
     }
 
     /**
