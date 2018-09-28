@@ -26,7 +26,7 @@ class ProjectStateMachine
         ProjectInterface::STATUS_TRANSFER   => [ProjectInterface::STATUS_EXPORTED, ProjectInterface::STATUS_ERROR],
         ProjectInterface::STATUS_EXPORTED   => [ProjectInterface::STATUS_TRANSLATED],
         ProjectInterface::STATUS_TRANSLATED => [ProjectInterface::STATUS_ACCEPTED, ProjectInterface::STATUS_ERROR],
-        ProjectInterface::STATUS_ACCEPTED   => [ProjectInterface::STATUS_IMPORTED],
+        ProjectInterface::STATUS_ACCEPTED   => [ProjectInterface::STATUS_IMPORTED, ProjectInterface::STATUS_TRANSLATED],
         ProjectInterface::STATUS_ERROR      => [
             ProjectInterface::STATUS_TRANSFER,
             ProjectInterface::STATUS_EXPORTED,
@@ -71,14 +71,14 @@ class ProjectStateMachine
         }
 
         if (!array_key_exists($currentStatus, $this->transitions)) {
-            $msg = sprintf('id=%d: status=%s', $id, $currentStatus);
+            $msg = sprintf('unknown status="%s" (project-id=%d)', $currentStatus, $id);
             throw new InvalidProjectStatusException($msg);
         }
 
         $allowedStatuses = $this->transitions[$currentStatus];
 
         if (!\in_array($status, $allowedStatuses, true)) {
-            $msg = sprintf('id=%d: from %s to %s', $id, $currentStatus, $status);
+            $msg = sprintf('illegal status-change from "%s" to "%s" (project-id=%d)', $currentStatus, $status, $id);
             throw new IllegalProjectStatusChangeException($msg);
         }
 
