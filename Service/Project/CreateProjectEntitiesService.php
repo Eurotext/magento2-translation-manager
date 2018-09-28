@@ -43,7 +43,7 @@ class CreateProjectEntitiesService
             try {
                 $sender->send($project);
 
-                $result[$senderKey] = 1;
+                $result[$senderKey] = true;
                 $this->logger->info(sprintf('%s => success', $senderKey));
             } catch (\Exception $e) {
                 $message = $e->getMessage();

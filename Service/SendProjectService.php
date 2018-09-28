@@ -41,7 +41,7 @@ class SendProjectService
         $this->projectRepository     = $projectRepository;
         $this->createProject         = $createProject;
         $this->createProjectEntities = $createProjectEntities;
-        $this->projectStateMachine = $projectStateMachine;
+        $this->projectStateMachine   = $projectStateMachine;
     }
 
     /**
@@ -73,18 +73,41 @@ class SendProjectService
         }
 
         // Send Project to Api
-        $projectCreated = $this->createProject->execute($project);
+        $resultProject = $this->createProject->execute($project);
 
-        if ($projectCreated === false) {
+        if ($resultProject === false) {
             return false;
         }
 
         // Send Entities to Api
-        $this->createProjectEntities->execute($project);
+        $resultEntities = $this->createProjectEntities->execute($project);
 
-        // Transfer finished, set Status to exported
-        $this->projectStateMachine->apply($project, ProjectInterface::STATUS_EXPORTED);
+        // Check results for error messages
+        $status = ProjectInterface::STATUS_EXPORTED;
+        if ($this->validateResultEntities($resultEntities) === true) {
+            $status = ProjectInterface::STATUS_ERROR;
+        }
+
+        // Transfer finished, set Status
+        $this->projectStateMachine->apply($project, $status);
 
         return true;
+    }
+
+    /**
+     * @param $resultEntities
+     *
+     * @return bool
+     */
+    private function validateResultEntities($resultEntities): bool
+    {
+        $hasErrors = false;
+        foreach ($resultEntities as $entityKey => $entityResult) {
+            if ($entityResult !== true) {
+                $hasErrors = true;
+            }
+        }
+
+        return $hasErrors;
     }
 }
