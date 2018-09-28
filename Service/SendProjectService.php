@@ -12,6 +12,7 @@ use Eurotext\TranslationManager\Api\Data\ProjectInterface;
 use Eurotext\TranslationManager\Api\ProjectRepositoryInterface;
 use Eurotext\TranslationManager\Service\Project\CreateProjectEntitiesService;
 use Eurotext\TranslationManager\Service\Project\CreateProjectService;
+use Eurotext\TranslationManager\State\ProjectStateMachine;
 
 class SendProjectService
 {
@@ -26,20 +27,29 @@ class SendProjectService
     /** @var CreateProjectEntitiesService */
     private $createProjectEntities;
 
+    /**
+     * @var ProjectStateMachine
+     */
+    private $projectStateMachine;
+
     public function __construct(
         ProjectRepositoryInterface $projectRepository,
         CreateProjectService $createProject,
-        CreateProjectEntitiesService $createProjectEntities
+        CreateProjectEntitiesService $createProjectEntities,
+        ProjectStateMachine $projectStateMachine
     ) {
         $this->projectRepository     = $projectRepository;
         $this->createProject         = $createProject;
         $this->createProjectEntities = $createProjectEntities;
+        $this->projectStateMachine = $projectStateMachine;
     }
 
     /**
      * @param int $id
      *
      * @return bool
+     * @throws \Eurotext\TranslationManager\Exception\IllegalProjectStatusChangeException
+     * @throws \Eurotext\TranslationManager\Exception\InvalidProjectStatusException
      */
     public function executeById(int $id) // return-types not supported by magento code-generator
     {
@@ -52,6 +62,8 @@ class SendProjectService
      * @param ProjectInterface $project
      *
      * @return bool
+     * @throws \Eurotext\TranslationManager\Exception\IllegalProjectStatusChangeException
+     * @throws \Eurotext\TranslationManager\Exception\InvalidProjectStatusException
      */
     public function execute(ProjectInterface $project) // return-types not supported by magento code-generator
     {
@@ -68,11 +80,10 @@ class SendProjectService
         }
 
         // Send Entities to Api
-        $entities = $this->createProjectEntities->execute($project);
+        $this->createProjectEntities->execute($project);
 
         // Transfer finished, set Status to exported
-        $project->setStatus(ProjectInterface::STATUS_EXPORTED);
-        $this->projectRepository->save($project);
+        $this->projectStateMachine->apply($project, ProjectInterface::STATUS_EXPORTED);
 
         return true;
     }

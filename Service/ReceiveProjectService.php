@@ -11,6 +11,7 @@ namespace Eurotext\TranslationManager\Service;
 use Eurotext\TranslationManager\Api\Data\ProjectInterface;
 use Eurotext\TranslationManager\Api\ProjectRepositoryInterface;
 use Eurotext\TranslationManager\Service\Project\FetchProjectEntitiesService;
+use Eurotext\TranslationManager\State\ProjectStateMachine;
 
 class ReceiveProjectService
 {
@@ -24,18 +25,27 @@ class ReceiveProjectService
      */
     private $fetchProjectEntities;
 
+    /**
+     * @var ProjectStateMachine
+     */
+    private $projectStateMachine;
+
     public function __construct(
         ProjectRepositoryInterface $projectRepository,
-        FetchProjectEntitiesService $fetchProjectEntities
+        FetchProjectEntitiesService $fetchProjectEntities,
+        ProjectStateMachine $projectStateMachine
     ) {
         $this->projectRepository    = $projectRepository;
         $this->fetchProjectEntities = $fetchProjectEntities;
+        $this->projectStateMachine  = $projectStateMachine;
     }
 
     /**
      * @param int $id
      *
      * @return bool
+     * @throws \Eurotext\TranslationManager\Exception\IllegalProjectStatusChangeException
+     * @throws \Eurotext\TranslationManager\Exception\InvalidProjectStatusException
      */
     public function executeById(int $id) // return-types not supported by magento code-generator
     {
@@ -48,9 +58,13 @@ class ReceiveProjectService
      * @param ProjectInterface $project
      *
      * @return bool
+     * @throws \Eurotext\TranslationManager\Exception\IllegalProjectStatusChangeException
+     * @throws \Eurotext\TranslationManager\Exception\InvalidProjectStatusException
      */
     public function execute(ProjectInterface $project) // return-types not supported by magento code-generator
     {
+        // @todo Service: check API Project Status === finished
+
         // Projects need to be in status accepted otherwise they will not be received
         if ($project->getStatus() !== ProjectInterface::STATUS_ACCEPTED) {
             return false;
@@ -58,8 +72,7 @@ class ReceiveProjectService
 
         $entities = $this->fetchProjectEntities->execute($project);
 
-        $project->setStatus(ProjectInterface::STATUS_IMPORTED);
-        $this->projectRepository->save($project);
+        $this->projectStateMachine->apply($project, ProjectInterface::STATUS_IMPORTED);
 
         // @todo set API Project Status === imported
 

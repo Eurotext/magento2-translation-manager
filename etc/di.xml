@@ -22,6 +22,7 @@
     <type name="Eurotext\TranslationManager\Command\SendProjectCommand">
         <arguments>
             <argument name="sendProject" xsi:type="object">Eurotext\TranslationManager\Service\SendProjectService\Proxy</argument>
+            <argument name="projectStateMachine" xsi:type="object">Eurotext\TranslationManager\State\ProjectStateMachine\Proxy</argument>
             <argument name="appState" xsi:type="object">Magento\Framework\App\State\Proxy</argument>
         </arguments>
     </type>

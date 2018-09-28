@@ -3,8 +3,10 @@ declare(strict_types=1);
 
 namespace Eurotext\TranslationManager\Command;
 
+use Eurotext\TranslationManager\Api\Data\ProjectInterface;
 use Eurotext\TranslationManager\Logger\PushConsoleLogHandler;
 use Eurotext\TranslationManager\Service\SendProjectService;
+use Eurotext\TranslationManager\State\ProjectStateMachine;
 use Magento\Framework\App\State as AppState;
 use Magento\Framework\Exception\LocalizedException;
 use Symfony\Component\Console\Command\Command;
@@ -33,16 +35,23 @@ class SendProjectCommand extends Command
      */
     private $pushConsoleLog;
 
+    /**
+     * @var ProjectStateMachine
+     */
+    private $projectStateMachine;
+
     public function __construct(
         SendProjectService $sendProject,
+        ProjectStateMachine $projectStateMachine,
         PushConsoleLogHandler $pushConsoleLog,
         AppState $appState
     ) {
         parent::__construct();
 
-        $this->sendProject    = $sendProject;
-        $this->pushConsoleLog = $pushConsoleLog;
-        $this->appState       = $appState;
+        $this->sendProject         = $sendProject;
+        $this->projectStateMachine = $projectStateMachine;
+        $this->pushConsoleLog      = $pushConsoleLog;
+        $this->appState            = $appState;
     }
 
     protected function configure()
@@ -68,9 +77,8 @@ class SendProjectCommand extends Command
         // Push the ConsoleLogger to the EurotextLogger so we directly see console output
         $this->pushConsoleLog->push($output);
 
-        // @todo Set status Transfer, because services are checking for the correct workflow
-//        $project->setStatus(ProjectInterface::STATUS_TRANSFER);
-//        $this->projectRepository->save($project);
+        // Set status Transfer, because services are checking for the correct workflow
+        $this->projectStateMachine->applyById($projectId, ProjectInterface::STATUS_TRANSFER);
 
         $this->sendProject->executeById($projectId);
 

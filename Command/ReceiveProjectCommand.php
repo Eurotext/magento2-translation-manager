@@ -68,8 +68,6 @@ class ReceiveProjectCommand extends Command
         // Push the ConsoleLogger to the EurotextLogger so we directly see console output
         $this->pushConsoleLog->push($output);
 
-        // @todo Service: check API Project Status === finished
-
         $this->receiveProject->executeById($projectId);
     }
 } 

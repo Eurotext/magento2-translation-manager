@@ -15,10 +15,14 @@ use Eurotext\TranslationManager\Model\Project;
 use Eurotext\TranslationManager\Repository\ProjectRepository;
 use Eurotext\TranslationManager\Service\Project\FetchProjectEntitiesService;
 use Eurotext\TranslationManager\Service\ReceiveProjectService;
+use Eurotext\TranslationManager\State\ProjectStateMachine;
 use Eurotext\TranslationManager\Test\Unit\UnitTestAbstract;
 
 class ReceiveProjectServiceUnitTest extends UnitTestAbstract
 {
+    /** @var ProjectStateMachine|\PHPUnit_Framework_MockObject_MockObject */
+    private $projectStateMachine;
+
     /** @var ReceiveProjectService */
     private $sut;
 
@@ -43,10 +47,17 @@ class ReceiveProjectServiceUnitTest extends UnitTestAbstract
                  ->setMethods(['execute'])
                  ->getMock();
 
+        $this->projectStateMachine =
+            $this->getMockBuilder(ProjectStateMachine::class)
+                 ->disableOriginalConstructor()
+                 ->setMethods(['apply'])
+                 ->getMock();
+
         $this->sut = $this->objectManager->getObject(
             ReceiveProjectService::class,
             [
                 'projectRepository'    => $this->projectRepository,
+                'projectStateMachine'  => $this->projectStateMachine,
                 'fetchProjectEntities' => $this->fetchProjectEntities,
             ]
         );
@@ -64,6 +75,11 @@ class ReceiveProjectServiceUnitTest extends UnitTestAbstract
         $project->method('getStatus')->willReturn(ProjectInterface::STATUS_ACCEPTED);
 
         $this->projectRepository->expects($this->once())->method('getById')->with($projectId)->willReturn($project);
+
+        $this->projectStateMachine
+            ->expects($this->once())
+            ->method('apply')
+            ->with($project, ProjectInterface::STATUS_IMPORTED);
 
         $this->fetchProjectEntities->expects($this->once())->method('execute')->willReturn(
             [EntityReceiverInterface::class => 1]
@@ -87,6 +103,8 @@ class ReceiveProjectServiceUnitTest extends UnitTestAbstract
         $project->method('getStatus')->willReturn(ProjectInterface::STATUS_EXPORTED);
 
         $this->projectRepository->expects($this->once())->method('getById')->with($projectId)->willReturn($project);
+
+        $this->projectStateMachine->expects($this->never())->method('apply');
 
         $this->fetchProjectEntities->expects($this->never())->method('execute');
 
