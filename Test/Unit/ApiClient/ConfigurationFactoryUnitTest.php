@@ -12,6 +12,8 @@ use Eurotext\RestApiClient\ConfigurationInterface;
 use Eurotext\TranslationManager\ApiClient\ConfigurationFactory;
 use Eurotext\TranslationManager\Test\Unit\UnitTestAbstract;
 use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\App\ProductMetadataInterface;
+use Magento\Framework\Module\ModuleListInterface;
 
 class ConfigurationFactoryUnitTest extends UnitTestAbstract
 {
@@ -21,17 +23,28 @@ class ConfigurationFactoryUnitTest extends UnitTestAbstract
     /** @var ScopeConfigInterface|\PHPUnit_Framework_MockObject_MockObject */
     private $scopeConfig;
 
+    /** @var ModuleListInterface|\PHPUnit_Framework_MockObject_MockObject */
+    private $moduleList;
+
+    /** @var ProductMetadataInterface|\PHPUnit_Framework_MockObject_MockObject */
+    private $magentoMetadata;
+
     protected function setUp()
     {
         parent::setUp();
 
-        $this->scopeConfig =
-            $this->getMockBuilder(ScopeConfigInterface::class)
-                 ->disableOriginalConstructor()
-                 ->setMethods(['getValue'])
-                 ->getMockForAbstractClass();
+        $this->scopeConfig     = $this->getMockBuilder(ScopeConfigInterface::class)->getMock();
+        $this->moduleList      = $this->getMockBuilder(ModuleListInterface::class)->getMock();
+        $this->magentoMetadata = $this->getMockBuilder(ProductMetadataInterface::class)->getMock();
 
-        $this->sut = new ConfigurationFactory($this->scopeConfig);
+        $this->sut = $this->objectManager->getObject(
+            ConfigurationFactory::class,
+            [
+                'scopeConfig'     => $this->scopeConfig,
+                'moduleList'      => $this->moduleList,
+                'magentoMetadata' => $this->magentoMetadata,
+            ]
+        );
     }
 
     public function testItShouldReturnAConfigurationObject()
@@ -48,9 +61,13 @@ class ConfigurationFactoryUnitTest extends UnitTestAbstract
             [ConfigurationFactory::CONFIG_PATH_API_HOST, $scopeType, $scopeCode, $host],
             [ConfigurationFactory::CONFIG_PATH_API_DEBUG_MODE, $scopeType, $scopeCode, $debug],
         ];
-        $this->scopeConfig->expects($this->any())
-                          ->method('getValue')
-                          ->willReturnMap($valueMap);
+        $this->scopeConfig->method('getValue')->willReturnMap($valueMap);
+
+        $this->moduleList->expects($this->once())->method('getOne')->willReturn(['setup_version' => '1.0.0']);
+
+        $this->magentoMetadata->expects($this->once())->method('getName')->willReturn('Magento');
+        $this->magentoMetadata->expects($this->once())->method('getEdition')->willReturn('Community');
+        $this->magentoMetadata->expects($this->once())->method('getVersion')->willReturn('2.2.6');
 
         $configuration = $this->sut->create();
 

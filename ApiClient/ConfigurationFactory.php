@@ -10,6 +10,7 @@ namespace Eurotext\TranslationManager\ApiClient;
 
 use Eurotext\RestApiClient\ConfigurationInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\App\ProductMetadataInterface;
 use Magento\Framework\Module\ModuleListInterface;
 
 class ConfigurationFactory
@@ -32,14 +33,14 @@ class ConfigurationFactory
     private $moduleList;
 
     /**
-     * @var \Magento\Framework\App\ProductMetadataInterface
+     * @var ProductMetadataInterface
      */
     private $magentoMetadata;
 
     public function __construct(
         ScopeConfigInterface $scopeConfig,
         ModuleListInterface $moduleList,
-        \Magento\Framework\App\ProductMetadataInterface $magentoMetadata
+        ProductMetadataInterface $magentoMetadata
     ) {
         $this->scopeConfig     = $scopeConfig;
         $this->moduleList      = $moduleList;
