@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace Eurotext\TranslationManager\Command;
 
 use Eurotext\TranslationManager\Command\Service\SeedEntitiesService;
+use Magento\Framework\App\State as AppState;
+use Magento\Framework\Exception\LocalizedException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -19,10 +21,18 @@ class SeedEntitiesCommand extends Command
      */
     private $seedEntitiesService;
 
-    public function __construct(SeedEntitiesService $seedEntitiesService)
-    {
+    /**
+     * @var AppState
+     */
+    private $appState;
+
+    public function __construct(
+        SeedEntitiesService $seedEntitiesService,
+        AppState $appState
+    ) {
         parent::__construct();
         $this->seedEntitiesService = $seedEntitiesService;
+        $this->appState            = $appState;
     }
 
     protected function configure()
@@ -42,6 +52,12 @@ class SeedEntitiesCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        try {
+            $this->appState->setAreaCode('adminhtml');
+        } catch (LocalizedException $e) {
+            // the area code is already set
+        }
+
         $this->seedEntitiesService->execute($input, $output);
     }
 } 

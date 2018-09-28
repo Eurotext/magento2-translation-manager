@@ -46,8 +46,8 @@ class SeedEntitiesService
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $projectId   = (int)$input->getArgument(self::ARG_PROJECT_ID);
-        $entities    = $input->getArgument(self::ARG_ENTITIES);
+        $projectId = (int)$input->getArgument(self::ARG_PROJECT_ID);
+        $entities  = $input->getArgument(self::ARG_ENTITIES);
 
         $entityCodes = explode(',', $entities);
 
