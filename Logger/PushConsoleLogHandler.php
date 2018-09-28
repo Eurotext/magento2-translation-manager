@@ -39,8 +39,8 @@ class PushConsoleLogHandler
         $consoleLogger = new ConsoleLogger(
             $output,
             [
-                LogLevel::NOTICE => OutputInterface::VERBOSITY_VERBOSE,
-                LogLevel::INFO   => OutputInterface::VERBOSITY_VERY_VERBOSE,
+                LogLevel::NOTICE => OutputInterface::VERBOSITY_NORMAL,
+                LogLevel::INFO   => OutputInterface::VERBOSITY_NORMAL,
             ]
         );
 
