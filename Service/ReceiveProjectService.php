@@ -10,6 +10,8 @@ namespace Eurotext\TranslationManager\Service;
 
 use Eurotext\TranslationManager\Api\Data\ProjectInterface;
 use Eurotext\TranslationManager\Api\ProjectRepositoryInterface;
+use Eurotext\TranslationManager\Exception\IllegalProjectStatusChangeException;
+use Eurotext\TranslationManager\Exception\InvalidProjectStatusException;
 use Eurotext\TranslationManager\Service\Project\FetchProjectEntitiesService;
 use Eurotext\TranslationManager\State\ProjectStateMachine;
 
@@ -44,8 +46,8 @@ class ReceiveProjectService
      * @param int $id
      *
      * @return bool
-     * @throws \Eurotext\TranslationManager\Exception\IllegalProjectStatusChangeException
-     * @throws \Eurotext\TranslationManager\Exception\InvalidProjectStatusException
+     * @throws IllegalProjectStatusChangeException
+     * @throws InvalidProjectStatusException
      */
     public function executeById(int $id) // return-types not supported by magento code-generator
     {
@@ -58,24 +60,51 @@ class ReceiveProjectService
      * @param ProjectInterface $project
      *
      * @return bool
-     * @throws \Eurotext\TranslationManager\Exception\IllegalProjectStatusChangeException
-     * @throws \Eurotext\TranslationManager\Exception\InvalidProjectStatusException
+     * @throws IllegalProjectStatusChangeException
+     * @throws InvalidProjectStatusException
      */
     public function execute(ProjectInterface $project) // return-types not supported by magento code-generator
     {
-        // @todo Service: check API Project Status === finished
-
         // Projects need to be in status accepted otherwise they will not be received
         if ($project->getStatus() !== ProjectInterface::STATUS_ACCEPTED) {
-            return false;
+            throw new InvalidProjectStatusException(
+                sprintf(
+                    'project needs to be in status "%s", current status is "%s"',
+                    ProjectInterface::STATUS_ACCEPTED, $project->getStatus()
+                )
+            );
         }
 
-        $entities = $this->fetchProjectEntities->execute($project);
+        $resultEntities = $this->fetchProjectEntities->execute($project);
 
-        $this->projectStateMachine->apply($project, ProjectInterface::STATUS_IMPORTED);
+        // Check results for error messages
+        $status = ProjectInterface::STATUS_IMPORTED;
+        if ($this->validateResultEntities($resultEntities) === true) {
+            $status = ProjectInterface::STATUS_ERROR;
+        }
+
+        // Transfer finished, set Status
+        $this->projectStateMachine->apply($project, $status);
 
         // @todo set API Project Status === imported
 
         return true;
+    }
+
+    /**
+     * @param $resultEntities
+     *
+     * @return bool
+     */
+    private function validateResultEntities($resultEntities): bool
+    {
+        $hasErrors = false;
+        foreach ($resultEntities as $entityKey => $entityResult) {
+            if ($entityResult !== true) {
+                $hasErrors = true;
+            }
+        }
+
+        return $hasErrors;
     }
 }

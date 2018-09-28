@@ -57,7 +57,7 @@ class FetchProjectEntitiesService
 
                 $receiver->receive($project);
 
-                $result[$receiverKey] = 1;
+                $result[$receiverKey] = true;
                 $this->logger->info(sprintf('%s => success', $receiverKey));
             } catch (\Exception $e) {
                 $message = $e->getMessage();

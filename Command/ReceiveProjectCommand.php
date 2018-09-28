@@ -3,8 +3,10 @@ declare(strict_types=1);
 
 namespace Eurotext\TranslationManager\Command;
 
+use Eurotext\TranslationManager\Api\Data\ProjectInterface;
 use Eurotext\TranslationManager\Logger\PushConsoleLogHandler;
 use Eurotext\TranslationManager\Service\ReceiveProjectService;
+use Eurotext\TranslationManager\State\ProjectStateMachine;
 use Magento\Framework\App\State as AppState;
 use Magento\Framework\Exception\LocalizedException;
 use Symfony\Component\Console\Command\Command;
@@ -33,8 +35,14 @@ class ReceiveProjectCommand extends Command
      */
     private $pushConsoleLog;
 
+    /**
+     * @var ProjectStateMachine
+     */
+    private $projectStateMachine;
+
     public function __construct(
         ReceiveProjectService $receiveProject,
+        ProjectStateMachine $projectStateMachine,
         PushConsoleLogHandler $pushConsoleLog,
         AppState $appState
     ) {
@@ -43,6 +51,7 @@ class ReceiveProjectCommand extends Command
         $this->receiveProject = $receiveProject;
         $this->pushConsoleLog = $pushConsoleLog;
         $this->appState       = $appState;
+        $this->projectStateMachine = $projectStateMachine;
     }
 
     protected function configure()
@@ -67,6 +76,12 @@ class ReceiveProjectCommand extends Command
 
         // Push the ConsoleLogger to the EurotextLogger so we directly see console output
         $this->pushConsoleLog->push($output);
+
+        // @todo Service: check API Project Status === finished
+
+        // Set status ACCEPTED, because services are checking for the correct workflow
+        $this->projectStateMachine->applyById($projectId, ProjectInterface::STATUS_TRANSLATED);
+        $this->projectStateMachine->applyById($projectId, ProjectInterface::STATUS_ACCEPTED);
 
         $this->receiveProject->executeById($projectId);
     }
