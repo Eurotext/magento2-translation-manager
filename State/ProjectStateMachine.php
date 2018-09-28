@@ -21,7 +21,7 @@ class ProjectStateMachine
     private $projectRepository;
 
     /** @var array */
-    private $transitions = [
+    private $allowedTransitions = [
         ProjectInterface::STATUS_NEW        => [ProjectInterface::STATUS_TRANSFER],
         ProjectInterface::STATUS_TRANSFER   => [ProjectInterface::STATUS_EXPORTED, ProjectInterface::STATUS_ERROR],
         ProjectInterface::STATUS_EXPORTED   => [ProjectInterface::STATUS_TRANSLATED],
@@ -70,12 +70,12 @@ class ProjectStateMachine
             return;
         }
 
-        if (!array_key_exists($currentStatus, $this->transitions)) {
+        if (!array_key_exists($currentStatus, $this->allowedTransitions)) {
             $msg = sprintf('unknown status="%s" (project-id=%d)', $currentStatus, $id);
             throw new InvalidProjectStatusException($msg);
         }
 
-        $allowedStatuses = $this->transitions[$currentStatus];
+        $allowedStatuses = $this->allowedTransitions[$currentStatus];
 
         if (!\in_array($status, $allowedStatuses, true)) {
             $msg = sprintf('illegal status-change from "%s" to "%s" (project-id=%d)', $currentStatus, $status, $id);
@@ -85,5 +85,10 @@ class ProjectStateMachine
         $project->setStatus($status);
 
         $this->projectRepository->save($project);
+    }
+
+    public function getAllowedTransitions(): array
+    {
+        return $this->allowedTransitions;
     }
 }
