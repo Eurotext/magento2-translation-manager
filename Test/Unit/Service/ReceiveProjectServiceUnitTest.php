@@ -11,6 +11,7 @@ namespace Eurotext\TranslationManager\Test\Unit\Service;
 use Eurotext\TranslationManager\Api\Data\ProjectInterface;
 use Eurotext\TranslationManager\Api\EntityReceiverInterface;
 use Eurotext\TranslationManager\Api\ProjectRepositoryInterface;
+use Eurotext\TranslationManager\Exception\InvalidProjectStatusException;
 use Eurotext\TranslationManager\Model\Project;
 use Eurotext\TranslationManager\Repository\ProjectRepository;
 use Eurotext\TranslationManager\Service\Project\FetchProjectEntitiesService;
@@ -82,7 +83,7 @@ class ReceiveProjectServiceUnitTest extends UnitTestAbstract
             ->with($project, ProjectInterface::STATUS_IMPORTED);
 
         $this->fetchProjectEntities->expects($this->once())->method('execute')->willReturn(
-            [EntityReceiverInterface::class => 1]
+            [EntityReceiverInterface::class => true]
         );
 
         $result = $this->sut->executeById($projectId);
@@ -93,6 +94,8 @@ class ReceiveProjectServiceUnitTest extends UnitTestAbstract
 
     public function testItShouldNotReceiveProjectForStatusOtherThanAccepted()
     {
+        $this->expectException(InvalidProjectStatusException::class);
+
         $projectId = 1;
 
         /** @var ProjectInterface|\PHPUnit_Framework_MockObject_MockObject $project */

@@ -11,6 +11,7 @@ namespace Eurotext\TranslationManager\Test\Unit\Service;
 use Eurotext\TranslationManager\Api\Data\ProjectInterface;
 use Eurotext\TranslationManager\Api\EntitySenderInterface;
 use Eurotext\TranslationManager\Api\ProjectRepositoryInterface;
+use Eurotext\TranslationManager\Exception\InvalidProjectStatusException;
 use Eurotext\TranslationManager\Model\Project;
 use Eurotext\TranslationManager\Repository\ProjectRepository;
 use Eurotext\TranslationManager\Service\Project\CreateProjectEntitiesService;
@@ -91,6 +92,8 @@ class SendProjectServiceUnitTest extends UnitTestAbstract
 
     public function testItShouldNotSendProjectOnlyForStatusTransfer()
     {
+        $this->expectException(InvalidProjectStatusException::class);
+
         $projectId = 1;
 
         /** @var ProjectInterface|\PHPUnit_Framework_MockObject_MockObject $project */
@@ -106,6 +109,7 @@ class SendProjectServiceUnitTest extends UnitTestAbstract
         $this->createProject->expects($this->never())->method('execute');
 
         $this->createProjectEntities->expects($this->never())->method('execute');
+
 
         $result = $this->sut->executeById($projectId);
 
