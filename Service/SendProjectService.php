@@ -10,6 +10,8 @@ namespace Eurotext\TranslationManager\Service;
 
 use Eurotext\TranslationManager\Api\Data\ProjectInterface;
 use Eurotext\TranslationManager\Api\ProjectRepositoryInterface;
+use Eurotext\TranslationManager\Exception\IllegalProjectStatusChangeException;
+use Eurotext\TranslationManager\Exception\InvalidProjectStatusException;
 use Eurotext\TranslationManager\Service\Project\CreateProjectEntitiesService;
 use Eurotext\TranslationManager\Service\Project\CreateProjectService;
 use Eurotext\TranslationManager\State\ProjectStateMachine;
@@ -48,8 +50,8 @@ class SendProjectService
      * @param int $id
      *
      * @return bool
-     * @throws \Eurotext\TranslationManager\Exception\IllegalProjectStatusChangeException
-     * @throws \Eurotext\TranslationManager\Exception\InvalidProjectStatusException
+     * @throws IllegalProjectStatusChangeException
+     * @throws InvalidProjectStatusException
      */
     public function executeById(int $id) // return-types not supported by magento code-generator
     {
@@ -62,14 +64,19 @@ class SendProjectService
      * @param ProjectInterface $project
      *
      * @return bool
-     * @throws \Eurotext\TranslationManager\Exception\IllegalProjectStatusChangeException
-     * @throws \Eurotext\TranslationManager\Exception\InvalidProjectStatusException
+     * @throws IllegalProjectStatusChangeException
+     * @throws InvalidProjectStatusException
      */
     public function execute(ProjectInterface $project) // return-types not supported by magento code-generator
     {
         // Projects may only be created if they are in status transfer
         if ($project->getStatus() !== ProjectInterface::STATUS_TRANSFER) {
-            return false;
+            throw new InvalidProjectStatusException(
+                sprintf(
+                    'project needs to be in status "%s", current status is "%s"',
+                    ProjectInterface::STATUS_TRANSFER, $project->getStatus()
+                )
+            );
         }
 
         // Send Project to Api
