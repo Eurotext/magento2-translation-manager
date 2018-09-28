@@ -23,10 +23,16 @@ class ProjectStateMachine
     /** @var array */
     private $transitions = [
         ProjectInterface::STATUS_NEW        => [ProjectInterface::STATUS_TRANSFER],
-        ProjectInterface::STATUS_TRANSFER   => [ProjectInterface::STATUS_EXPORTED],
+        ProjectInterface::STATUS_TRANSFER   => [ProjectInterface::STATUS_EXPORTED, ProjectInterface::STATUS_ERROR],
         ProjectInterface::STATUS_EXPORTED   => [ProjectInterface::STATUS_TRANSLATED],
-        ProjectInterface::STATUS_TRANSLATED => [ProjectInterface::STATUS_ACCEPTED],
+        ProjectInterface::STATUS_TRANSLATED => [ProjectInterface::STATUS_ACCEPTED, ProjectInterface::STATUS_ERROR],
         ProjectInterface::STATUS_ACCEPTED   => [ProjectInterface::STATUS_IMPORTED],
+        ProjectInterface::STATUS_ERROR      => [
+            ProjectInterface::STATUS_TRANSFER,
+            ProjectInterface::STATUS_EXPORTED,
+            ProjectInterface::STATUS_ACCEPTED,
+            ProjectInterface::STATUS_IMPORTED,
+        ],
     ];
 
     public function __construct(ProjectRepositoryInterface $projectRepository)
@@ -65,14 +71,14 @@ class ProjectStateMachine
         }
 
         if (!array_key_exists($currentStatus, $this->transitions)) {
-            $msg = sprintf('id: %d, status: $d', $id, $currentStatus);
+            $msg = sprintf('id=%d: status=%s', $id, $currentStatus);
             throw new InvalidProjectStatusException($msg);
         }
 
         $allowedStatuses = $this->transitions[$currentStatus];
 
-        if (!array_key_exists($status, $allowedStatuses)) {
-            $msg = sprintf('id: %d, status: $d, new-status: %s', $id, $currentStatus, $status);
+        if (!\in_array($status, $allowedStatuses, true)) {
+            $msg = sprintf('id=%d: from %s to %s', $id, $currentStatus, $status);
             throw new IllegalProjectStatusChangeException($msg);
         }
 

@@ -11,6 +11,7 @@ interface ProjectInterface
     const STATUS_TRANSLATED = 'translated';
     const STATUS_ACCEPTED   = 'accepted';
     const STATUS_IMPORTED   = 'imported';
+    const STATUS_ERROR      = 'error';
 
     public function getId();
 
