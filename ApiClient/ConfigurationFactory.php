@@ -10,6 +10,7 @@ namespace Eurotext\TranslationManager\ApiClient;
 
 use Eurotext\RestApiClient\ConfigurationInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\Module\ModuleListInterface;
 
 class ConfigurationFactory
 {
@@ -25,25 +26,61 @@ class ConfigurationFactory
      */
     private $scopeConfig;
 
-    public function __construct(ScopeConfigInterface $scopeConfig)
-    {
-        $this->scopeConfig = $scopeConfig;
+    /**
+     * @var ModuleListInterface
+     */
+    private $moduleList;
+
+    /**
+     * @var \Magento\Framework\App\ProductMetadataInterface
+     */
+    private $magentoMetadata;
+
+    public function __construct(
+        ScopeConfigInterface $scopeConfig,
+        ModuleListInterface $moduleList,
+        \Magento\Framework\App\ProductMetadataInterface $magentoMetadata
+    ) {
+        $this->scopeConfig     = $scopeConfig;
+        $this->moduleList      = $moduleList;
+        $this->magentoMetadata = $magentoMetadata;
     }
 
     public function create(): ConfigurationInterface
     {
-        $configuration = new \Eurotext\RestApiClient\Configuration();
-        $configuration->setApiKey((string)$this->scopeConfig->getValue(self::CONFIG_PATH_API_KEY));
-        $configuration->setHost((string)$this->scopeConfig->getValue(self::CONFIG_PATH_API_HOST));
+        $apiKey = (string)$this->scopeConfig->getValue(self::CONFIG_PATH_API_KEY);
+        if (empty($apiKey)) {
+            $msg = sprintf('invalid eurotext api-key. Please set your API-Key in the configuration');
+            throw new \InvalidArgumentException($msg);
+        }
 
+        $host = (string)$this->scopeConfig->getValue(self::CONFIG_PATH_API_HOST);
+        if (empty($apiKey)) {
+            $msg = sprintf('invalid eurotext api-host. Please set your API-Host in the configuration');
+            throw new \InvalidArgumentException($msg);
+        }
+
+        $configuration = new \Eurotext\RestApiClient\Configuration();
+
+        // API
+        $configuration->setApiKey($apiKey);
+        $configuration->setHost($host);
+
+        // DEBUG
         $configuration->setDebug((bool)$this->scopeConfig->getValue(self::CONFIG_PATH_API_DEBUG_MODE));
         $configuration->setDebugFile('var/log/eurotext_api_debug.log'); // @todo improve file-path generation
 
+        // Module
+        $moduleData    = $this->moduleList->getOne('Eurotext_TranslationManager');
+        $pluginVersion = $moduleData['setup_version'];
+        $configuration->setPluginVersion($pluginVersion);
         $configuration->setPluginName(self::PLUGIN_NAME);
-        $configuration->setPluginVersion('1.0.0'); // @todo get current plugin version
 
-        $configuration->setSystemName(self::SYSTEM_NAME); // @todo get complete Magento Name incl. Dist Type
-        $configuration->setSystemVersion('2.2.4'); // @todo get current system version
+        // System
+        $systemName    = $this->magentoMetadata->getName() . ' ' . $this->magentoMetadata->getEdition();
+        $systemVersion = $this->magentoMetadata->getVersion();
+        $configuration->setSystemName($systemName);
+        $configuration->setSystemVersion($systemVersion);
 
         return $configuration;
     }
