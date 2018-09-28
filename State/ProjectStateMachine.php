@@ -87,7 +87,10 @@ class ProjectStateMachine
         $this->projectRepository->save($project);
     }
 
-    public function getAllowedTransitions(): array
+    /**
+     * @return array
+     */
+    public function getAllowedTransitions()
     {
         return $this->allowedTransitions;
     }
