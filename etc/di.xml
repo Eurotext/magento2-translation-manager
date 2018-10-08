@@ -30,10 +30,7 @@
 
     <type name="Eurotext\TranslationManager\Command\ReceiveProjectCommand">
         <arguments>
-            <argument name="receiveProject" xsi:type="object">Eurotext\TranslationManager\Service\ReceiveProjectService\Proxy</argument>
-            <argument name="projectRepository" xsi:type="object">Eurotext\TranslationManager\Repository\ProjectRepository\Proxy</argument>
-            <argument name="projectStatusValidator" xsi:type="object">Eurotext\RestApiClient\Validator\ProjectStatusValidator\Proxy</argument>
-            <argument name="projectStateMachine" xsi:type="object">Eurotext\TranslationManager\State\ProjectStateMachine\Proxy</argument>
+            <argument name="receiveProject" xsi:type="object">Eurotext\TranslationManager\Command\Service\ReceiveProjectCliService\Proxy</argument>
             <argument name="appState" xsi:type="object">Magento\Framework\App\State\Proxy</argument>
         </arguments>
     </type>

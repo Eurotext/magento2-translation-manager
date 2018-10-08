@@ -16,14 +16,12 @@ use Eurotext\TranslationManager\Model\ProjectFactory;
 use Eurotext\TranslationManager\Seeder\EntitySeederPool;
 use Eurotext\TranslationManager\Test\Builder\ConsoleMockBuilder;
 use Eurotext\TranslationManager\Test\Builder\ProjectMockBuilder;
+use Eurotext\TranslationManager\Test\Unit\UnitTestAbstract;
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager as ObjectManagerHelper;
 use PHPUnit\Framework\TestCase;
 
-class CreateProjectServiceUnitTest extends TestCase
+class CreateProjectServiceUnitTest extends UnitTestAbstract
 {
-    /** @var ObjectManagerHelper */
-    protected $objectManager;
-
     /** @var ProjectFactory|\PHPUnit_Framework_MockObject_MockObject */
     protected $projectFactory;
 
@@ -51,8 +49,6 @@ class CreateProjectServiceUnitTest extends TestCase
 
         $this->projectMockBuilder = new ProjectMockBuilder($this);
         $this->consoleMockBuilder = new ConsoleMockBuilder($this);
-
-        $this->objectManager = new ObjectManagerHelper($this);
 
         $this->projectFactory    = $this->projectMockBuilder->buildProjectFactoryMock();
         $this->projectRepository = $this->projectMockBuilder->buildProjectRepositoryMock();
