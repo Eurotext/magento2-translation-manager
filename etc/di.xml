@@ -7,6 +7,8 @@
     <preference for="Eurotext\RestApiClient\Api\Project\ItemV1ApiInterface" type="Eurotext\TranslationManager\ApiClient\ItemV1Api" />
     <preference for="Eurotext\RestApiClient\ConfigurationInterface" type="Eurotext\TranslationManager\ApiClient\Configuration" />
 
+    <preference for="Eurotext\RestApiClient\Validator\ProjectStatusValidatorInterface" type="Eurotext\RestApiClient\Validator\ProjectStatusValidator" />
+
     <type name="Eurotext\TranslationManager\Command\NewProjectCommand">
         <arguments>
             <argument name="newProject" xsi:type="object">Eurotext\TranslationManager\Command\Service\NewProjectService\Proxy</argument>
