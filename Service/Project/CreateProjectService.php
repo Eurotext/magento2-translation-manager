@@ -9,10 +9,10 @@ declare(strict_types=1);
 namespace Eurotext\TranslationManager\Service\Project;
 
 use Eurotext\RestApiClient\Api\ProjectV1ApiInterface;
-use Eurotext\RestApiClient\Exception\ProjectApiException;
 use Eurotext\TranslationManager\Api\Data\ProjectInterface;
 use Eurotext\TranslationManager\Api\ProjectRepositoryInterface;
 use Eurotext\TranslationManager\Mapper\ProjectPostMapper;
+use GuzzleHttp\Exception\GuzzleException;
 use Psr\Log\LoggerInterface;
 
 class CreateProjectService
@@ -72,7 +72,7 @@ class CreateProjectService
             $response = $this->projectApi->post($request);
 
             $this->logger->info(sprintf('project id:%d => success', $id));
-        } catch (ProjectApiException $apiException) {
+        } catch (GuzzleException $apiException) {
             $e = $apiException->getPrevious();
 
             $message = $e->getMessage();
