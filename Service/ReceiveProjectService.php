@@ -8,11 +8,13 @@ declare(strict_types=1);
 
 namespace Eurotext\TranslationManager\Service;
 
+use Eurotext\RestApiClient\Enum\ProjectStatusEnum;
 use Eurotext\TranslationManager\Api\Data\ProjectInterface;
 use Eurotext\TranslationManager\Api\ProjectRepositoryInterface;
 use Eurotext\TranslationManager\Exception\IllegalProjectStatusChangeException;
 use Eurotext\TranslationManager\Exception\InvalidProjectStatusException;
 use Eurotext\TranslationManager\Service\Project\FetchProjectEntitiesService;
+use Eurotext\TranslationManager\Service\Project\TransitionProjectService;
 use Eurotext\TranslationManager\State\ProjectStateMachine;
 
 class ReceiveProjectService
@@ -32,14 +34,21 @@ class ReceiveProjectService
      */
     private $projectStateMachine;
 
+    /**
+     * @var TransitionProjectService
+     */
+    private $transitionProject;
+
     public function __construct(
         ProjectRepositoryInterface $projectRepository,
         FetchProjectEntitiesService $fetchProjectEntities,
+        TransitionProjectService $transitionProject,
         ProjectStateMachine $projectStateMachine
     ) {
         $this->projectRepository    = $projectRepository;
         $this->fetchProjectEntities = $fetchProjectEntities;
         $this->projectStateMachine  = $projectStateMachine;
+        $this->transitionProject    = $transitionProject;
     }
 
     /**
@@ -86,9 +95,18 @@ class ReceiveProjectService
         // Transfer finished, set Status
         $this->projectStateMachine->apply($project, $status);
 
-        // @todo set API Project Status === imported
+        // Stop process when there was an error
+        if ($project->getStatus() === ProjectInterface::STATUS_ERROR) {
+            return false;
+        }
 
-        return true;
+        // set Eurotext project status = imported
+        $resultTransition = $this->transitionProject->execute($project, ProjectStatusEnum::IMPORTED());
+
+        // save project to store possible errors
+        $this->projectRepository->save($project);
+
+        return $resultTransition;
     }
 
     /**

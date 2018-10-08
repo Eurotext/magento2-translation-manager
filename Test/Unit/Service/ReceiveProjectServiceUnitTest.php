@@ -15,6 +15,7 @@ use Eurotext\TranslationManager\Exception\InvalidProjectStatusException;
 use Eurotext\TranslationManager\Model\Project;
 use Eurotext\TranslationManager\Repository\ProjectRepository;
 use Eurotext\TranslationManager\Service\Project\FetchProjectEntitiesService;
+use Eurotext\TranslationManager\Service\Project\TransitionProjectService;
 use Eurotext\TranslationManager\Service\ReceiveProjectService;
 use Eurotext\TranslationManager\State\ProjectStateMachine;
 use Eurotext\TranslationManager\Test\Unit\UnitTestAbstract;
@@ -29,6 +30,9 @@ class ReceiveProjectServiceUnitTest extends UnitTestAbstract
 
     /** @var FetchProjectEntitiesService|\PHPUnit_Framework_MockObject_MockObject */
     private $fetchProjectEntities;
+
+    /** @var TransitionProjectService|\PHPUnit_Framework_MockObject_MockObject */
+    private $transitionProject;
 
     /** @var ProjectRepository|\PHPUnit_Framework_MockObject_MockObject */
     private $projectRepository;
@@ -54,12 +58,19 @@ class ReceiveProjectServiceUnitTest extends UnitTestAbstract
                  ->setMethods(['apply'])
                  ->getMock();
 
+        $this->transitionProject =
+            $this->getMockBuilder(TransitionProjectService::class)
+                 ->disableOriginalConstructor()
+                 ->setMethods(['execute'])
+                 ->getMock();
+
         $this->sut = $this->objectManager->getObject(
             ReceiveProjectService::class,
             [
                 'projectRepository'    => $this->projectRepository,
                 'projectStateMachine'  => $this->projectStateMachine,
                 'fetchProjectEntities' => $this->fetchProjectEntities,
+                'transitionProject'    => $this->transitionProject,
             ]
         );
     }
@@ -85,6 +96,8 @@ class ReceiveProjectServiceUnitTest extends UnitTestAbstract
         $this->fetchProjectEntities->expects($this->once())->method('execute')->willReturn(
             [EntityReceiverInterface::class => true]
         );
+
+        $this->transitionProject->expects($this->once())->method('execute')->willReturn(true);
 
         $result = $this->sut->executeById($projectId);
 
@@ -117,4 +130,34 @@ class ReceiveProjectServiceUnitTest extends UnitTestAbstract
         $this->assertFalse($result);
     }
 
+    public function testItShouldQuitForProjectStatusError()
+    {
+        $projectId = 1;
+
+        /** @var ProjectInterface|\PHPUnit_Framework_MockObject_MockObject $project */
+        $project = $this->getMockBuilder(Project::class)
+                        ->setMethods(['getStatus'])
+                        ->disableOriginalConstructor()
+                        ->getMock();
+        $project->method('getStatus')
+                ->willReturnOnConsecutiveCalls(ProjectInterface::STATUS_ACCEPTED, ProjectInterface::STATUS_ERROR);
+
+        $this->projectRepository->expects($this->once())->method('getById')->with($projectId)->willReturn($project);
+
+        $this->projectStateMachine
+            ->expects($this->once())
+            ->method('apply')
+            ->with($project, ProjectInterface::STATUS_ERROR);
+
+        $this->fetchProjectEntities->expects($this->once())->method('execute')->willReturn(
+            [EntityReceiverInterface::class => false]
+        );
+
+        $this->transitionProject->expects($this->never())->method('execute');
+
+        $result = $this->sut->executeById($projectId);
+
+        $this->assertInternalType('bool', $result);
+        $this->assertFalse($result);
+    }
 }
