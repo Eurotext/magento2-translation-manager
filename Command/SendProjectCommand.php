@@ -64,6 +64,14 @@ class SendProjectCommand extends Command
         parent::configure();
     }
 
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     *
+     * @return int|null|void
+     * @throws \Eurotext\TranslationManager\Exception\IllegalProjectStatusChangeException
+     * @throws \Eurotext\TranslationManager\Exception\InvalidProjectStatusException
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $projectId = (int)$input->getArgument(self::ARG_ID);
@@ -81,7 +89,6 @@ class SendProjectCommand extends Command
         $this->projectStateMachine->applyById($projectId, ProjectInterface::STATUS_TRANSFER);
 
         $this->sendProject->executeById($projectId);
-
     }
 
 } 

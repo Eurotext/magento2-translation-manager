@@ -77,11 +77,13 @@ class CreateProjectService
 
             $message = $e->getMessage();
             $this->logger->error(sprintf('project id:%d => %s', $id, $message));
+            $project->setLastError($message);
 
             return false;
         } catch (\Exception $e) {
             $message = $e->getMessage();
             $this->logger->error(sprintf('project id:%d => %s', $id, $message));
+            $project->setLastError($message);
 
             return false;
         }

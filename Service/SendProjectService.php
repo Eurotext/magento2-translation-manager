@@ -8,12 +8,14 @@ declare(strict_types=1);
 
 namespace Eurotext\TranslationManager\Service;
 
+use Eurotext\RestApiClient\Enum\ProjectStatusEnum;
 use Eurotext\TranslationManager\Api\Data\ProjectInterface;
 use Eurotext\TranslationManager\Api\ProjectRepositoryInterface;
 use Eurotext\TranslationManager\Exception\IllegalProjectStatusChangeException;
 use Eurotext\TranslationManager\Exception\InvalidProjectStatusException;
 use Eurotext\TranslationManager\Service\Project\CreateProjectEntitiesService;
 use Eurotext\TranslationManager\Service\Project\CreateProjectService;
+use Eurotext\TranslationManager\Service\Project\TransitionProjectService;
 use Eurotext\TranslationManager\State\ProjectStateMachine;
 
 class SendProjectService
@@ -34,15 +36,22 @@ class SendProjectService
      */
     private $projectStateMachine;
 
+    /**
+     * @var TransitionProjectService
+     */
+    private $transitionProject;
+
     public function __construct(
         ProjectRepositoryInterface $projectRepository,
         CreateProjectService $createProject,
         CreateProjectEntitiesService $createProjectEntities,
+        TransitionProjectService $transitionProject,
         ProjectStateMachine $projectStateMachine
     ) {
         $this->projectRepository     = $projectRepository;
         $this->createProject         = $createProject;
         $this->createProjectEntities = $createProjectEntities;
+        $this->transitionProject     = $transitionProject;
         $this->projectStateMachine   = $projectStateMachine;
     }
 
@@ -83,6 +92,8 @@ class SendProjectService
         $resultProject = $this->createProject->execute($project);
 
         if ($resultProject === false) {
+            $this->projectStateMachine->apply($project, ProjectInterface::STATUS_ERROR);
+
             return false;
         }
 
@@ -91,14 +102,25 @@ class SendProjectService
 
         // Check results for error messages
         $status = ProjectInterface::STATUS_EXPORTED;
-        if ($this->validateResultEntities($resultEntities) === true) {
+        if ($this->validateResultEntities($resultEntities) === false) {
             $status = ProjectInterface::STATUS_ERROR;
         }
 
-        // Transfer finished, set Status
+        // Transfer finished, set status
         $this->projectStateMachine->apply($project, $status);
 
-        return true;
+        // Stop process when there was an error
+        if ($project->getStatus() === ProjectInterface::STATUS_ERROR) {
+            return false;
+        }
+
+        // set Eurotext project status = new
+        $resultTransition = $this->transitionProject->execute($project, ProjectStatusEnum::NEW());
+
+        // save project to store possible errors
+        $this->projectRepository->save($project);
+
+        return $resultTransition;
     }
 
     /**
@@ -108,13 +130,13 @@ class SendProjectService
      */
     private function validateResultEntities($resultEntities): bool
     {
-        $hasErrors = false;
+        $isValid = true;
         foreach ($resultEntities as $entityKey => $entityResult) {
             if ($entityResult !== true) {
-                $hasErrors = true;
+                $isValid = false;
             }
         }
 
-        return $hasErrors;
+        return $isValid;
     }
 }
