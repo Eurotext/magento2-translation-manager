@@ -39,9 +39,11 @@ class TransitionProjectService
     {
         $projectId = $project->getExtId();
 
-        $request = new ProjectTransitionRequest($projectId, $status);
+        $this->logger->info(sprintf('set project status id:%d => %s', $projectId, (string)$status));
 
         try {
+            $request = new ProjectTransitionRequest($projectId, $status);
+
             $response = $this->projectApi->transition($request);
         } catch (GuzzleException $e) {
             $message = $e->getMessage();
@@ -54,12 +56,12 @@ class TransitionProjectService
         $httpResponse = $response->getHttpResponse();
         $statusCode   = $httpResponse->getStatusCode();
 
-        $result = true;
         if (!\in_array($statusCode, $this->allowedStatusCode, true)) {
             $project->setLastError("Invalid HTTP response status code: $statusCode");
-            $result = false;
+
+            return false;
         }
 
-        return $result;
+        return true;
     }
 }

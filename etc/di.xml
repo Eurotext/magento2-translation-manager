@@ -49,6 +49,12 @@
         </arguments>
     </type>
 
+    <type name="Eurotext\TranslationManager\Service\Project\TransitionProjectService">
+        <arguments>
+            <argument name="logger" xsi:type="object">Eurotext\TranslationManager\Logger\ApiLogger</argument>
+        </arguments>
+    </type>
+
     <type name="Eurotext\TranslationManager\Logger\ApiLogger" shared="true" />
 
     <type name="Eurotext\TranslationManager\Seeder\EntitySeederPool">
