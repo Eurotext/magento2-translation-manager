@@ -12,6 +12,7 @@ use Eurotext\RestApiClient\Enum\ProjectStatusEnum;
 use Eurotext\RestApiClient\Validator\ProjectStatusValidatorInterface;
 use Eurotext\TranslationManager\Api\Data\ProjectInterface;
 use Eurotext\TranslationManager\Api\ProjectRepositoryInterface;
+use Eurotext\TranslationManager\Logger\ApiLogger;
 use Eurotext\TranslationManager\Service\ReceiveProjectService;
 use Eurotext\TranslationManager\State\ProjectStateMachine;
 
@@ -37,16 +38,23 @@ class ReceiveProjectCliService
      */
     private $projectRepository;
 
+    /**
+     * @var ApiLogger
+     */
+    private $logger;
+
     public function __construct(
         ReceiveProjectService $receiveProject,
         ProjectRepositoryInterface $projectRepository,
         ProjectStatusValidatorInterface $projectStatusValidator,
-        ProjectStateMachine $projectStateMachine
+        ProjectStateMachine $projectStateMachine,
+        ApiLogger $logger
     ) {
         $this->receiveProject         = $receiveProject;
         $this->projectRepository      = $projectRepository;
         $this->projectStatusValidator = $projectStatusValidator;
         $this->projectStateMachine    = $projectStateMachine;
+        $this->logger                 = $logger;
     }
 
     /**
@@ -62,8 +70,11 @@ class ReceiveProjectCliService
         $project = $this->projectRepository->getById($projectId);
 
         // check API Project Status === finished
-        $isFinished = $this->projectStatusValidator->validate($project, ProjectStatusEnum::FINISHED());
+        $requiredStatus = ProjectStatusEnum::FINISHED();
+        $isFinished     = $this->projectStatusValidator->validate($project, $requiredStatus);
         if (!$isFinished) {
+            $this->logger->error("project api-status is not $requiredStatus");
+
             return false;
         }
 
