@@ -74,8 +74,6 @@ class SendProjectCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $projectId = (int)$input->getArgument(self::ARG_ID);
-
         try {
             $this->appState->setAreaCode('adminhtml');
         } catch (LocalizedException $e) {
@@ -84,6 +82,8 @@ class SendProjectCommand extends Command
 
         // Push the ConsoleLogger to the EurotextLogger so we directly see console output
         $this->pushConsoleLog->push($output);
+
+        $projectId = (int)$input->getArgument(self::ARG_ID);
 
         // Set status Transfer, because services are checking for the correct workflow
         $this->projectStateMachine->applyById($projectId, ProjectInterface::STATUS_TRANSFER);

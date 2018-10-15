@@ -29,7 +29,7 @@ class SeedEntitiesService
     /**
      * @var EntitySeederPool
      */
-    private $projectSeederPool;
+    private $entitySeederPool;
 
     /**
      * @var ProjectRepositoryInterface
@@ -38,9 +38,9 @@ class SeedEntitiesService
 
     public function __construct(
         ProjectRepositoryInterface $projectRepository,
-        EntitySeederPool $projectSeederPool
+        EntitySeederPool $entitySeederPool
     ) {
-        $this->projectSeederPool = $projectSeederPool;
+        $this->entitySeederPool  = $entitySeederPool;
         $this->projectRepository = $projectRepository;
     }
 
@@ -55,13 +55,13 @@ class SeedEntitiesService
 
         foreach ($entityCodes as $entityCode) {
             try {
-                $projectSeeder = $this->projectSeederPool->getByCode($entityCode);
+                $entitySeeder = $this->entitySeederPool->getByCode($entityCode);
             } catch (\Exception $e) {
                 $output->writeln(sprintf('%s: seeder not found', $entityCode));
                 continue;
             }
 
-            $result = $projectSeeder->seed($project);
+            $result = $entitySeeder->seed($project);
 
             if ($result === true) {
                 $output->writeln(sprintf('%s: seeding successful', $entityCode));

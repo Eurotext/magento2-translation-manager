@@ -8,26 +8,25 @@ declare(strict_types=1);
 
 namespace Eurotext\TranslationManager\Test\Unit\Command;
 
-use Eurotext\TranslationManager\Command\SendProjectCommand;
-use Eurotext\TranslationManager\Logger\PushConsoleLogHandler;
-use Eurotext\TranslationManager\Service\SendProjectService;
+use Eurotext\TranslationManager\Command\SeedEntitiesCommand;
+use Eurotext\TranslationManager\Command\Service\SeedEntitiesService;
 use Eurotext\TranslationManager\Test\Builder\ConsoleMockBuilder;
 use Eurotext\TranslationManager\Test\Unit\UnitTestAbstract;
 use Magento\Framework\App\State;
 use Magento\Framework\Exception\LocalizedException;
 
-class SendProjectCommandUnitTest extends UnitTestAbstract
+class SeedEntitiesCommandUnitTest extends UnitTestAbstract
 {
     /** @var \Eurotext\TranslationManager\Service\SendProjectService|\PHPUnit_Framework_MockObject_MockObject */
-    protected $sendProjectService;
+    protected $seedEntitiesService;
 
-    /** @var SendProjectCommand */
+    /** @var SeedEntitiesCommand */
     protected $sut;
 
     /** @var ConsoleMockBuilder */
     protected $builder;
 
-    /** @var State */
+    /** @var State|\PHPUnit_Framework_MockObject_MockObject */
     protected $appState;
 
     protected $pushConsoleLog;
@@ -38,24 +37,18 @@ class SendProjectCommandUnitTest extends UnitTestAbstract
 
         $this->builder = new ConsoleMockBuilder($this);
 
-        $this->sendProjectService =
-            $this->getMockBuilder(SendProjectService::class)
-                 ->setMethods(['executeById'])
-                 ->disableOriginalConstructor()
-                 ->getMock();
-
-        $this->pushConsoleLog =
-            $this->getMockBuilder(PushConsoleLogHandler::class)
+        $this->seedEntitiesService =
+            $this->getMockBuilder(SeedEntitiesService::class)
+                 ->setMethods(['execute'])
                  ->disableOriginalConstructor()
                  ->getMock();
 
         $this->appState = $this->getMockBuilder(State::class)->disableOriginalConstructor()->getMock();
 
         $this->sut = $this->objectManager->getObject(
-            SendProjectCommand::class, [
-                'sendProject'    => $this->sendProjectService,
-                'pushConsoleLog' => $this->pushConsoleLog,
-                'appState'       => $this->appState,
+            SeedEntitiesCommand::class, [
+                'seedEntitiesService' => $this->seedEntitiesService,
+                'appState'            => $this->appState,
             ]
         );
     }
@@ -67,36 +60,24 @@ class SendProjectCommandUnitTest extends UnitTestAbstract
      */
     public function itShouldExecuteTheCreateProjectService()
     {
-        $projectId = 1;
+        $this->seedEntitiesService->expects($this->once())->method('execute');
 
-        $this->sendProjectService->expects($this->once())->method('executeById')
-                                 ->with($projectId)
-                                 ->willReturn(['project' => 1]);
-
-        $input = $this->builder->buildConsoleInputMock();
-        $input->expects($this->once())->method('getArgument')->willReturn($projectId);
-
+        $input  = $this->builder->buildConsoleInputMock();
         $output = $this->builder->buildConsoleOutputMock();
 
         $this->sut->run($input, $output);
     }
 
-
     public function testItShouldNotStopForLocalicedExceptions()
     {
-        $projectId = 1;
-
         $exception = new LocalizedException(new \Magento\Framework\Phrase('some error'));
         $this->appState->expects($this->once())->method('setAreaCode')->with('adminhtml')
                        ->willThrowException($exception);
 
-        $this->sendProjectService->expects($this->once())->method('executeById')
-                             ->with($projectId)->willReturn(['project' => 1]);
-
-        $input = $this->builder->buildConsoleInputMock();
-        $input->expects($this->once())->method('getArgument')->willReturn($projectId);
-
+        $input  = $this->builder->buildConsoleInputMock();
         $output = $this->builder->buildConsoleOutputMock();
+
+        $this->seedEntitiesService->expects($this->once())->method('execute')->with($input, $output);
 
         $this->sut->run($input, $output);
     }

@@ -5,7 +5,6 @@ namespace Eurotext\TranslationManager\Command;
 
 use Eurotext\TranslationManager\Command\Service\ReceiveProjectCliService;
 use Eurotext\TranslationManager\Logger\PushConsoleLogHandler;
-use Eurotext\TranslationManager\State\ProjectStateMachine;
 use Magento\Framework\App\State as AppState;
 use Magento\Framework\Exception\LocalizedException;
 use Symfony\Component\Console\Command\Command;
@@ -66,8 +65,6 @@ class ReceiveProjectCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $projectId = (int)$input->getArgument(self::ARG_ID);
-
         try {
             $this->appState->setAreaCode('adminhtml');
         } catch (LocalizedException $e) {
@@ -76,6 +73,8 @@ class ReceiveProjectCommand extends Command
 
         // Push the ConsoleLogger to the EurotextLogger so we directly see console output
         $this->pushConsoleLog->push($output);
+
+        $projectId = (int)$input->getArgument(self::ARG_ID);
 
         $this->receiveProject->executeById($projectId);
     }
