@@ -123,12 +123,7 @@ class SendProjectService
         return $resultTransition;
     }
 
-    /**
-     * @param $resultEntities
-     *
-     * @return bool
-     */
-    private function validateResultEntities($resultEntities): bool
+    private function validateResultEntities(array $resultEntities): bool
     {
         $isValid = true;
         foreach ($resultEntities as $entityKey => $entityResult) {
