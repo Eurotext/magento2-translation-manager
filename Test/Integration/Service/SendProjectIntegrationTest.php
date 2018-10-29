@@ -23,7 +23,10 @@ use Eurotext\TranslationManager\Test\Integration\IntegrationTestAbstract;
 class SendProjectIntegrationTest extends IntegrationTestAbstract
 {
     /** @var SendProjectService */
-    protected $sut;
+    private $sut;
+
+    /** @var CreateProjectEntitiesService|\PHPUnit_Framework_MockObject_MockObject */
+    private $createProjectEntities;
 
     protected function setUp()
     {
@@ -34,10 +37,18 @@ class SendProjectIntegrationTest extends IntegrationTestAbstract
 
         $projectApi = new ProjectV1Api($config);
 
+        $createProjectEntities = $this->objectManager->create(
+            CreateProjectEntitiesService::class, ['projectApi' => $projectApi]
+        );
+        $this->createProjectEntities = $this->getMockBuilder(CreateProjectEntitiesService::class)
+             ->setMethods(['execute'])
+             ->disableOriginalConstructor()
+             ->getMock();
+
         $this->sut = new SendProjectService(
             $this->objectManager->get(ProjectRepositoryInterface::class),
             $this->objectManager->create(CreateProjectService::class, ['projectApi' => $projectApi]),
-            $this->objectManager->create(CreateProjectEntitiesService::class, ['projectApi' => $projectApi]),
+            $this->createProjectEntities,
             $this->objectManager->create(TransitionProjectService::class, ['projectApi' => $projectApi]),
             $this->objectManager->get(ProjectStateMachine::class)
         );
@@ -48,6 +59,8 @@ class SendProjectIntegrationTest extends IntegrationTestAbstract
      */
     public function testItShouldSendAProjectToEurotext()
     {
+        $this->createProjectEntities->expects($this->once())->method('execute')->willReturn([]);
+
         /** @var Project $project */
         $project = $this->objectManager->create(Project::class);
         $project->isObjectNew(true);
