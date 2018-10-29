@@ -37,9 +37,6 @@ class SendProjectIntegrationTest extends IntegrationTestAbstract
 
         $projectApi = new ProjectV1Api($config);
 
-        $createProjectEntities = $this->objectManager->create(
-            CreateProjectEntitiesService::class, ['projectApi' => $projectApi]
-        );
         $this->createProjectEntities = $this->getMockBuilder(CreateProjectEntitiesService::class)
              ->setMethods(['execute'])
              ->disableOriginalConstructor()
