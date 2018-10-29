@@ -54,7 +54,7 @@ class ProjectMockBuilder
     public function buildProjectRepositoryMock(): \PHPUnit_Framework_MockObject_MockObject
     {
         return $this->getMockBuilder(ProjectRepositoryInterface::class)
-                    ->setMethods(['save'])
+                    ->setMethods(['save', 'getList'])
                     ->disableOriginalConstructor()
                     ->getMockForAbstractClass();
     }
