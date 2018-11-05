@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!-- PREFERENCES -->
     <preference for="Eurotext\TranslationManager\Api\ScopeConfigReaderInterface" type="Eurotext\TranslationManager\ScopeConfig\ScopeConfigReader" />
     <preference for="Eurotext\TranslationManager\Api\ProjectRepositoryInterface" type="Eurotext\TranslationManager\Repository\ProjectRepository" />
     <preference for="Eurotext\TranslationManager\Service\Project\CheckProjectStatusServiceInterface" type="Eurotext\TranslationManager\Service\Project\CheckProjectStatusService" />
@@ -10,6 +11,7 @@
 
     <preference for="Eurotext\RestApiClient\Validator\ProjectStatusValidatorInterface" type="Eurotext\RestApiClient\Validator\ProjectStatusValidator" />
 
+    <!-- COMMANDS -->
     <type name="Eurotext\TranslationManager\Command\NewProjectCommand">
         <arguments>
             <argument name="newProject" xsi:type="object">Eurotext\TranslationManager\Command\Service\NewProjectService\Proxy</argument>
@@ -51,6 +53,7 @@
         </arguments>
     </type>
 
+    <!-- SERVICES -->
     <type name="Eurotext\TranslationManager\Service\Project\CreateProjectService">
         <arguments>
             <argument name="logger" xsi:type="object">Eurotext\TranslationManager\Logger\ApiLogger</argument>
@@ -75,6 +78,7 @@
         </arguments>
     </type>
 
+    <!-- MISC -->
     <type name="Eurotext\TranslationManager\Logger\ApiLogger" shared="true" />
 
     <type name="Eurotext\TranslationManager\Seeder\EntitySeederPool">
