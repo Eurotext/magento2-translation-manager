@@ -15,7 +15,7 @@ use Eurotext\TranslationManager\Setup\EntitySchema\ProjectSchema;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Psr\Log\LoggerInterface;
 
-class TransferProjectsCron
+class SendProjectsCron
 {
 
     /**

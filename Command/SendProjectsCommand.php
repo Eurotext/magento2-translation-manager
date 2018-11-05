@@ -3,20 +3,19 @@ declare(strict_types=1);
 
 namespace Eurotext\TranslationManager\Command;
 
-use Eurotext\TranslationManager\Cron\CheckProjectStatusCron;
+use Eurotext\TranslationManager\Cron\SendProjectsCron;
 use Eurotext\TranslationManager\Logger\PushConsoleLogHandler;
-use Eurotext\TranslationManager\Service\Project\CheckProjectStatusService;
 use Magento\Framework\App\State as AppState;
 use Magento\Framework\Exception\LocalizedException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class CheckProjectStatusCronCommand extends Command
+class SendProjectsCommand extends Command
 {
     const ARG_ID              = 'id';
-    const COMMAND_NAME        = 'etm:project:check-status-cron';
-    const COMMAND_DESCRIPTION = 'Check Project Status against ETM2 API';
+    const COMMAND_NAME        = 'etm:project:send-all';
+    const COMMAND_DESCRIPTION = 'Send all projects in status transfer to Eurotext';
 
     /**
      * @var AppState
@@ -29,20 +28,20 @@ class CheckProjectStatusCronCommand extends Command
     private $pushConsoleLog;
 
     /**
-     * @var CheckProjectStatusService
+     * @var SendProjectsCron
      */
-    private $checkProjectStatus;
+    private $sendProjects;
 
     public function __construct(
-        CheckProjectStatusCron $checkProjectStatus,
+        SendProjectsCron $sendProjects,
         PushConsoleLogHandler $pushConsoleLog,
         AppState $appState
     ) {
         parent::__construct();
 
-        $this->checkProjectStatus = $checkProjectStatus;
-        $this->pushConsoleLog     = $pushConsoleLog;
-        $this->appState           = $appState;
+        $this->pushConsoleLog = $pushConsoleLog;
+        $this->appState       = $appState;
+        $this->sendProjects   = $sendProjects;
     }
 
     protected function configure()
@@ -72,6 +71,6 @@ class CheckProjectStatusCronCommand extends Command
         // Push the ConsoleLogger to the EurotextLogger so we directly see console output
         $this->pushConsoleLog->push($output);
 
-        $this->checkProjectStatus->execute();
+        $this->sendProjects->execute();
     }
-} 
+}
