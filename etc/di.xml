@@ -22,12 +22,6 @@
         </arguments>
     </type>
 
-    <type name="Eurotext\TranslationManager\Command\SendProjectsCommand">
-        <arguments>
-            <argument name="sendProjectsCron" xsi:type="object">Eurotext\TranslationManager\Cron\SendProjectsCron\Proxy</argument>
-        </arguments>
-    </type>
-
     <type name="Eurotext\TranslationManager\Command\SeedEntitiesCommand">
         <arguments>
             <argument name="seedEntitiesService" xsi:type="object">\Eurotext\TranslationManager\Command\Service\SeedEntitiesService\Proxy</argument>
@@ -40,6 +34,12 @@
             <argument name="sendProject" xsi:type="object">Eurotext\TranslationManager\Service\SendProjectService\Proxy</argument>
             <argument name="projectStateMachine" xsi:type="object">Eurotext\TranslationManager\State\ProjectStateMachine\Proxy</argument>
             <argument name="appState" xsi:type="object">Magento\Framework\App\State\Proxy</argument>
+        </arguments>
+    </type>
+
+    <type name="Eurotext\TranslationManager\Command\SendProjectsCommand">
+        <arguments>
+            <argument name="sendProjectsCron" xsi:type="object">Eurotext\TranslationManager\Cron\SendProjectsCron\Proxy</argument>
         </arguments>
     </type>
 
