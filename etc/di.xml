@@ -2,6 +2,7 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <preference for="Eurotext\TranslationManager\Api\ScopeConfigReaderInterface" type="Eurotext\TranslationManager\ScopeConfig\ScopeConfigReader" />
     <preference for="Eurotext\TranslationManager\Api\ProjectRepositoryInterface" type="Eurotext\TranslationManager\Repository\ProjectRepository" />
+    <preference for="Eurotext\TranslationManager\Service\Project\CheckProjectStatusServiceInterface" type="Eurotext\TranslationManager\Service\Project\CheckProjectStatusService" />
 
     <preference for="Eurotext\RestApiClient\Api\ProjectV1ApiInterface" type="Eurotext\TranslationManager\ApiClient\ProjectV1Api" />
     <preference for="Eurotext\RestApiClient\Api\Project\ItemV1ApiInterface" type="Eurotext\TranslationManager\ApiClient\ItemV1Api" />
@@ -55,6 +56,12 @@
         </arguments>
     </type>
 
+    <type name="Eurotext\TranslationManager\Service\Project\CheckProjectStatusService">
+        <arguments>
+            <argument name="logger" xsi:type="object">Eurotext\TranslationManager\Logger\ApiLogger</argument>
+        </arguments>
+    </type>
+
     <type name="Eurotext\TranslationManager\Logger\ApiLogger" shared="true" />
 
     <type name="Eurotext\TranslationManager\Seeder\EntitySeederPool">
@@ -91,6 +98,8 @@
                 <item name="etm_project_new" xsi:type="object">Eurotext\TranslationManager\Command\NewProjectCommand</item>
                 <item name="etm_project_send" xsi:type="object">Eurotext\TranslationManager\Command\SendProjectCommand</item>
                 <item name="etm_project_receive" xsi:type="object">Eurotext\TranslationManager\Command\ReceiveProjectCommand</item>
+                <item name="etm_project_checkStatus" xsi:type="object">Eurotext\TranslationManager\Command\CheckProjectStatusCommand</item>
+                <item name="etm_project_checkStatusCron" xsi:type="object">Eurotext\TranslationManager\Command\CheckProjectStatusCronCommand</item>
                 <item name="etm_entity_types" xsi:type="object">Eurotext\TranslationManager\Command\ListEntitiesCommand</item>
                 <item name="etm_entity_seed" xsi:type="object">Eurotext\TranslationManager\Command\SeedEntitiesCommand</item>
             </argument>
