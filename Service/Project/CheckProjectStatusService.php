@@ -51,14 +51,14 @@ class CheckProjectStatusService implements CheckProjectStatusServiceInterface
         $this->logger                 = $logger;
     }
 
-    public function executeById(int $projectId): bool
+    public function executeById(int $projectId)
     {
         $project = $this->projectRepository->getById($projectId);
 
         return $this->execute($project);
     }
 
-    public function execute(ProjectInterface $project): bool
+    public function execute(ProjectInterface $project)
     {
         $result = true;
 

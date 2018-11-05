@@ -11,7 +11,7 @@ use Eurotext\TranslationManager\Api\Data\ProjectInterface;
 
 interface CheckProjectStatusServiceInterface
 {
-    public function executeById(int $projectId): bool;
+    public function executeById(int $projectId);
 
-    public function execute(ProjectInterface $project): bool;
+    public function execute(ProjectInterface $project);
 }
