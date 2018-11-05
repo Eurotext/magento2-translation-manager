@@ -24,7 +24,7 @@
 
     <type name="Eurotext\TranslationManager\Command\SendProjectsCommand">
         <arguments>
-            <argument name="transferProjects" xsi:type="object">Eurotext\TranslationManager\Cron\TransferProjectsCron\Proxy</argument>
+            <argument name="sendProjectsCron" xsi:type="object">Eurotext\TranslationManager\Cron\SendProjectsCron\Proxy</argument>
         </arguments>
     </type>
 

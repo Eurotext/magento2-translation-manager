@@ -30,18 +30,18 @@ class SendProjectsCommand extends Command
     /**
      * @var SendProjectsCron
      */
-    private $sendProjects;
+    private $sendProjectsCron;
 
     public function __construct(
-        SendProjectsCron $sendProjects,
+        SendProjectsCron $sendProjectsCron,
         PushConsoleLogHandler $pushConsoleLog,
         AppState $appState
     ) {
         parent::__construct();
 
-        $this->pushConsoleLog = $pushConsoleLog;
-        $this->appState       = $appState;
-        $this->sendProjects   = $sendProjects;
+        $this->pushConsoleLog   = $pushConsoleLog;
+        $this->appState         = $appState;
+        $this->sendProjectsCron = $sendProjectsCron;
     }
 
     protected function configure()
@@ -71,6 +71,6 @@ class SendProjectsCommand extends Command
         // Push the ConsoleLogger to the EurotextLogger so we directly see console output
         $this->pushConsoleLog->push($output);
 
-        $this->sendProjects->execute();
+        $this->sendProjectsCron->execute();
     }
 }
