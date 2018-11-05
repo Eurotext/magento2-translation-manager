@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Eurotext\TranslationManager\Command;
 
+use Eurotext\TranslationManager\Cron\CheckProjectStatusCron;
 use Eurotext\TranslationManager\Logger\PushConsoleLogHandler;
 use Eurotext\TranslationManager\Service\Project\CheckProjectStatusServiceInterface;
 use Magento\Framework\App\State as AppState;
@@ -33,16 +34,23 @@ class CheckProjectStatusCommand extends Command
      */
     private $checkProjectStatus;
 
+    /**
+     * @var CheckProjectStatusCron
+     */
+    private $checkProjectStatusCron;
+
     public function __construct(
         CheckProjectStatusServiceInterface $checkProjectStatus,
+        CheckProjectStatusCron $checkProjectStatusCron,
         PushConsoleLogHandler $pushConsoleLog,
         AppState $appState
     ) {
         parent::__construct();
 
-        $this->checkProjectStatus = $checkProjectStatus;
-        $this->pushConsoleLog     = $pushConsoleLog;
-        $this->appState           = $appState;
+        $this->checkProjectStatus     = $checkProjectStatus;
+        $this->pushConsoleLog         = $pushConsoleLog;
+        $this->appState               = $appState;
+        $this->checkProjectStatusCron = $checkProjectStatusCron;
     }
 
     protected function configure()
@@ -50,7 +58,7 @@ class CheckProjectStatusCommand extends Command
         $this->setName(self::COMMAND_NAME);
         $this->setDescription(self::COMMAND_DESCRIPTION);
 
-        $this->addArgument(self::ARG_ID, InputArgument::REQUIRED);
+        $this->addArgument(self::ARG_ID, InputArgument::OPTIONAL);
 
         parent::configure();
     }
@@ -76,6 +84,10 @@ class CheckProjectStatusCommand extends Command
 
         $projectId = (int)$input->getArgument(self::ARG_ID);
 
-        $this->checkProjectStatus->executeById($projectId);
+        if ($projectId > 0) {
+            $this->checkProjectStatus->executeById($projectId);
+        } else {
+            $this->checkProjectStatusCron->execute();
+        }
     }
 } 
