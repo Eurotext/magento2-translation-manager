@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Eurotext\TranslationManager\Console\Command;
 
-use Eurotext\TranslationManager\Console\Command\Service\SeedEntitiesService;
+use Eurotext\TranslationManager\Console\Service\SeedEntitiesService;
 use Magento\Framework\App\State as AppState;
 use Magento\Framework\Exception\LocalizedException;
 use Symfony\Component\Console\Command\Command;

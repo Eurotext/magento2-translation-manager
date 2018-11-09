@@ -6,7 +6,7 @@ declare(strict_types=1);
  * @see PROJECT_LICENSE.txt
  */
 
-namespace Eurotext\TranslationManager\Console\Command\Service;
+namespace Eurotext\TranslationManager\Console\Service;
 
 use Eurotext\RestApiClient\Enum\ProjectStatusEnum;
 use Eurotext\RestApiClient\Validator\ProjectStatusValidatorInterface;

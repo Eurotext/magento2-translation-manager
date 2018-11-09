@@ -14,7 +14,7 @@
     <!-- COMMANDS -->
     <type name="Eurotext\TranslationManager\Console\Command\NewProjectCommand">
         <arguments>
-            <argument name="newProject" xsi:type="object">Eurotext\TranslationManager\Console\Command\Service\NewProjectService\Proxy</argument>
+            <argument name="newProject" xsi:type="object">Eurotext\TranslationManager\Console\Service\NewProjectService\Proxy</argument>
         </arguments>
     </type>
 
@@ -28,7 +28,7 @@
 
     <type name="Eurotext\TranslationManager\Console\Command\SeedEntitiesCommand">
         <arguments>
-            <argument name="seedEntitiesService" xsi:type="object">\Eurotext\TranslationManager\Console\Command\Service\SeedEntitiesService\Proxy</argument>
+            <argument name="seedEntitiesService" xsi:type="object">\Eurotext\TranslationManager\Console\Service\SeedEntitiesService\Proxy</argument>
             <argument name="appState" xsi:type="object">Magento\Framework\App\State\Proxy</argument>
         </arguments>
     </type>
@@ -56,7 +56,7 @@
 
     <type name="Eurotext\TranslationManager\Console\Command\ReceiveProjectCommand">
         <arguments>
-            <argument name="receiveProject" xsi:type="object">Eurotext\TranslationManager\Console\Command\Service\ReceiveProjectCliService\Proxy</argument>
+            <argument name="receiveProject" xsi:type="object">Eurotext\TranslationManager\Console\Service\ReceiveProjectCliService\Proxy</argument>
             <argument name="appState" xsi:type="object">Magento\Framework\App\State\Proxy</argument>
         </arguments>
     </type>

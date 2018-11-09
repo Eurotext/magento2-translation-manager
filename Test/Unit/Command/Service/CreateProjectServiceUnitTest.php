@@ -10,7 +10,7 @@ namespace Eurotext\TranslationManager\Test\Unit\Command\Service;
 
 use Eurotext\TranslationManager\Api\EntitySeederInterface;
 use Eurotext\TranslationManager\Api\ProjectRepositoryInterface;
-use Eurotext\TranslationManager\Console\Command\Service\NewProjectService;
+use Eurotext\TranslationManager\Console\Service\NewProjectService;
 use Eurotext\TranslationManager\Model\Project;
 use Eurotext\TranslationManager\Model\ProjectFactory;
 use Eurotext\TranslationManager\Seeder\EntitySeederPool;

@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Eurotext\TranslationManager\Console\Command;
 
-use Eurotext\TranslationManager\Console\Command\Service\ReceiveProjectCliService;
+use Eurotext\TranslationManager\Console\Service\ReceiveProjectCliService;
 use Eurotext\TranslationManager\Logger\PushConsoleLogHandler;
 use Magento\Framework\App\State as AppState;
 use Magento\Framework\Exception\LocalizedException;
