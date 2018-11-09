@@ -10,6 +10,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ListEntitiesCommand extends Command
 {
+    const COMMAND_NAME        = 'etm:entity:types';
+    const COMMAND_DESCRIPTION = 'List all Entities available';
 
     /**
      * @var EntityTypePool
@@ -25,8 +27,8 @@ class ListEntitiesCommand extends Command
 
     protected function configure()
     {
-        $this->setName('etm:entity:types');
-        $this->setDescription('List all Entities available');
+        $this->setName(self::COMMAND_NAME);
+        $this->setDescription(self::COMMAND_DESCRIPTION);
 
         parent::configure();
     }

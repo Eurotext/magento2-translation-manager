@@ -18,7 +18,7 @@ class SendProjectCommand extends Command
 {
     const ARG_ID              = 'id';
     const COMMAND_NAME        = 'etm:project:send';
-    const COMMAND_DESCRIPTION = 'Send Project to ETM2';
+    const COMMAND_DESCRIPTION = 'Send Project and Entities to Eurotext';
 
     /**
      * @var SendProjectServiceInterface

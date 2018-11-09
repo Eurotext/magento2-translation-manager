@@ -8,16 +8,16 @@ declare(strict_types=1);
 
 namespace Eurotext\TranslationManager\Test\Unit\Console\Command;
 
-use Eurotext\TranslationManager\Console\Command\AcceptProjectCommand;
+use Eurotext\TranslationManager\Console\Command\SetStatusAcceptCommand;
 use Eurotext\TranslationManager\Exception\IllegalProjectStatusChangeException;
 use Eurotext\TranslationManager\State\ProjectStateMachine;
 use Eurotext\TranslationManager\Test\Builder\ConsoleMockBuilder;
 use Eurotext\TranslationManager\Test\Unit\UnitTestAbstract;
 use Symfony\Component\Console\Formatter\OutputFormatterInterface;
 
-class AcceptProjectUnitTest extends UnitTestAbstract
+class SetStatusAcceptUnitTest extends UnitTestAbstract
 {
-    /** @var AcceptProjectCommand */
+    /** @var SetStatusAcceptCommand */
     protected $sut;
 
     /** @var ConsoleMockBuilder */
@@ -39,7 +39,7 @@ class AcceptProjectUnitTest extends UnitTestAbstract
                  ->getMock();
 
         $this->sut = $this->objectManager->getObject(
-            AcceptProjectCommand::class,
+            SetStatusAcceptCommand::class,
             [
                 'projectStateMachine' => $this->projectStateMachine,
             ]

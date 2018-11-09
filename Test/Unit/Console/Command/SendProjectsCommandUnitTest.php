@@ -8,7 +8,7 @@ declare(strict_types=1);
 
 namespace Eurotext\TranslationManager\Test\Unit\Console\Command;
 
-use Eurotext\TranslationManager\Console\Command\CheckProjectStatusCommand;
+use Eurotext\TranslationManager\Console\Command\CheckStatusCommand;
 use Eurotext\TranslationManager\Console\Command\SendProjectsCommand;
 use Eurotext\TranslationManager\Cron\SendProjectsCron;
 use Eurotext\TranslationManager\Test\Builder\ConsoleMockBuilder;
@@ -17,7 +17,7 @@ use Symfony\Component\Console\Formatter\OutputFormatterInterface;
 
 class SendProjectsCommandUnitTest extends UnitTestAbstract
 {
-    /** @var CheckProjectStatusCommand */
+    /** @var CheckStatusCommand */
     protected $sut;
 
     /** @var ConsoleMockBuilder */

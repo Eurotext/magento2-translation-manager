@@ -16,7 +16,7 @@ class ReceiveProjectCommand extends Command
 {
     const ARG_ID              = 'id';
     const COMMAND_NAME        = 'etm:project:receive';
-    const COMMAND_DESCRIPTION = 'Receive Project Translations from ETM2';
+    const COMMAND_DESCRIPTION = 'Receive Project Translations from Eurotext';
 
     /**
      * @var ReceiveProjectCliService

@@ -13,11 +13,11 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class CheckProjectStatusCommand extends Command
+class CheckStatusCommand extends Command
 {
     const ARG_ID              = 'id';
-    const COMMAND_NAME        = 'etm:project:check-status';
-    const COMMAND_DESCRIPTION = 'Check Project Status against ETM2 API';
+    const COMMAND_NAME        = 'etm:project:status-check';
+    const COMMAND_DESCRIPTION = 'Check Project Status at Eurotext. Will update project status in Magento.';
 
     /**
      * @var AppState

@@ -10,11 +10,11 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class AcceptProjectCommand extends Command
+class SetStatusTransferCommand extends Command
 {
     const ARG_ID              = 'id';
-    const COMMAND_NAME        = 'etm:project:accept';
-    const COMMAND_DESCRIPTION = 'Accept project translations. project is in status translated';
+    const COMMAND_NAME        = 'etm:project:status-set-transfer';
+    const COMMAND_DESCRIPTION = 'Set project status to transfer. Project can then be transfered to Eurotext';
 
     /**
      * @var ProjectStateMachine
@@ -49,8 +49,8 @@ class AcceptProjectCommand extends Command
     {
         $projectId = (int) $input->getArgument(self::ARG_ID);
 
-        $this->projectStateMachine->applyById($projectId, ProjectInterface::STATUS_ACCEPTED);
+        $this->projectStateMachine->applyById($projectId, ProjectInterface::STATUS_TRANSFER);
 
-        $output->writeln("<info>project-id $projectId marked as accepted</info>");
+        $output->writeln("<info>project-id $projectId marked for transfer</info>");
     }
 } 

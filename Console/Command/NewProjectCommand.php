@@ -11,6 +11,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class NewProjectCommand extends Command
 {
+    const COMMAND_NAME        = 'etm:project:new';
+    const COMMAND_DESCRIPTION = 'Create new Project';
+
     /**
      * @var NewProjectService
      */
@@ -25,8 +28,8 @@ class NewProjectCommand extends Command
 
     protected function configure()
     {
-        $this->setName('etm:project:new');
-        $this->setDescription('Create Project for ETM2');
+        $this->setName(self::COMMAND_NAME);
+        $this->setDescription(self::COMMAND_DESCRIPTION);
 
         $this->addArgument(NewProjectService::ARG_NAME, InputArgument::REQUIRED);
         $this->addArgument(NewProjectService::ARG_STORE_ID_SRC, InputArgument::REQUIRED);

@@ -8,22 +8,22 @@ declare(strict_types=1);
 
 namespace Eurotext\TranslationManager\Test\Unit\Console\Command;
 
-use Eurotext\TranslationManager\Console\Command\CheckProjectStatusCommand;
+use Eurotext\TranslationManager\Console\Command\CheckStatusCommand;
 use Eurotext\TranslationManager\Cron\CheckProjectStatusCron;
 use Eurotext\TranslationManager\Service\Project\CheckProjectStatusServiceInterface;
 use Eurotext\TranslationManager\Test\Builder\ConsoleMockBuilder;
 use Eurotext\TranslationManager\Test\Unit\UnitTestAbstract;
 use Symfony\Component\Console\Formatter\OutputFormatterInterface;
 
-class CheckProjectStatusUnitTest extends UnitTestAbstract
+class CheckStatusUnitTest extends UnitTestAbstract
 {
-    /** @var CheckProjectStatusCommand */
+    /** @var CheckStatusCommand */
     protected $sut;
 
     /** @var ConsoleMockBuilder */
     protected $builder;
 
-    /** @var CheckProjectStatusCommand|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var CheckStatusCommand|\PHPUnit_Framework_MockObject_MockObject */
     protected $checkProjectStatus;
 
     /** @var CheckProjectStatusCron|\PHPUnit_Framework_MockObject_MockObject */
@@ -47,7 +47,7 @@ class CheckProjectStatusUnitTest extends UnitTestAbstract
                  ->getMock();
 
         $this->sut = $this->objectManager->getObject(
-            CheckProjectStatusCommand::class,
+            CheckStatusCommand::class,
             [
                 'checkProjectStatus'     => $this->checkProjectStatus,
                 'checkProjectStatusCron' => $this->checkProjectStatusCron,
