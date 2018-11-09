@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
-<!--
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
--->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
     <group id="default">
-        <job name="eurotext_check_project_status" instance="Eurotext\TranslationManager\Cron\CheckProjectStatusCron" method="execute">
-            <schedule>0 * * * *</schedule>
+        <job name="eurotext_project_check_status" instance="Eurotext\TranslationManager\Cron\CheckProjectStatusCron" method="execute">
+            <schedule>*/5 * * * *</schedule>
+        </job>
+        <job name="eurotext_project_send" instance="Eurotext\TranslationManager\Cron\SendProjectsCron" method="execute">
+            <schedule>*/5 * * * *</schedule>
+        </job>
+        <job name="eurotext_project_receive" instance="Eurotext\TranslationManager\Cron\ReceiveProjectsCron" method="execute">
+            <schedule>*/5 * * * *</schedule>
         </job>
     </group>
 </config>
