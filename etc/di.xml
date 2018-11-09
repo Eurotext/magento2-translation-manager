@@ -22,6 +22,7 @@
         <arguments>
             <argument name="checkProjectStatus" xsi:type="object">Eurotext\TranslationManager\Service\Project\CheckProjectStatusService\Proxy</argument>
             <argument name="checkProjectStatusCron" xsi:type="object">Eurotext\TranslationManager\Cron\CheckProjectStatusCron\Proxy</argument>
+            <argument name="appState" xsi:type="object">Magento\Framework\App\State\Proxy</argument>
         </arguments>
     </type>
 
@@ -43,6 +44,7 @@
     <type name="Eurotext\TranslationManager\Command\SendProjectsCommand">
         <arguments>
             <argument name="sendProjectsCron" xsi:type="object">Eurotext\TranslationManager\Cron\SendProjectsCron\Proxy</argument>
+            <argument name="appState" xsi:type="object">Magento\Framework\App\State\Proxy</argument>
         </arguments>
     </type>
 
@@ -55,6 +57,13 @@
     <type name="Eurotext\TranslationManager\Command\ReceiveProjectCommand">
         <arguments>
             <argument name="receiveProject" xsi:type="object">Eurotext\TranslationManager\Command\Service\ReceiveProjectCliService\Proxy</argument>
+            <argument name="appState" xsi:type="object">Magento\Framework\App\State\Proxy</argument>
+        </arguments>
+    </type>
+
+    <type name="Eurotext\TranslationManager\Command\ReceiveProjectsCommand">
+        <arguments>
+            <argument name="receiveProjectsCron" xsi:type="object">Eurotext\TranslationManager\Cron\ReceiveProjectsCron\Proxy</argument>
             <argument name="appState" xsi:type="object">Magento\Framework\App\State\Proxy</argument>
         </arguments>
     </type>
@@ -123,6 +132,7 @@
                 <item name="etm_project_send_all" xsi:type="object">Eurotext\TranslationManager\Command\SendProjectsCommand</item>
                 <item name="etm_project_accept" xsi:type="object">Eurotext\TranslationManager\Command\AcceptProjectCommand</item>
                 <item name="etm_project_receive" xsi:type="object">Eurotext\TranslationManager\Command\ReceiveProjectCommand</item>
+                <item name="etm_project_receive_all" xsi:type="object">Eurotext\TranslationManager\Command\ReceiveProjectsCommand</item>
                 <item name="etm_project_checkStatus" xsi:type="object">Eurotext\TranslationManager\Command\CheckProjectStatusCommand</item>
                 <item name="etm_entity_types" xsi:type="object">Eurotext\TranslationManager\Command\ListEntitiesCommand</item>
                 <item name="etm_entity_seed" xsi:type="object">Eurotext\TranslationManager\Command\SeedEntitiesCommand</item>

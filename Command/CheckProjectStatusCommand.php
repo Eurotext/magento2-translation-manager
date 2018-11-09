@@ -48,9 +48,9 @@ class CheckProjectStatusCommand extends Command
         parent::__construct();
 
         $this->checkProjectStatus     = $checkProjectStatus;
+        $this->checkProjectStatusCron = $checkProjectStatusCron;
         $this->pushConsoleLog         = $pushConsoleLog;
         $this->appState               = $appState;
-        $this->checkProjectStatusCron = $checkProjectStatusCron;
     }
 
     protected function configure()
