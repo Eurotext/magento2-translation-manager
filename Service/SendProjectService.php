@@ -15,11 +15,10 @@ use Eurotext\TranslationManager\Exception\IllegalProjectStatusChangeException;
 use Eurotext\TranslationManager\Exception\InvalidProjectStatusException;
 use Eurotext\TranslationManager\Service\Project\CreateProjectEntitiesServiceInterface;
 use Eurotext\TranslationManager\Service\Project\CreateProjectServiceInterface;
-use Eurotext\TranslationManager\Service\Project\TransitionProjectService;
 use Eurotext\TranslationManager\Service\Project\TransitionProjectServiceInterface;
 use Eurotext\TranslationManager\State\ProjectStateMachine;
 
-class SendProjectService
+class SendProjectService implements SendProjectServiceInterface
 {
     /**
      * @var ProjectRepositoryInterface

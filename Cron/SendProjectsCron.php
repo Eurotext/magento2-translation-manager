@@ -10,7 +10,7 @@ namespace Eurotext\TranslationManager\Cron;
 
 use Eurotext\TranslationManager\Api\Data\ProjectInterface;
 use Eurotext\TranslationManager\Api\ProjectRepositoryInterface;
-use Eurotext\TranslationManager\Service\SendProjectService;
+use Eurotext\TranslationManager\Service\SendProjectServiceInterface;
 use Eurotext\TranslationManager\Setup\EntitySchema\ProjectSchema;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Psr\Log\LoggerInterface;
@@ -29,7 +29,7 @@ class SendProjectsCron
     private $criteriaBuilder;
 
     /**
-     * @var SendProjectService
+     * @var SendProjectServiceInterface
      */
     private $sendProjectService;
 
@@ -41,7 +41,7 @@ class SendProjectsCron
     public function __construct(
         ProjectRepositoryInterface $projectRepository,
         SearchCriteriaBuilder $criteriaBuilder,
-        SendProjectService $sendProjectService,
+        SendProjectServiceInterface $sendProjectService,
         LoggerInterface $logger
     ) {
         $this->projectRepository  = $projectRepository;

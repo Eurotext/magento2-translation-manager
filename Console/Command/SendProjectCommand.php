@@ -5,7 +5,7 @@ namespace Eurotext\TranslationManager\Console\Command;
 
 use Eurotext\TranslationManager\Api\Data\ProjectInterface;
 use Eurotext\TranslationManager\Logger\PushConsoleLogHandler;
-use Eurotext\TranslationManager\Service\SendProjectService;
+use Eurotext\TranslationManager\Service\SendProjectServiceInterface;
 use Eurotext\TranslationManager\State\ProjectStateMachine;
 use Magento\Framework\App\State as AppState;
 use Magento\Framework\Exception\LocalizedException;
@@ -21,7 +21,7 @@ class SendProjectCommand extends Command
     const COMMAND_DESCRIPTION = 'Send Project to ETM2';
 
     /**
-     * @var SendProjectService
+     * @var SendProjectServiceInterface
      */
     private $sendProject;
 
@@ -41,7 +41,7 @@ class SendProjectCommand extends Command
     private $projectStateMachine;
 
     public function __construct(
-        SendProjectService $sendProject,
+        SendProjectServiceInterface $sendProject,
         ProjectStateMachine $projectStateMachine,
         PushConsoleLogHandler $pushConsoleLog,
         AppState $appState

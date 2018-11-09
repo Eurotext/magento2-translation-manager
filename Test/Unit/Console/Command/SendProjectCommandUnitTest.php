@@ -10,7 +10,7 @@ namespace Eurotext\TranslationManager\Test\Unit\Console\Command;
 
 use Eurotext\TranslationManager\Console\Command\SendProjectCommand;
 use Eurotext\TranslationManager\Logger\PushConsoleLogHandler;
-use Eurotext\TranslationManager\Service\SendProjectService;
+use Eurotext\TranslationManager\Service\SendProjectServiceInterface;
 use Eurotext\TranslationManager\Test\Builder\ConsoleMockBuilder;
 use Eurotext\TranslationManager\Test\Unit\UnitTestAbstract;
 use Magento\Framework\App\State;
@@ -18,7 +18,7 @@ use Magento\Framework\Exception\LocalizedException;
 
 class SendProjectCommandUnitTest extends UnitTestAbstract
 {
-    /** @var \Eurotext\TranslationManager\Service\SendProjectService|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var SendProjectServiceInterface|\PHPUnit_Framework_MockObject_MockObject */
     protected $sendProjectService;
 
     /** @var SendProjectCommand */
@@ -39,7 +39,7 @@ class SendProjectCommandUnitTest extends UnitTestAbstract
         $this->builder = new ConsoleMockBuilder($this);
 
         $this->sendProjectService =
-            $this->getMockBuilder(SendProjectService::class)
+            $this->getMockBuilder(SendProjectServiceInterface::class)
                  ->setMethods(['executeById'])
                  ->disableOriginalConstructor()
                  ->getMock();
@@ -81,7 +81,6 @@ class SendProjectCommandUnitTest extends UnitTestAbstract
         $this->sut->run($input, $output);
     }
 
-
     public function testItShouldNotStopForLocalicedExceptions()
     {
         $projectId = 1;
@@ -91,7 +90,7 @@ class SendProjectCommandUnitTest extends UnitTestAbstract
                        ->willThrowException($exception);
 
         $this->sendProjectService->expects($this->once())->method('executeById')
-                             ->with($projectId)->willReturn(['project' => 1]);
+                                 ->with($projectId)->willReturn(['project' => 1]);
 
         $input = $this->builder->buildConsoleInputMock();
         $input->expects($this->once())->method('getArgument')->willReturn($projectId);
