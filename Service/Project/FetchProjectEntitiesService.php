@@ -9,16 +9,16 @@ declare(strict_types=1);
 namespace Eurotext\TranslationManager\Service\Project;
 
 use Eurotext\TranslationManager\Api\Data\ProjectInterface;
-use Eurotext\TranslationManager\Receiver\EntityReceiverPool;
+use Eurotext\TranslationManager\Retriever\EntityRetrieverPool;
 use Magento\Store\Model\StoreManagerInterface;
 use Psr\Log\LoggerInterface;
 
 class FetchProjectEntitiesService implements FetchProjectEntitiesServiceInterface
 {
     /**
-     * @var EntityReceiverPool
+     * @var EntityRetrieverPool
      */
-    private $entityReceiverPool;
+    private $entityRetrieverPool;
 
     /**
      * @var LoggerInterface
@@ -31,11 +31,11 @@ class FetchProjectEntitiesService implements FetchProjectEntitiesServiceInterfac
     private $storeManager;
 
     public function __construct(
-        EntityReceiverPool $entityReceiverPool,
+        EntityRetrieverPool $entityRetrieverPool,
         StoreManagerInterface $storeManager,
         LoggerInterface $logger
     ) {
-        $this->entityReceiverPool = $entityReceiverPool;
+        $this->entityRetrieverPool = $entityRetrieverPool;
         $this->storeManager       = $storeManager;
         $this->logger             = $logger;
     }
@@ -49,21 +49,21 @@ class FetchProjectEntitiesService implements FetchProjectEntitiesServiceInterfac
         $store = $this->storeManager->getStore($project->getStoreviewDst());
         $this->storeManager->setCurrentStore($store->getId());
 
-        // receive project items dynamically by internal project entities
-        $receivers = $this->entityReceiverPool->getItems();
+        // retrieve project items dynamically by internal project entities
+        $retrievers = $this->entityRetrieverPool->getItems();
 
-        foreach ($receivers as $receiverKey => $receiver) {
+        foreach ($retrievers as $retrieverKey => $retriever) {
             try {
 
-                $receiver->receive($project);
+                $retriever->retrieve($project);
 
-                $result[$receiverKey] = true;
-                $this->logger->info(sprintf('%s => success', $receiverKey));
+                $result[$retrieverKey] = true;
+                $this->logger->info(sprintf('%s => success', $retrieverKey));
             } catch (\Exception $e) {
                 $message = $e->getMessage();
 
-                $result[$receiverKey] = $message;
-                $this->logger->error(sprintf('%s => %s', $receiverKey, $message));
+                $result[$retrieverKey] = $message;
+                $this->logger->error(sprintf('%s => %s', $retrieverKey, $message));
             }
         }
 

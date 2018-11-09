@@ -17,7 +17,7 @@ use Eurotext\TranslationManager\Service\Project\FetchProjectEntitiesServiceInter
 use Eurotext\TranslationManager\Service\Project\TransitionProjectServiceInterface;
 use Eurotext\TranslationManager\State\ProjectStateMachine;
 
-class ReceiveProjectService implements ReceiveProjectServiceInterface
+class RetrieveProjectService implements RetrieveProjectServiceInterface
 {
     /**
      * @var ProjectRepositoryInterface
@@ -74,7 +74,7 @@ class ReceiveProjectService implements ReceiveProjectServiceInterface
      */
     public function execute(ProjectInterface $project) // return-types not supported by magento code-generator
     {
-        // Projects need to be in status accepted otherwise they will not be received
+        // Projects need to be in status accepted otherwise they will not be retrieved
         if ($project->getStatus() !== ProjectInterface::STATUS_ACCEPTED) {
             throw new InvalidProjectStatusException(
                 sprintf(

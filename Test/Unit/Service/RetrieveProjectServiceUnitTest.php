@@ -9,7 +9,7 @@ declare(strict_types=1);
 namespace Eurotext\TranslationManager\Test\Unit\Service;
 
 use Eurotext\TranslationManager\Api\Data\ProjectInterface;
-use Eurotext\TranslationManager\Api\EntityReceiverInterface;
+use Eurotext\TranslationManager\Api\EntityRetrieverInterface;
 use Eurotext\TranslationManager\Api\ProjectRepositoryInterface;
 use Eurotext\TranslationManager\Exception\InvalidProjectStatusException;
 use Eurotext\TranslationManager\Model\Project;
@@ -17,16 +17,16 @@ use Eurotext\TranslationManager\Repository\ProjectRepository;
 use Eurotext\TranslationManager\Service\Project\FetchProjectEntitiesServiceInterface;
 use Eurotext\TranslationManager\Service\Project\TransitionProjectService;
 use Eurotext\TranslationManager\Service\Project\TransitionProjectServiceInterface;
-use Eurotext\TranslationManager\Service\ReceiveProjectService;
+use Eurotext\TranslationManager\Service\RetrieveProjectService;
 use Eurotext\TranslationManager\State\ProjectStateMachine;
 use Eurotext\TranslationManager\Test\Unit\UnitTestAbstract;
 
-class ReceiveProjectServiceUnitTest extends UnitTestAbstract
+class RetrieveProjectServiceUnitTest extends UnitTestAbstract
 {
     /** @var ProjectStateMachine|\PHPUnit_Framework_MockObject_MockObject */
     private $projectStateMachine;
 
-    /** @var ReceiveProjectService */
+    /** @var RetrieveProjectService */
     private $sut;
 
     /** @var FetchProjectEntitiesServiceInterface|\PHPUnit_Framework_MockObject_MockObject */
@@ -65,7 +65,7 @@ class ReceiveProjectServiceUnitTest extends UnitTestAbstract
                  ->getMock();
 
         $this->sut = $this->objectManager->getObject(
-            ReceiveProjectService::class,
+            RetrieveProjectService::class,
             [
                 'projectRepository'    => $this->projectRepository,
                 'projectStateMachine'  => $this->projectStateMachine,
@@ -75,7 +75,7 @@ class ReceiveProjectServiceUnitTest extends UnitTestAbstract
         );
     }
 
-    public function testItShouldReceiveProject()
+    public function testItShouldRetrieveProject()
     {
         $projectId = 1;
 
@@ -94,7 +94,7 @@ class ReceiveProjectServiceUnitTest extends UnitTestAbstract
             ->with($project, ProjectInterface::STATUS_IMPORTED);
 
         $this->fetchProjectEntities->expects($this->once())->method('execute')->willReturn(
-            [EntityReceiverInterface::class => true]
+            [EntityRetrieverInterface::class => true]
         );
 
         $this->transitionProject->expects($this->once())->method('execute')->willReturn(true);
@@ -105,7 +105,7 @@ class ReceiveProjectServiceUnitTest extends UnitTestAbstract
         $this->assertTrue($result);
     }
 
-    public function testItShouldNotReceiveProjectForStatusOtherThanAccepted()
+    public function testItShouldNotRetrieveProjectForStatusOtherThanAccepted()
     {
         $this->expectException(InvalidProjectStatusException::class);
 
@@ -150,7 +150,7 @@ class ReceiveProjectServiceUnitTest extends UnitTestAbstract
             ->with($project, ProjectInterface::STATUS_ERROR);
 
         $this->fetchProjectEntities->expects($this->once())->method('execute')->willReturn(
-            [EntityReceiverInterface::class => false]
+            [EntityRetrieverInterface::class => false]
         );
 
         $this->transitionProject->expects($this->never())->method('execute');

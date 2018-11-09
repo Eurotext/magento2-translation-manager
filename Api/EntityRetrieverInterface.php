@@ -10,7 +10,7 @@ namespace Eurotext\TranslationManager\Api;
 
 use Eurotext\TranslationManager\Api\Data\ProjectInterface;
 
-interface EntityReceiverInterface
+interface EntityRetrieverInterface
 {
-    public function receive(ProjectInterface $project): bool;
+    public function retrieve(ProjectInterface $project): bool;
 }

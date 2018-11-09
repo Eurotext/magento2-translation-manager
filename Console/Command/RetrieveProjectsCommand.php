@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Eurotext\TranslationManager\Console\Command;
 
-use Eurotext\TranslationManager\Cron\ReceiveProjectsCron;
+use Eurotext\TranslationManager\Cron\RetrieveProjectsCron;
 use Eurotext\TranslationManager\Logger\PushConsoleLogHandler;
 use Magento\Framework\App\State as AppState;
 use Magento\Framework\Exception\LocalizedException;
@@ -11,11 +11,11 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class ReceiveProjectsCommand extends Command
+class RetrieveProjectsCommand extends Command
 {
     const ARG_ID              = 'id';
-    const COMMAND_NAME        = 'etm:project:receive-all';
-    const COMMAND_DESCRIPTION = 'Receive all projects in status accpted from Eurotext';
+    const COMMAND_NAME        = 'etm:project:retrieve-all';
+    const COMMAND_DESCRIPTION = 'Retrieve all projects in status accpted from Eurotext';
 
     /**
      * @var AppState
@@ -28,18 +28,18 @@ class ReceiveProjectsCommand extends Command
     private $pushConsoleLog;
 
     /**
-     * @var ReceiveProjectsCron
+     * @var RetrieveProjectsCron
      */
     private $sendProjectsCron;
 
     public function __construct(
-        ReceiveProjectsCron $receiveProjectsCron,
+        RetrieveProjectsCron $retrieveProjectsCron,
         PushConsoleLogHandler $pushConsoleLog,
         AppState $appState
     ) {
         parent::__construct();
 
-        $this->sendProjectsCron = $receiveProjectsCron;
+        $this->sendProjectsCron = $retrieveProjectsCron;
         $this->pushConsoleLog   = $pushConsoleLog;
         $this->appState         = $appState;
     }

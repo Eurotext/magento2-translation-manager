@@ -10,12 +10,12 @@ namespace Eurotext\TranslationManager\Cron;
 
 use Eurotext\TranslationManager\Api\Data\ProjectInterface;
 use Eurotext\TranslationManager\Api\ProjectRepositoryInterface;
-use Eurotext\TranslationManager\Service\ReceiveProjectServiceInterface;
+use Eurotext\TranslationManager\Service\RetrieveProjectServiceInterface;
 use Eurotext\TranslationManager\Setup\EntitySchema\ProjectSchema;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Psr\Log\LoggerInterface;
 
-class ReceiveProjectsCron
+class RetrieveProjectsCron
 {
 
     /**
@@ -29,9 +29,9 @@ class ReceiveProjectsCron
     private $criteriaBuilder;
 
     /**
-     * @var ReceiveProjectServiceInterface
+     * @var RetrieveProjectServiceInterface
      */
-    private $receiveProjectService;
+    private $retrieveProjectService;
 
     /**
      * @var LoggerInterface
@@ -41,12 +41,12 @@ class ReceiveProjectsCron
     public function __construct(
         ProjectRepositoryInterface $projectRepository,
         SearchCriteriaBuilder $criteriaBuilder,
-        ReceiveProjectServiceInterface $receiveProjectService,
+        RetrieveProjectServiceInterface $retrieveProjectService,
         LoggerInterface $logger
     ) {
         $this->projectRepository     = $projectRepository;
         $this->criteriaBuilder       = $criteriaBuilder;
-        $this->receiveProjectService = $receiveProjectService;
+        $this->retrieveProjectService = $retrieveProjectService;
         $this->logger                = $logger;
     }
 
@@ -60,11 +60,11 @@ class ReceiveProjectsCron
         /** @var ProjectInterface[] $projects */
         $projects = $searchResults->getItems();
 
-        // Receive Project from Eurotext
+        // Retrieve Project from Eurotext
         foreach ($projects as $project) {
             $projectId = $project->getId();
             try {
-                $result = $this->receiveProjectService->execute($project);
+                $result = $this->retrieveProjectService->execute($project);
                 if ($result === false) {
                     $msg = sprintf('project-id %d: error receiving the project', $projectId);
                     $this->logger->error($msg);

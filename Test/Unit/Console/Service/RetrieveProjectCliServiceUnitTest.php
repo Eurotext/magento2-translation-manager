@@ -11,18 +11,18 @@ namespace Eurotext\TranslationManager\Test\Unit\Console\Service;
 use Eurotext\RestApiClient\Validator\ProjectStatusValidator;
 use Eurotext\TranslationManager\Api\Data\ProjectInterface;
 use Eurotext\TranslationManager\Api\ProjectRepositoryInterface;
-use Eurotext\TranslationManager\Console\Service\ReceiveProjectCliService;
-use Eurotext\TranslationManager\Service\ReceiveProjectServiceInterface;
+use Eurotext\TranslationManager\Console\Service\RetrieveProjectCliService;
+use Eurotext\TranslationManager\Service\RetrieveProjectServiceInterface;
 use Eurotext\TranslationManager\State\ProjectStateMachine;
 use Eurotext\TranslationManager\Test\Unit\UnitTestAbstract;
 
-class ReceiveProjectCliServiceUnitTest extends UnitTestAbstract
+class RetrieveProjectCliServiceUnitTest extends UnitTestAbstract
 {
-    /** @var ReceiveProjectCliService */
+    /** @var RetrieveProjectCliService */
     protected $sut;
 
-    /** @var ReceiveProjectServiceInterface|\PHPUnit_Framework_MockObject_MockObject */
-    protected $receiveProject;
+    /** @var RetrieveProjectServiceInterface|\PHPUnit_Framework_MockObject_MockObject */
+    protected $retrieveProject;
 
     /** @var ProjectRepositoryInterface|\PHPUnit_Framework_MockObject_MockObject */
     protected $projectRepository;
@@ -37,8 +37,8 @@ class ReceiveProjectCliServiceUnitTest extends UnitTestAbstract
     {
         parent::setUp();
 
-        $this->receiveProject =
-            $this->getMockBuilder(ReceiveProjectServiceInterface::class)
+        $this->retrieveProject =
+            $this->getMockBuilder(RetrieveProjectServiceInterface::class)
                  ->setMethods(['execute'])
                  ->getMockForAbstractClass();
 
@@ -59,9 +59,9 @@ class ReceiveProjectCliServiceUnitTest extends UnitTestAbstract
                  ->getMock();
 
         $this->sut = $this->objectManager->getObject(
-            ReceiveProjectCliService::class,
+            RetrieveProjectCliService::class,
             [
-                'receiveProject'         => $this->receiveProject,
+                'retrieveProject'         => $this->retrieveProject,
                 'projectRepository'      => $this->projectRepository,
                 'projectStatusValidator' => $this->projectStatusValidator,
                 'projectStateMachine'    => $this->projectStateMachine,
@@ -73,7 +73,7 @@ class ReceiveProjectCliServiceUnitTest extends UnitTestAbstract
      * @throws \Eurotext\TranslationManager\Exception\IllegalProjectStatusChangeException
      * @throws \Eurotext\TranslationManager\Exception\InvalidProjectStatusException
      */
-    public function testItShouldReceiveAProject()
+    public function testItShouldRetrieveAProject()
     {
         $projectId = 1;
 
@@ -88,7 +88,7 @@ class ReceiveProjectCliServiceUnitTest extends UnitTestAbstract
             ->expects($this->exactly(2))->method('apply');
         //->withConsecutive(ProjectInterface::STATUS_TRANSLATED, ProjectInterface::STATUS_ACCEPTED);
 
-        $this->receiveProject->expects($this->once())->method('execute')->willReturn(true);
+        $this->retrieveProject->expects($this->once())->method('execute')->willReturn(true);
 
         $result = $this->sut->executeById($projectId);
 
@@ -112,7 +112,7 @@ class ReceiveProjectCliServiceUnitTest extends UnitTestAbstract
 
         $this->projectStateMachine->expects($this->never())->method('apply');
 
-        $this->receiveProject->expects($this->never())->method('execute');
+        $this->retrieveProject->expects($this->never())->method('execute');
 
         $result = $this->sut->executeById($projectId);
 

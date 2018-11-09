@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Eurotext\TranslationManager\Console\Command;
 
-use Eurotext\TranslationManager\Console\Service\ReceiveProjectCliService;
+use Eurotext\TranslationManager\Console\Service\RetrieveProjectCliService;
 use Eurotext\TranslationManager\Logger\PushConsoleLogHandler;
 use Magento\Framework\App\State as AppState;
 use Magento\Framework\Exception\LocalizedException;
@@ -12,16 +12,16 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class ReceiveProjectCommand extends Command
+class RetrieveProjectCommand extends Command
 {
     const ARG_ID              = 'id';
-    const COMMAND_NAME        = 'etm:project:receive';
-    const COMMAND_DESCRIPTION = 'Receive Project Translations from Eurotext';
+    const COMMAND_NAME        = 'etm:project:retrieve';
+    const COMMAND_DESCRIPTION = 'Retrieve Project Translations from Eurotext';
 
     /**
-     * @var ReceiveProjectCliService
+     * @var RetrieveProjectCliService
      */
-    private $receiveProject;
+    private $retrieveProject;
 
     /**
      * @var AppState
@@ -34,13 +34,13 @@ class ReceiveProjectCommand extends Command
     private $pushConsoleLog;
 
     public function __construct(
-        ReceiveProjectCliService $receiveProject,
+        RetrieveProjectCliService $retrieveProject,
         PushConsoleLogHandler $pushConsoleLog,
         AppState $appState
     ) {
         parent::__construct();
 
-        $this->receiveProject = $receiveProject;
+        $this->retrieveProject = $retrieveProject;
         $this->pushConsoleLog = $pushConsoleLog;
         $this->appState       = $appState;
     }
@@ -76,6 +76,6 @@ class ReceiveProjectCommand extends Command
 
         $projectId = (int)$input->getArgument(self::ARG_ID);
 
-        $this->receiveProject->executeById($projectId);
+        $this->retrieveProject->executeById($projectId);
     }
 } 

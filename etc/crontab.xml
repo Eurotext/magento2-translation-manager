@@ -7,7 +7,7 @@
         <job name="eurotext_project_send" instance="Eurotext\TranslationManager\Cron\SendProjectsCron" method="execute">
             <schedule>*/5 * * * *</schedule>
         </job>
-        <job name="eurotext_project_receive" instance="Eurotext\TranslationManager\Cron\ReceiveProjectsCron" method="execute">
+        <job name="eurotext_project_retrieve" instance="Eurotext\TranslationManager\Cron\RetrieveProjectsCron" method="execute">
             <schedule>*/5 * * * *</schedule>
         </job>
     </group>

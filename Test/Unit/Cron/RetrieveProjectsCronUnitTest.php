@@ -9,8 +9,8 @@ declare(strict_types=1);
 namespace Eurotext\TranslationManager\Test\Unit\Cron;
 
 use Eurotext\TranslationManager\Api\ProjectRepositoryInterface;
-use Eurotext\TranslationManager\Cron\ReceiveProjectsCron;
-use Eurotext\TranslationManager\Service\ReceiveProjectServiceInterface;
+use Eurotext\TranslationManager\Cron\RetrieveProjectsCron;
+use Eurotext\TranslationManager\Service\RetrieveProjectServiceInterface;
 use Eurotext\TranslationManager\Test\Builder\ProjectMockBuilder;
 use Eurotext\TranslationManager\Test\Unit\UnitTestAbstract;
 use Magento\Framework\Api\SearchCriteria;
@@ -18,13 +18,13 @@ use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\Api\SearchResults;
 use Psr\Log\LoggerInterface;
 
-class ReceiveProjectsCronUnitTest extends UnitTestAbstract
+class RetrieveProjectsCronUnitTest extends UnitTestAbstract
 {
-    /** @var ReceiveProjectsCron */
+    /** @var RetrieveProjectsCron */
     private $sut;
 
-    /** @var ReceiveProjectServiceInterface|\PHPUnit_Framework_MockObject_MockObject */
-    private $receiveProjectService;
+    /** @var RetrieveProjectServiceInterface|\PHPUnit_Framework_MockObject_MockObject */
+    private $retrieveProjectService;
 
     /** @var ProjectMockBuilder */
     private $projectMockBuilder;
@@ -54,25 +54,25 @@ class ReceiveProjectsCronUnitTest extends UnitTestAbstract
             $this->getMockBuilder(ProjectRepositoryInterface::class)
                  ->getMockForAbstractClass();
 
-        $this->receiveProjectService =
-            $this->getMockBuilder(ReceiveProjectServiceInterface::class)
+        $this->retrieveProjectService =
+            $this->getMockBuilder(RetrieveProjectServiceInterface::class)
                  ->setMethods(['execute'])
                  ->getMockForAbstractClass();
 
         $this->logger = $this->getMockBuilder(LoggerInterface::class)->getMock();
 
         $this->sut = $this->objectManager->getObject(
-            ReceiveProjectsCron::class,
+            RetrieveProjectsCron::class,
             [
                 'projectRepository'     => $this->projectRepository,
                 'criteriaBuilder'       => $this->criteriaBuilder,
-                'receiveProjectService' => $this->receiveProjectService,
+                'retrieveProjectService' => $this->retrieveProjectService,
                 'logger'                => $this->logger,
             ]
         );
     }
 
-    public function testItShouldReceiveAllProjectsInStatusAccepted()
+    public function testItShouldRetrieveAllProjectsInStatusAccepted()
     {
         $project = $this->projectMockBuilder->buildProjectMock();
 
@@ -83,14 +83,14 @@ class ReceiveProjectsCronUnitTest extends UnitTestAbstract
         $this->criteriaBuilder->expects($this->once())->method('create')->willReturn(new SearchCriteria());
         $this->projectRepository->expects($this->once())->method('getList')->willReturn($searchResults);
 
-        $this->receiveProjectService->expects($this->once())->method('execute')->with($project)->willReturn(true);
+        $this->retrieveProjectService->expects($this->once())->method('execute')->with($project)->willReturn(true);
 
         $this->logger->expects($this->never())->method('error');
 
         $this->sut->execute();
     }
 
-    public function testItShouldLogReceiveExceptionOnResultFalse()
+    public function testItShouldLogRetrieveExceptionOnResultFalse()
     {
         $project = $this->projectMockBuilder->buildProjectMock();
 
@@ -101,14 +101,14 @@ class ReceiveProjectsCronUnitTest extends UnitTestAbstract
         $this->criteriaBuilder->expects($this->once())->method('create')->willReturn(new SearchCriteria());
         $this->projectRepository->expects($this->once())->method('getList')->willReturn($searchResults);
 
-        $this->receiveProjectService->expects($this->once())->method('execute')->with($project)->willReturn(false);
+        $this->retrieveProjectService->expects($this->once())->method('execute')->with($project)->willReturn(false);
 
         $this->logger->expects($this->once())->method('error');
 
         $this->sut->execute();
     }
 
-    public function testItShouldLogReceiveExceptions()
+    public function testItShouldLogRetrieveExceptions()
     {
         $project = $this->projectMockBuilder->buildProjectMock();
 
@@ -119,7 +119,7 @@ class ReceiveProjectsCronUnitTest extends UnitTestAbstract
         $this->criteriaBuilder->expects($this->once())->method('create')->willReturn(new SearchCriteria());
         $this->projectRepository->expects($this->once())->method('getList')->willReturn($searchResults);
 
-        $this->receiveProjectService
+        $this->retrieveProjectService
             ->expects($this->once())->method('execute')
             ->with($project)->willThrowException(new \Exception());
 

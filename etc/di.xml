@@ -8,7 +8,7 @@
     <preference for="Eurotext\TranslationManager\Service\Project\CreateProjectEntitiesServiceInterface" type="Eurotext\TranslationManager\Service\Project\CreateProjectEntitiesService" />
     <preference for="Eurotext\TranslationManager\Service\Project\FetchProjectEntitiesServiceInterface" type="Eurotext\TranslationManager\Service\Project\FetchProjectEntitiesService" />
     <preference for="Eurotext\TranslationManager\Service\Project\TransitionProjectServiceInterface" type="Eurotext\TranslationManager\Service\Project\TransitionProjectService" />
-    <preference for="Eurotext\TranslationManager\Service\ReceiveProjectServiceInterface" type="Eurotext\TranslationManager\Service\ReceiveProjectService" />
+    <preference for="Eurotext\TranslationManager\Service\RetrieveProjectServiceInterface" type="Eurotext\TranslationManager\Service\RetrieveProjectService" />
     <preference for="Eurotext\TranslationManager\Service\SendProjectServiceInterface" type="Eurotext\TranslationManager\Service\SendProjectService" />
 
     <preference for="Eurotext\RestApiClient\Api\ProjectV1ApiInterface" type="Eurotext\TranslationManager\ApiClient\ProjectV1Api" />
@@ -66,16 +66,16 @@
         </arguments>
     </type>
 
-    <type name="Eurotext\TranslationManager\Console\Command\ReceiveProjectCommand">
+    <type name="Eurotext\TranslationManager\Console\Command\RetrieveProjectCommand">
         <arguments>
-            <argument name="receiveProject" xsi:type="object">Eurotext\TranslationManager\Console\Service\ReceiveProjectCliService\Proxy</argument>
+            <argument name="retrieveProject" xsi:type="object">Eurotext\TranslationManager\Console\Service\RetrieveProjectCliService\Proxy</argument>
             <argument name="appState" xsi:type="object">Magento\Framework\App\State\Proxy</argument>
         </arguments>
     </type>
 
-    <type name="Eurotext\TranslationManager\Console\Command\ReceiveProjectsCommand">
+    <type name="Eurotext\TranslationManager\Console\Command\RetrieveProjectsCommand">
         <arguments>
-            <argument name="receiveProjectsCron" xsi:type="object">Eurotext\TranslationManager\Cron\ReceiveProjectsCron\Proxy</argument>
+            <argument name="retrieveProjectsCron" xsi:type="object">Eurotext\TranslationManager\Cron\RetrieveProjectsCron\Proxy</argument>
             <argument name="appState" xsi:type="object">Magento\Framework\App\State\Proxy</argument>
         </arguments>
     </type>
@@ -122,7 +122,7 @@
         </arguments>
     </type>
 
-    <type name="Eurotext\TranslationManager\Receiver\EntityReceiverPool">
+    <type name="Eurotext\TranslationManager\Retriever\EntityRetrieverPool">
         <arguments>
             <argument name="items" xsi:type="array">
             </argument>
@@ -142,8 +142,8 @@
                 <item name="etm_project_new" xsi:type="object">Eurotext\TranslationManager\Console\Command\NewProjectCommand</item>
                 <item name="etm_project_send" xsi:type="object">Eurotext\TranslationManager\Console\Command\SendProjectCommand</item>
                 <item name="etm_project_send_all" xsi:type="object">Eurotext\TranslationManager\Console\Command\SendProjectsCommand</item>
-                <item name="etm_project_receive" xsi:type="object">Eurotext\TranslationManager\Console\Command\ReceiveProjectCommand</item>
-                <item name="etm_project_receive_all" xsi:type="object">Eurotext\TranslationManager\Console\Command\ReceiveProjectsCommand</item>
+                <item name="etm_project_retrieve" xsi:type="object">Eurotext\TranslationManager\Console\Command\RetrieveProjectCommand</item>
+                <item name="etm_project_retrieve_all" xsi:type="object">Eurotext\TranslationManager\Console\Command\RetrieveProjectsCommand</item>
                 <item name="etm_project_status_accept" xsi:type="object">Eurotext\TranslationManager\Console\Command\SetStatusAcceptCommand</item>
                 <item name="etm_project_status_transfer" xsi:type="object">Eurotext\TranslationManager\Console\Command\SetStatusTransferCommand</item>
                 <item name="etm_project_status_check" xsi:type="object">Eurotext\TranslationManager\Console\Command\CheckStatusCommand</item>

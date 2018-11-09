@@ -8,20 +8,20 @@ declare(strict_types=1);
 
 namespace Eurotext\TranslationManager\Test\Unit\Console\Command;
 
-use Eurotext\TranslationManager\Console\Command\ReceiveProjectCommand;
-use Eurotext\TranslationManager\Console\Service\ReceiveProjectCliService;
+use Eurotext\TranslationManager\Console\Command\RetrieveProjectCommand;
+use Eurotext\TranslationManager\Console\Service\RetrieveProjectCliService;
 use Eurotext\TranslationManager\Logger\PushConsoleLogHandler;
 use Eurotext\TranslationManager\Test\Builder\ConsoleMockBuilder;
 use Eurotext\TranslationManager\Test\Unit\UnitTestAbstract;
 use Magento\Framework\App\State;
 use Magento\Framework\Exception\LocalizedException;
 
-class ReceiveProjectCommandUnitTest extends UnitTestAbstract
+class RetrieveProjectCommandUnitTest extends UnitTestAbstract
 {
-    /** @var ReceiveProjectCliService|\PHPUnit_Framework_MockObject_MockObject */
-    protected $receiveProject;
+    /** @var RetrieveProjectCliService|\PHPUnit_Framework_MockObject_MockObject */
+    protected $retrieveProject;
 
-    /** @var ReceiveProjectCommand */
+    /** @var RetrieveProjectCommand */
     protected $sut;
 
     /** @var ConsoleMockBuilder */
@@ -38,8 +38,8 @@ class ReceiveProjectCommandUnitTest extends UnitTestAbstract
 
         $this->builder = new ConsoleMockBuilder($this);
 
-        $this->receiveProject =
-            $this->getMockBuilder(ReceiveProjectCliService::class)
+        $this->retrieveProject =
+            $this->getMockBuilder(RetrieveProjectCliService::class)
                  ->setMethods(['executeById'])
                  ->disableOriginalConstructor()
                  ->getMock();
@@ -52,8 +52,8 @@ class ReceiveProjectCommandUnitTest extends UnitTestAbstract
         $this->appState = $this->getMockBuilder(State::class)->disableOriginalConstructor()->getMock();
 
         $this->sut = $this->objectManager->getObject(
-            ReceiveProjectCommand::class, [
-                'receiveProject' => $this->receiveProject,
+            RetrieveProjectCommand::class, [
+                'retrieveProject' => $this->retrieveProject,
                 'pushConsoleLog' => $this->pushConsoleLog,
                 'appState'       => $this->appState,
             ]
@@ -64,7 +64,7 @@ class ReceiveProjectCommandUnitTest extends UnitTestAbstract
     {
         $projectId = 1;
 
-        $this->receiveProject->expects($this->once())->method('executeById')
+        $this->retrieveProject->expects($this->once())->method('executeById')
                              ->with($projectId)->willReturn(['project' => 1]);
 
         $input = $this->builder->buildConsoleInputMock();
@@ -83,7 +83,7 @@ class ReceiveProjectCommandUnitTest extends UnitTestAbstract
         $this->appState->expects($this->once())->method('setAreaCode')->with('adminhtml')
                        ->willThrowException($exception);
 
-        $this->receiveProject->expects($this->once())->method('executeById')
+        $this->retrieveProject->expects($this->once())->method('executeById')
                              ->with($projectId)->willReturn(['project' => 1]);
 
         $input = $this->builder->buildConsoleInputMock();

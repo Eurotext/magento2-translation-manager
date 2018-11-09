@@ -8,22 +8,22 @@ declare(strict_types=1);
 
 namespace Eurotext\TranslationManager\Test\Unit\Console\Command;
 
-use Eurotext\TranslationManager\Console\Command\ReceiveProjectsCommand;
-use Eurotext\TranslationManager\Cron\ReceiveProjectsCron;
+use Eurotext\TranslationManager\Console\Command\RetrieveProjectsCommand;
+use Eurotext\TranslationManager\Cron\RetrieveProjectsCron;
 use Eurotext\TranslationManager\Test\Builder\ConsoleMockBuilder;
 use Eurotext\TranslationManager\Test\Unit\UnitTestAbstract;
 use Symfony\Component\Console\Formatter\OutputFormatterInterface;
 
-class ReceiveProjectsCommandUnitTest extends UnitTestAbstract
+class RetrieveProjectsCommandUnitTest extends UnitTestAbstract
 {
-    /** @var ReceiveProjectsCommand */
+    /** @var RetrieveProjectsCommand */
     protected $sut;
 
     /** @var ConsoleMockBuilder */
     protected $builder;
 
-    /** @var ReceiveProjectsCron|\PHPUnit_Framework_MockObject_MockObject */
-    protected $receiveProjectsCron;
+    /** @var RetrieveProjectsCron|\PHPUnit_Framework_MockObject_MockObject */
+    protected $retrieveProjectsCron;
 
     protected function setUp()
     {
@@ -31,16 +31,16 @@ class ReceiveProjectsCommandUnitTest extends UnitTestAbstract
 
         $this->builder = new ConsoleMockBuilder($this);
 
-        $this->receiveProjectsCron =
-            $this->getMockBuilder(ReceiveProjectsCron::class)
+        $this->retrieveProjectsCron =
+            $this->getMockBuilder(RetrieveProjectsCron::class)
                  ->disableOriginalConstructor()
                  ->setMethods(['execute'])
                  ->getMock();
 
         $this->sut = $this->objectManager->getObject(
-            ReceiveProjectsCommand::class,
+            RetrieveProjectsCommand::class,
             [
-                'receiveProjectsCron' => $this->receiveProjectsCron,
+                'retrieveProjectsCron' => $this->retrieveProjectsCron,
             ]
         );
     }
@@ -53,7 +53,7 @@ class ReceiveProjectsCommandUnitTest extends UnitTestAbstract
         $outputFormatter = $this->getMockBuilder(OutputFormatterInterface::class)->getMock();
         $output->method('getFormatter')->willReturn($outputFormatter);
 
-        $this->receiveProjectsCron->expects($this->once())->method('execute');
+        $this->retrieveProjectsCron->expects($this->once())->method('execute');
 
         $this->sut->run($input, $output);
     }

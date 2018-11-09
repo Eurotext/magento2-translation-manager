@@ -9,9 +9,9 @@ declare(strict_types=1);
 namespace Eurotext\TranslationManager\Test\Unit\Service;
 
 use Eurotext\TranslationManager\Api\Data\ProjectInterface;
-use Eurotext\TranslationManager\Api\EntityReceiverInterface;
+use Eurotext\TranslationManager\Api\EntityRetrieverInterface;
 use Eurotext\TranslationManager\Model\Project;
-use Eurotext\TranslationManager\Receiver\EntityReceiverPool;
+use Eurotext\TranslationManager\Retriever\EntityRetrieverPool;
 use Eurotext\TranslationManager\Sender\EntitySenderPool;
 use Eurotext\TranslationManager\Service\Project\FetchProjectEntitiesService;
 use Eurotext\TranslationManager\Test\Unit\UnitTestAbstract;
@@ -20,7 +20,7 @@ use Magento\Store\Model\StoreManagerInterface;
 
 class FetchProjectEntitesUnitTest extends UnitTestAbstract
 {
-    const ENTITY_RECEIVER_KEY = 'entityReceiverKey';
+    const ENTITY_RECEIVER_KEY = 'entityRetrieverKey';
 
     /** @var FetchProjectEntitiesService */
     private $sut;
@@ -28,8 +28,8 @@ class FetchProjectEntitesUnitTest extends UnitTestAbstract
     /** @var EntitySenderPool */
     private $entitySenderPool;
 
-    /** @var EntityReceiverInterface|\PHPUnit_Framework_MockObject_MockObject */
-    private $entityReceiver;
+    /** @var EntityRetrieverInterface|\PHPUnit_Framework_MockObject_MockObject */
+    private $entityRetriever;
 
     /** @var StoreManagerInterface|\PHPUnit_Framework_MockObject_MockObject */
     private $storeManager;
@@ -41,12 +41,12 @@ class FetchProjectEntitesUnitTest extends UnitTestAbstract
     {
         parent::setUp();
 
-        $this->entityReceiver =
-            $this->getMockBuilder(EntityReceiverInterface::class)
-                 ->setMethods(['receive'])
+        $this->entityRetriever =
+            $this->getMockBuilder(EntityRetrieverInterface::class)
+                 ->setMethods(['retrieve'])
                  ->getMockForAbstractClass();
 
-        $this->entitySenderPool = new EntityReceiverPool([self::ENTITY_RECEIVER_KEY => $this->entityReceiver]);
+        $this->entitySenderPool = new EntityRetrieverPool([self::ENTITY_RECEIVER_KEY => $this->entityRetriever]);
 
         $this->store = $this->getMockBuilder(StoreInterface::class)->getMock();
 
@@ -56,20 +56,20 @@ class FetchProjectEntitesUnitTest extends UnitTestAbstract
         $this->sut = $this->objectManager->getObject(
             FetchProjectEntitiesService::class,
             [
-                'entityReceiverPool' => $this->entitySenderPool,
+                'entityRetrieverPool' => $this->entitySenderPool,
                 'storeManager'       => $this->storeManager,
             ]
         );
     }
 
-    public function testItShouldReceiveItemGetRequestWithEntityReceivers()
+    public function testItShouldRetrieveItemGetRequestWithEntityRetrievers()
     {
         /** @var ProjectInterface $project */
         $project = $this->getMockBuilder(Project::class)
                         ->disableOriginalConstructor()
                         ->getMock();
 
-        $this->entityReceiver->expects($this->once())->method('receive')->with($project);
+        $this->entityRetriever->expects($this->once())->method('retrieve')->with($project);
 
         $result = $this->sut->execute($project);
 
@@ -80,17 +80,17 @@ class FetchProjectEntitesUnitTest extends UnitTestAbstract
         $this->assertEquals(1, $result[self::ENTITY_RECEIVER_KEY]);
     }
 
-    public function testItShouldReceiveItemGetRequestAndCatchEntityReceiverException()
+    public function testItShouldRetrieveItemGetRequestAndCatchEntityRetrieverException()
     {
-        $exceptionMessage = 'There was was an error during Receiver exceution';
+        $exceptionMessage = 'There was was an error during Retriever exceution';
 
         /** @var ProjectInterface $project */
         $project = $this->getMockBuilder(Project::class)
                         ->disableOriginalConstructor()
                         ->getMock();
 
-        $this->entityReceiver->expects($this->once())
-                             ->method('receive')
+        $this->entityRetriever->expects($this->once())
+                             ->method('retrieve')
                              ->with($project)
                              ->willThrowException(new \Exception($exceptionMessage));
 

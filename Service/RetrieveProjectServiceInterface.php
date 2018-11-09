@@ -11,7 +11,7 @@ use Eurotext\TranslationManager\Api\Data\ProjectInterface;
 use Eurotext\TranslationManager\Exception\IllegalProjectStatusChangeException;
 use Eurotext\TranslationManager\Exception\InvalidProjectStatusException;
 
-interface ReceiveProjectServiceInterface
+interface RetrieveProjectServiceInterface
 {
     /**
      * @param int $id
