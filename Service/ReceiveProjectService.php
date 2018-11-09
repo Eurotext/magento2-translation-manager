@@ -14,11 +14,10 @@ use Eurotext\TranslationManager\Api\ProjectRepositoryInterface;
 use Eurotext\TranslationManager\Exception\IllegalProjectStatusChangeException;
 use Eurotext\TranslationManager\Exception\InvalidProjectStatusException;
 use Eurotext\TranslationManager\Service\Project\FetchProjectEntitiesServiceInterface;
-use Eurotext\TranslationManager\Service\Project\TransitionProjectService;
 use Eurotext\TranslationManager\Service\Project\TransitionProjectServiceInterface;
 use Eurotext\TranslationManager\State\ProjectStateMachine;
 
-class ReceiveProjectService
+class ReceiveProjectService implements ReceiveProjectServiceInterface
 {
     /**
      * @var ProjectRepositoryInterface

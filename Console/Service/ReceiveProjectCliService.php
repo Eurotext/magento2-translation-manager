@@ -13,13 +13,13 @@ use Eurotext\RestApiClient\Validator\ProjectStatusValidatorInterface;
 use Eurotext\TranslationManager\Api\Data\ProjectInterface;
 use Eurotext\TranslationManager\Api\ProjectRepositoryInterface;
 use Eurotext\TranslationManager\Logger\ApiLogger;
-use Eurotext\TranslationManager\Service\ReceiveProjectService;
+use Eurotext\TranslationManager\Service\ReceiveProjectServiceInterface;
 use Eurotext\TranslationManager\State\ProjectStateMachine;
 
 class ReceiveProjectCliService
 {
     /**
-     * @var ReceiveProjectService
+     * @var ReceiveProjectServiceInterface
      */
     private $receiveProject;
 
@@ -44,7 +44,7 @@ class ReceiveProjectCliService
     private $logger;
 
     public function __construct(
-        ReceiveProjectService $receiveProject,
+        ReceiveProjectServiceInterface $receiveProject,
         ProjectRepositoryInterface $projectRepository,
         ProjectStatusValidatorInterface $projectStatusValidator,
         ProjectStateMachine $projectStateMachine,

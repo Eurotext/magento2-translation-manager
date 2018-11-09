@@ -10,7 +10,7 @@ namespace Eurotext\TranslationManager\Test\Unit\Cron;
 
 use Eurotext\TranslationManager\Api\ProjectRepositoryInterface;
 use Eurotext\TranslationManager\Cron\ReceiveProjectsCron;
-use Eurotext\TranslationManager\Service\ReceiveProjectService;
+use Eurotext\TranslationManager\Service\ReceiveProjectServiceInterface;
 use Eurotext\TranslationManager\Test\Builder\ProjectMockBuilder;
 use Eurotext\TranslationManager\Test\Unit\UnitTestAbstract;
 use Magento\Framework\Api\SearchCriteria;
@@ -23,7 +23,7 @@ class ReceiveProjectsCronUnitTest extends UnitTestAbstract
     /** @var ReceiveProjectsCron */
     private $sut;
 
-    /** @var ReceiveProjectService|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var ReceiveProjectServiceInterface|\PHPUnit_Framework_MockObject_MockObject */
     private $receiveProjectService;
 
     /** @var ProjectMockBuilder */
@@ -53,7 +53,7 @@ class ReceiveProjectsCronUnitTest extends UnitTestAbstract
         $this->projectRepository = $this->getMockBuilder(ProjectRepositoryInterface::class)->getMock();
 
         $this->receiveProjectService =
-            $this->getMockBuilder(ReceiveProjectService::class)
+            $this->getMockBuilder(ReceiveProjectServiceInterface::class)
                  ->disableOriginalConstructor()
                  ->setMethods(['execute'])
                  ->getMock();

@@ -12,7 +12,7 @@ use Eurotext\RestApiClient\Validator\ProjectStatusValidator;
 use Eurotext\TranslationManager\Api\Data\ProjectInterface;
 use Eurotext\TranslationManager\Api\ProjectRepositoryInterface;
 use Eurotext\TranslationManager\Console\Service\ReceiveProjectCliService;
-use Eurotext\TranslationManager\Service\ReceiveProjectService;
+use Eurotext\TranslationManager\Service\ReceiveProjectServiceInterface;
 use Eurotext\TranslationManager\State\ProjectStateMachine;
 use Eurotext\TranslationManager\Test\Unit\UnitTestAbstract;
 
@@ -21,7 +21,7 @@ class ReceiveProjectCliServiceUnitTest extends UnitTestAbstract
     /** @var ReceiveProjectCliService */
     protected $sut;
 
-    /** @var ReceiveProjectService|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var ReceiveProjectServiceInterface|\PHPUnit_Framework_MockObject_MockObject */
     protected $receiveProject;
 
     /** @var ProjectRepositoryInterface|\PHPUnit_Framework_MockObject_MockObject */
@@ -38,7 +38,7 @@ class ReceiveProjectCliServiceUnitTest extends UnitTestAbstract
         parent::setUp();
 
         $this->receiveProject =
-            $this->getMockBuilder(ReceiveProjectService::class)
+            $this->getMockBuilder(ReceiveProjectServiceInterface::class)
                  ->disableOriginalConstructor()
                  ->setMethods(['execute'])
                  ->getMock();
@@ -87,7 +87,7 @@ class ReceiveProjectCliServiceUnitTest extends UnitTestAbstract
 
         $this->projectStateMachine
             ->expects($this->exactly(2))->method('apply');
-            //->withConsecutive(ProjectInterface::STATUS_TRANSLATED, ProjectInterface::STATUS_ACCEPTED);
+        //->withConsecutive(ProjectInterface::STATUS_TRANSLATED, ProjectInterface::STATUS_ACCEPTED);
 
         $this->receiveProject->expects($this->once())->method('execute')->willReturn(true);
 
