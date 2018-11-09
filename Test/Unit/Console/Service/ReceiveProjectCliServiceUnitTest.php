@@ -6,7 +6,7 @@ declare(strict_types=1);
  * @see PROJECT_LICENSE.txt
  */
 
-namespace Eurotext\TranslationManager\Test\Unit\Command\Service;
+namespace Eurotext\TranslationManager\Test\Unit\Console\Service;
 
 use Eurotext\RestApiClient\Validator\ProjectStatusValidator;
 use Eurotext\TranslationManager\Api\Data\ProjectInterface;

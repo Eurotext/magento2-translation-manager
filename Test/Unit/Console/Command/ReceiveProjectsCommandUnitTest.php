@@ -6,7 +6,7 @@ declare(strict_types=1);
  * @see PROJECT_LICENSE.txt
  */
 
-namespace Eurotext\TranslationManager\Test\Unit\Command;
+namespace Eurotext\TranslationManager\Test\Unit\Console\Command;
 
 use Eurotext\TranslationManager\Console\Command\ReceiveProjectsCommand;
 use Eurotext\TranslationManager\Cron\ReceiveProjectsCron;
