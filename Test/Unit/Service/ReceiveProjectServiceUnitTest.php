@@ -16,6 +16,7 @@ use Eurotext\TranslationManager\Model\Project;
 use Eurotext\TranslationManager\Repository\ProjectRepository;
 use Eurotext\TranslationManager\Service\Project\FetchProjectEntitiesServiceInterface;
 use Eurotext\TranslationManager\Service\Project\TransitionProjectService;
+use Eurotext\TranslationManager\Service\Project\TransitionProjectServiceInterface;
 use Eurotext\TranslationManager\Service\ReceiveProjectService;
 use Eurotext\TranslationManager\State\ProjectStateMachine;
 use Eurotext\TranslationManager\Test\Unit\UnitTestAbstract;
@@ -31,7 +32,7 @@ class ReceiveProjectServiceUnitTest extends UnitTestAbstract
     /** @var FetchProjectEntitiesServiceInterface|\PHPUnit_Framework_MockObject_MockObject */
     private $fetchProjectEntities;
 
-    /** @var TransitionProjectService|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var TransitionProjectServiceInterface|\PHPUnit_Framework_MockObject_MockObject */
     private $transitionProject;
 
     /** @var ProjectRepository|\PHPUnit_Framework_MockObject_MockObject */

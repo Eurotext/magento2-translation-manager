@@ -7,6 +7,7 @@
     <preference for="Eurotext\TranslationManager\Service\Project\CreateProjectServiceInterface" type="Eurotext\TranslationManager\Service\Project\CreateProjectService" />
     <preference for="Eurotext\TranslationManager\Service\Project\CreateProjectEntitiesServiceInterface" type="Eurotext\TranslationManager\Service\Project\CreateProjectEntitiesService" />
     <preference for="Eurotext\TranslationManager\Service\Project\FetchProjectEntitiesServiceInterface" type="Eurotext\TranslationManager\Service\Project\FetchProjectEntitiesService" />
+    <preference for="Eurotext\TranslationManager\Service\Project\TransitionProjectServiceInterface" type="Eurotext\TranslationManager\Service\Project\TransitionProjectService" />
 
     <preference for="Eurotext\RestApiClient\Api\ProjectV1ApiInterface" type="Eurotext\TranslationManager\ApiClient\ProjectV1Api" />
     <preference for="Eurotext\RestApiClient\Api\Project\ItemV1ApiInterface" type="Eurotext\TranslationManager\ApiClient\ItemV1Api" />

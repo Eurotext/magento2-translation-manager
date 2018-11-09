@@ -14,10 +14,9 @@ use Eurotext\TranslationManager\Api\ProjectRepositoryInterface;
 use Eurotext\TranslationManager\Exception\InvalidProjectStatusException;
 use Eurotext\TranslationManager\Model\Project;
 use Eurotext\TranslationManager\Repository\ProjectRepository;
-use Eurotext\TranslationManager\Service\Project\CreateProjectEntitiesService;
 use Eurotext\TranslationManager\Service\Project\CreateProjectEntitiesServiceInterface;
-use Eurotext\TranslationManager\Service\Project\CreateProjectService;
-use Eurotext\TranslationManager\Service\Project\TransitionProjectService;
+use Eurotext\TranslationManager\Service\Project\CreateProjectServiceInterface;
+use Eurotext\TranslationManager\Service\Project\TransitionProjectServiceInterface;
 use Eurotext\TranslationManager\Service\SendProjectService;
 use Eurotext\TranslationManager\State\ProjectStateMachine;
 use Eurotext\TranslationManager\Test\Unit\UnitTestAbstract;
@@ -27,7 +26,7 @@ class SendProjectServiceUnitTest extends UnitTestAbstract
     /** @var SendProjectService */
     private $sut;
 
-    /** @var CreateProjectService|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var CreateProjectServiceInterface|\PHPUnit_Framework_MockObject_MockObject */
     private $createProject;
 
     /** @var CreateProjectEntitiesServiceInterface|\PHPUnit_Framework_MockObject_MockObject */
@@ -36,7 +35,7 @@ class SendProjectServiceUnitTest extends UnitTestAbstract
     /** @var ProjectRepository|\PHPUnit_Framework_MockObject_MockObject */
     private $projectRepository;
 
-    /** @var TransitionProjectService|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var TransitionProjectServiceInterface|\PHPUnit_Framework_MockObject_MockObject */
     private $transitionProject;
 
     /** @var ProjectStateMachine|\PHPUnit_Framework_MockObject_MockObject */
@@ -52,19 +51,19 @@ class SendProjectServiceUnitTest extends UnitTestAbstract
                  ->getMockForAbstractClass();
 
         $this->createProject =
-            $this->getMockBuilder(CreateProjectService::class)
+            $this->getMockBuilder(CreateProjectServiceInterface::class)
                  ->disableOriginalConstructor()
                  ->setMethods(['execute'])
                  ->getMock();
 
         $this->createProjectEntities =
-            $this->getMockBuilder(CreateProjectEntitiesService::class)
+            $this->getMockBuilder(CreateProjectEntitiesServiceInterface::class)
                  ->disableOriginalConstructor()
                  ->setMethods(['execute'])
                  ->getMock();
 
         $this->transitionProject =
-            $this->getMockBuilder(TransitionProjectService::class)
+            $this->getMockBuilder(TransitionProjectServiceInterface::class)
                  ->disableOriginalConstructor()
                  ->setMethods(['execute'])
                  ->getMock();

@@ -15,7 +15,7 @@ use Eurotext\TranslationManager\Api\Data\ProjectInterface;
 use GuzzleHttp\Exception\GuzzleException;
 use Psr\Log\LoggerInterface;
 
-class TransitionProjectService
+class TransitionProjectService implements TransitionProjectServiceInterface
 {
     private $allowedStatusCode = [200, 201, 202, 203, 204];
 

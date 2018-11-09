@@ -16,6 +16,7 @@ use Eurotext\TranslationManager\Exception\InvalidProjectStatusException;
 use Eurotext\TranslationManager\Service\Project\CreateProjectEntitiesServiceInterface;
 use Eurotext\TranslationManager\Service\Project\CreateProjectServiceInterface;
 use Eurotext\TranslationManager\Service\Project\TransitionProjectService;
+use Eurotext\TranslationManager\Service\Project\TransitionProjectServiceInterface;
 use Eurotext\TranslationManager\State\ProjectStateMachine;
 
 class SendProjectService
@@ -37,7 +38,7 @@ class SendProjectService
     private $projectStateMachine;
 
     /**
-     * @var TransitionProjectService
+     * @var TransitionProjectServiceInterface
      */
     private $transitionProject;
 
@@ -45,7 +46,7 @@ class SendProjectService
         ProjectRepositoryInterface $projectRepository,
         CreateProjectServiceInterface $createProject,
         CreateProjectEntitiesServiceInterface $createProjectEntities,
-        TransitionProjectService $transitionProject,
+        TransitionProjectServiceInterface $transitionProject,
         ProjectStateMachine $projectStateMachine
     ) {
         $this->projectRepository     = $projectRepository;

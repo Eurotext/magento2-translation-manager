@@ -15,6 +15,7 @@ use Eurotext\TranslationManager\Exception\IllegalProjectStatusChangeException;
 use Eurotext\TranslationManager\Exception\InvalidProjectStatusException;
 use Eurotext\TranslationManager\Service\Project\FetchProjectEntitiesServiceInterface;
 use Eurotext\TranslationManager\Service\Project\TransitionProjectService;
+use Eurotext\TranslationManager\Service\Project\TransitionProjectServiceInterface;
 use Eurotext\TranslationManager\State\ProjectStateMachine;
 
 class ReceiveProjectService
@@ -35,14 +36,14 @@ class ReceiveProjectService
     private $projectStateMachine;
 
     /**
-     * @var TransitionProjectService
+     * @var TransitionProjectServiceInterface
      */
     private $transitionProject;
 
     public function __construct(
         ProjectRepositoryInterface $projectRepository,
         FetchProjectEntitiesServiceInterface $fetchProjectEntities,
-        TransitionProjectService $transitionProject,
+        TransitionProjectServiceInterface $transitionProject,
         ProjectStateMachine $projectStateMachine
     ) {
         $this->projectRepository    = $projectRepository;
