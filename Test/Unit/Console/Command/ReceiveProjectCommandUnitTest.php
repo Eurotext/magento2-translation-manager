@@ -18,7 +18,7 @@ use Magento\Framework\Exception\LocalizedException;
 
 class ReceiveProjectCommandUnitTest extends UnitTestAbstract
 {
-    /** @var \Eurotext\TranslationManager\Service\SendProjectService|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var ReceiveProjectCliService|\PHPUnit_Framework_MockObject_MockObject */
     protected $receiveProject;
 
     /** @var ReceiveProjectCommand */

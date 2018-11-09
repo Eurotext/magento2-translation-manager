@@ -17,7 +17,7 @@ use Magento\Framework\Exception\LocalizedException;
 
 class SeedEntitiesCommandUnitTest extends UnitTestAbstract
 {
-    /** @var \Eurotext\TranslationManager\Service\SendProjectService|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var SeedEntitiesService|\PHPUnit_Framework_MockObject_MockObject */
     protected $seedEntitiesService;
 
     /** @var SeedEntitiesCommand */
