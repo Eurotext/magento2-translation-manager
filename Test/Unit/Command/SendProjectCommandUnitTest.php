@@ -8,7 +8,7 @@ declare(strict_types=1);
 
 namespace Eurotext\TranslationManager\Test\Unit\Command;
 
-use Eurotext\TranslationManager\Command\SendProjectCommand;
+use Eurotext\TranslationManager\Console\Command\SendProjectCommand;
 use Eurotext\TranslationManager\Logger\PushConsoleLogHandler;
 use Eurotext\TranslationManager\Service\SendProjectService;
 use Eurotext\TranslationManager\Test\Builder\ConsoleMockBuilder;

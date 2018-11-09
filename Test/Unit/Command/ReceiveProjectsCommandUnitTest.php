@@ -8,7 +8,7 @@ declare(strict_types=1);
 
 namespace Eurotext\TranslationManager\Test\Unit\Command;
 
-use Eurotext\TranslationManager\Command\ReceiveProjectsCommand;
+use Eurotext\TranslationManager\Console\Command\ReceiveProjectsCommand;
 use Eurotext\TranslationManager\Cron\ReceiveProjectsCron;
 use Eurotext\TranslationManager\Test\Builder\ConsoleMockBuilder;
 use Eurotext\TranslationManager\Test\Unit\UnitTestAbstract;

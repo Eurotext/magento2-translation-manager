@@ -1,11 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace Eurotext\TranslationManager\Command;
+namespace Eurotext\TranslationManager\Console\Command;
 
-use Eurotext\TranslationManager\Cron\CheckProjectStatusCron;
+use Eurotext\TranslationManager\Console\Command\Service\ReceiveProjectCliService;
 use Eurotext\TranslationManager\Logger\PushConsoleLogHandler;
-use Eurotext\TranslationManager\Service\Project\CheckProjectStatusServiceInterface;
 use Magento\Framework\App\State as AppState;
 use Magento\Framework\Exception\LocalizedException;
 use Symfony\Component\Console\Command\Command;
@@ -13,11 +12,16 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class CheckProjectStatusCommand extends Command
+class ReceiveProjectCommand extends Command
 {
     const ARG_ID              = 'id';
-    const COMMAND_NAME        = 'etm:project:check-status';
-    const COMMAND_DESCRIPTION = 'Check Project Status against ETM2 API';
+    const COMMAND_NAME        = 'etm:project:receive';
+    const COMMAND_DESCRIPTION = 'Receive Project Translations from ETM2';
+
+    /**
+     * @var ReceiveProjectCliService
+     */
+    private $receiveProject;
 
     /**
      * @var AppState
@@ -29,28 +33,16 @@ class CheckProjectStatusCommand extends Command
      */
     private $pushConsoleLog;
 
-    /**
-     * @var CheckProjectStatusServiceInterface
-     */
-    private $checkProjectStatus;
-
-    /**
-     * @var CheckProjectStatusCron
-     */
-    private $checkProjectStatusCron;
-
     public function __construct(
-        CheckProjectStatusServiceInterface $checkProjectStatus,
-        CheckProjectStatusCron $checkProjectStatusCron,
+        ReceiveProjectCliService $receiveProject,
         PushConsoleLogHandler $pushConsoleLog,
         AppState $appState
     ) {
         parent::__construct();
 
-        $this->checkProjectStatus     = $checkProjectStatus;
-        $this->checkProjectStatusCron = $checkProjectStatusCron;
-        $this->pushConsoleLog         = $pushConsoleLog;
-        $this->appState               = $appState;
+        $this->receiveProject = $receiveProject;
+        $this->pushConsoleLog = $pushConsoleLog;
+        $this->appState       = $appState;
     }
 
     protected function configure()
@@ -58,7 +50,7 @@ class CheckProjectStatusCommand extends Command
         $this->setName(self::COMMAND_NAME);
         $this->setDescription(self::COMMAND_DESCRIPTION);
 
-        $this->addArgument(self::ARG_ID, InputArgument::OPTIONAL);
+        $this->addArgument(self::ARG_ID, InputArgument::REQUIRED);
 
         parent::configure();
     }
@@ -84,10 +76,6 @@ class CheckProjectStatusCommand extends Command
 
         $projectId = (int)$input->getArgument(self::ARG_ID);
 
-        if ($projectId > 0) {
-            $this->checkProjectStatus->executeById($projectId);
-        } else {
-            $this->checkProjectStatusCron->execute();
-        }
+        $this->receiveProject->executeById($projectId);
     }
 } 

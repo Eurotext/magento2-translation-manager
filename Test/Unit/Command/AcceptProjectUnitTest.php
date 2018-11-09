@@ -8,7 +8,7 @@ declare(strict_types=1);
 
 namespace Eurotext\TranslationManager\Test\Unit\Command;
 
-use Eurotext\TranslationManager\Command\AcceptProjectCommand;
+use Eurotext\TranslationManager\Console\Command\AcceptProjectCommand;
 use Eurotext\TranslationManager\Exception\IllegalProjectStatusChangeException;
 use Eurotext\TranslationManager\State\ProjectStateMachine;
 use Eurotext\TranslationManager\Test\Builder\ConsoleMockBuilder;

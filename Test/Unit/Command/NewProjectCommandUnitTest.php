@@ -8,14 +8,14 @@ declare(strict_types=1);
 
 namespace Eurotext\TranslationManager\Test\Unit\Command;
 
-use Eurotext\TranslationManager\Command\NewProjectCommand;
-use Eurotext\TranslationManager\Command\Service\NewProjectService;
+use Eurotext\TranslationManager\Console\Command\NewProjectCommand;
+use Eurotext\TranslationManager\Console\Command\Service\NewProjectService;
 use Eurotext\TranslationManager\Test\Builder\ConsoleMockBuilder;
 use PHPUnit\Framework\TestCase;
 
 class NewProjectCommandUnitTest extends TestCase
 {
-    /** @var \Eurotext\TranslationManager\Command\Service\NewProjectService|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var \Eurotext\TranslationManager\Console\Command\Service\NewProjectService|\PHPUnit_Framework_MockObject_MockObject */
     protected $newProjectService;
 
     /** @var NewProjectCommand */

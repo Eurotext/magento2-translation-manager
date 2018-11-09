@@ -8,8 +8,8 @@ declare(strict_types=1);
 
 namespace Eurotext\TranslationManager\Test\Unit\Command;
 
-use Eurotext\TranslationManager\Command\SeedEntitiesCommand;
-use Eurotext\TranslationManager\Command\Service\SeedEntitiesService;
+use Eurotext\TranslationManager\Console\Command\SeedEntitiesCommand;
+use Eurotext\TranslationManager\Console\Command\Service\SeedEntitiesService;
 use Eurotext\TranslationManager\Test\Builder\ConsoleMockBuilder;
 use Eurotext\TranslationManager\Test\Unit\UnitTestAbstract;
 use Magento\Framework\App\State;

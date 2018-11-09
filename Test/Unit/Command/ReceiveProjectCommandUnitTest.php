@@ -8,8 +8,8 @@ declare(strict_types=1);
 
 namespace Eurotext\TranslationManager\Test\Unit\Command;
 
-use Eurotext\TranslationManager\Command\ReceiveProjectCommand;
-use Eurotext\TranslationManager\Command\Service\ReceiveProjectCliService;
+use Eurotext\TranslationManager\Console\Command\ReceiveProjectCommand;
+use Eurotext\TranslationManager\Console\Command\Service\ReceiveProjectCliService;
 use Eurotext\TranslationManager\Logger\PushConsoleLogHandler;
 use Eurotext\TranslationManager\Test\Builder\ConsoleMockBuilder;
 use Eurotext\TranslationManager\Test\Unit\UnitTestAbstract;

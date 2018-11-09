@@ -8,8 +8,8 @@ declare(strict_types=1);
 
 namespace Eurotext\TranslationManager\Test\Unit\Command;
 
-use Eurotext\TranslationManager\Command\CheckProjectStatusCommand;
-use Eurotext\TranslationManager\Command\SendProjectsCommand;
+use Eurotext\TranslationManager\Console\Command\CheckProjectStatusCommand;
+use Eurotext\TranslationManager\Console\Command\SendProjectsCommand;
 use Eurotext\TranslationManager\Cron\SendProjectsCron;
 use Eurotext\TranslationManager\Test\Builder\ConsoleMockBuilder;
 use Eurotext\TranslationManager\Test\Unit\UnitTestAbstract;

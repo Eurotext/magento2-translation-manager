@@ -11,7 +11,7 @@ namespace Eurotext\TranslationManager\Test\Unit\Command\Service;
 use Eurotext\RestApiClient\Validator\ProjectStatusValidator;
 use Eurotext\TranslationManager\Api\Data\ProjectInterface;
 use Eurotext\TranslationManager\Api\ProjectRepositoryInterface;
-use Eurotext\TranslationManager\Command\Service\ReceiveProjectCliService;
+use Eurotext\TranslationManager\Console\Command\Service\ReceiveProjectCliService;
 use Eurotext\TranslationManager\Service\ReceiveProjectService;
 use Eurotext\TranslationManager\State\ProjectStateMachine;
 use Eurotext\TranslationManager\Test\Unit\UnitTestAbstract;

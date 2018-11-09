@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Eurotext\TranslationManager\Command;
+namespace Eurotext\TranslationManager\Console\Command;
 
-use Eurotext\TranslationManager\Command\Service\NewProjectService;
+use Eurotext\TranslationManager\Console\Command\Service\NewProjectService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;

@@ -1,27 +1,21 @@
 <?php
 declare(strict_types=1);
 
-namespace Eurotext\TranslationManager\Command;
+namespace Eurotext\TranslationManager\Console\Command;
 
-use Eurotext\TranslationManager\Command\Service\ReceiveProjectCliService;
+use Eurotext\TranslationManager\Cron\ReceiveProjectsCron;
 use Eurotext\TranslationManager\Logger\PushConsoleLogHandler;
 use Magento\Framework\App\State as AppState;
 use Magento\Framework\Exception\LocalizedException;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class ReceiveProjectCommand extends Command
+class ReceiveProjectsCommand extends Command
 {
     const ARG_ID              = 'id';
-    const COMMAND_NAME        = 'etm:project:receive';
-    const COMMAND_DESCRIPTION = 'Receive Project Translations from ETM2';
-
-    /**
-     * @var ReceiveProjectCliService
-     */
-    private $receiveProject;
+    const COMMAND_NAME        = 'etm:project:receive-all';
+    const COMMAND_DESCRIPTION = 'Receive all projects in status accpted from Eurotext';
 
     /**
      * @var AppState
@@ -33,24 +27,27 @@ class ReceiveProjectCommand extends Command
      */
     private $pushConsoleLog;
 
+    /**
+     * @var ReceiveProjectsCron
+     */
+    private $sendProjectsCron;
+
     public function __construct(
-        ReceiveProjectCliService $receiveProject,
+        ReceiveProjectsCron $receiveProjectsCron,
         PushConsoleLogHandler $pushConsoleLog,
         AppState $appState
     ) {
         parent::__construct();
 
-        $this->receiveProject = $receiveProject;
-        $this->pushConsoleLog = $pushConsoleLog;
-        $this->appState       = $appState;
+        $this->sendProjectsCron = $receiveProjectsCron;
+        $this->pushConsoleLog   = $pushConsoleLog;
+        $this->appState         = $appState;
     }
 
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME);
         $this->setDescription(self::COMMAND_DESCRIPTION);
-
-        $this->addArgument(self::ARG_ID, InputArgument::REQUIRED);
 
         parent::configure();
     }
@@ -74,8 +71,6 @@ class ReceiveProjectCommand extends Command
         // Push the ConsoleLogger to the EurotextLogger so we directly see console output
         $this->pushConsoleLog->push($output);
 
-        $projectId = (int)$input->getArgument(self::ARG_ID);
-
-        $this->receiveProject->executeById($projectId);
+        $this->sendProjectsCron->execute();
     }
-} 
+}

@@ -9,8 +9,8 @@ declare(strict_types=1);
 namespace Eurotext\TranslationManager\Test\Unit\Command;
 
 use Eurotext\TranslationManager\Api\EntityTypeInterface;
-use Eurotext\TranslationManager\Command\ListEntitiesCommand;
-use Eurotext\TranslationManager\Command\NewProjectCommand;
+use Eurotext\TranslationManager\Console\Command\ListEntitiesCommand;
+use Eurotext\TranslationManager\Console\Command\NewProjectCommand;
 use Eurotext\TranslationManager\Entity\EntityTypePool;
 use Eurotext\TranslationManager\Test\Builder\ConsoleMockBuilder;
 use PHPUnit\Framework\TestCase;

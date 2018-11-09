@@ -10,15 +10,13 @@ namespace Eurotext\TranslationManager\Test\Unit\Command\Service;
 
 use Eurotext\TranslationManager\Api\EntitySeederInterface;
 use Eurotext\TranslationManager\Api\ProjectRepositoryInterface;
-use Eurotext\TranslationManager\Command\Service\NewProjectService;
+use Eurotext\TranslationManager\Console\Command\Service\NewProjectService;
 use Eurotext\TranslationManager\Model\Project;
 use Eurotext\TranslationManager\Model\ProjectFactory;
 use Eurotext\TranslationManager\Seeder\EntitySeederPool;
 use Eurotext\TranslationManager\Test\Builder\ConsoleMockBuilder;
 use Eurotext\TranslationManager\Test\Builder\ProjectMockBuilder;
 use Eurotext\TranslationManager\Test\Unit\UnitTestAbstract;
-use Magento\Framework\TestFramework\Unit\Helper\ObjectManager as ObjectManagerHelper;
-use PHPUnit\Framework\TestCase;
 
 class CreateProjectServiceUnitTest extends UnitTestAbstract
 {

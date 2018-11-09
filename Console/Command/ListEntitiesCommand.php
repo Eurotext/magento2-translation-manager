@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Eurotext\TranslationManager\Command;
+namespace Eurotext\TranslationManager\Console\Command;
 
 use Eurotext\TranslationManager\Entity\EntityTypePool;
 use Symfony\Component\Console\Command\Command;

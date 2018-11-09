@@ -8,7 +8,7 @@ declare(strict_types=1);
 
 namespace Eurotext\TranslationManager\Test\Integration\Command\Service;
 
-use Eurotext\TranslationManager\Command\Service\NewProjectService;
+use Eurotext\TranslationManager\Console\Command\Service\NewProjectService;
 use Eurotext\TranslationManager\Test\Builder\ConsoleMockBuilder;
 use Eurotext\TranslationManager\Test\Integration\IntegrationTestAbstract;
 use Magento\TestFramework\Helper\Bootstrap;
