@@ -46,6 +46,12 @@
         </arguments>
     </type>
 
+    <type name="Eurotext\TranslationManager\Command\AcceptProjectCommand">
+        <arguments>
+            <argument name="projectStateMachine" xsi:type="object">Eurotext\TranslationManager\State\ProjectStateMachine\Proxy</argument>
+        </arguments>
+    </type>
+
     <type name="Eurotext\TranslationManager\Command\ReceiveProjectCommand">
         <arguments>
             <argument name="receiveProject" xsi:type="object">Eurotext\TranslationManager\Command\Service\ReceiveProjectCliService\Proxy</argument>
@@ -115,6 +121,7 @@
                 <item name="etm_project_new" xsi:type="object">Eurotext\TranslationManager\Command\NewProjectCommand</item>
                 <item name="etm_project_send" xsi:type="object">Eurotext\TranslationManager\Command\SendProjectCommand</item>
                 <item name="etm_project_send_all" xsi:type="object">Eurotext\TranslationManager\Command\SendProjectsCommand</item>
+                <item name="etm_project_accept" xsi:type="object">Eurotext\TranslationManager\Command\AcceptProjectCommand</item>
                 <item name="etm_project_receive" xsi:type="object">Eurotext\TranslationManager\Command\ReceiveProjectCommand</item>
                 <item name="etm_project_checkStatus" xsi:type="object">Eurotext\TranslationManager\Command\CheckProjectStatusCommand</item>
                 <item name="etm_entity_types" xsi:type="object">Eurotext\TranslationManager\Command\ListEntitiesCommand</item>
