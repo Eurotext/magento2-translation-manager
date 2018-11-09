@@ -15,7 +15,7 @@ use Eurotext\TranslationManager\Mapper\ProjectPostMapper;
 use GuzzleHttp\Exception\GuzzleException;
 use Psr\Log\LoggerInterface;
 
-class CreateProjectService
+class CreateProjectService implements CreateProjectServiceInterface
 {
     /** @var ProjectPostMapper */
     private $projectPostMapper;

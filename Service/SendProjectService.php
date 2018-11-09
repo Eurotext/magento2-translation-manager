@@ -14,7 +14,7 @@ use Eurotext\TranslationManager\Api\ProjectRepositoryInterface;
 use Eurotext\TranslationManager\Exception\IllegalProjectStatusChangeException;
 use Eurotext\TranslationManager\Exception\InvalidProjectStatusException;
 use Eurotext\TranslationManager\Service\Project\CreateProjectEntitiesService;
-use Eurotext\TranslationManager\Service\Project\CreateProjectService;
+use Eurotext\TranslationManager\Service\Project\CreateProjectServiceInterface;
 use Eurotext\TranslationManager\Service\Project\TransitionProjectService;
 use Eurotext\TranslationManager\State\ProjectStateMachine;
 
@@ -25,7 +25,7 @@ class SendProjectService
      */
     private $projectRepository;
 
-    /** @var CreateProjectService */
+    /** @var CreateProjectServiceInterface */
     private $createProject;
 
     /** @var CreateProjectEntitiesService */
@@ -43,7 +43,7 @@ class SendProjectService
 
     public function __construct(
         ProjectRepositoryInterface $projectRepository,
-        CreateProjectService $createProject,
+        CreateProjectServiceInterface $createProject,
         CreateProjectEntitiesService $createProjectEntities,
         TransitionProjectService $transitionProject,
         ProjectStateMachine $projectStateMachine
