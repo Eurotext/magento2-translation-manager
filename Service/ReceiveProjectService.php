@@ -13,7 +13,7 @@ use Eurotext\TranslationManager\Api\Data\ProjectInterface;
 use Eurotext\TranslationManager\Api\ProjectRepositoryInterface;
 use Eurotext\TranslationManager\Exception\IllegalProjectStatusChangeException;
 use Eurotext\TranslationManager\Exception\InvalidProjectStatusException;
-use Eurotext\TranslationManager\Service\Project\FetchProjectEntitiesService;
+use Eurotext\TranslationManager\Service\Project\FetchProjectEntitiesServiceInterface;
 use Eurotext\TranslationManager\Service\Project\TransitionProjectService;
 use Eurotext\TranslationManager\State\ProjectStateMachine;
 
@@ -25,7 +25,7 @@ class ReceiveProjectService
     private $projectRepository;
 
     /**
-     * @var FetchProjectEntitiesService
+     * @var FetchProjectEntitiesServiceInterface
      */
     private $fetchProjectEntities;
 
@@ -41,7 +41,7 @@ class ReceiveProjectService
 
     public function __construct(
         ProjectRepositoryInterface $projectRepository,
-        FetchProjectEntitiesService $fetchProjectEntities,
+        FetchProjectEntitiesServiceInterface $fetchProjectEntities,
         TransitionProjectService $transitionProject,
         ProjectStateMachine $projectStateMachine
     ) {

@@ -14,7 +14,7 @@ use Eurotext\TranslationManager\Api\ProjectRepositoryInterface;
 use Eurotext\TranslationManager\Exception\InvalidProjectStatusException;
 use Eurotext\TranslationManager\Model\Project;
 use Eurotext\TranslationManager\Repository\ProjectRepository;
-use Eurotext\TranslationManager\Service\Project\FetchProjectEntitiesService;
+use Eurotext\TranslationManager\Service\Project\FetchProjectEntitiesServiceInterface;
 use Eurotext\TranslationManager\Service\Project\TransitionProjectService;
 use Eurotext\TranslationManager\Service\ReceiveProjectService;
 use Eurotext\TranslationManager\State\ProjectStateMachine;
@@ -28,7 +28,7 @@ class ReceiveProjectServiceUnitTest extends UnitTestAbstract
     /** @var ReceiveProjectService */
     private $sut;
 
-    /** @var FetchProjectEntitiesService|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var FetchProjectEntitiesServiceInterface|\PHPUnit_Framework_MockObject_MockObject */
     private $fetchProjectEntities;
 
     /** @var TransitionProjectService|\PHPUnit_Framework_MockObject_MockObject */
@@ -47,7 +47,7 @@ class ReceiveProjectServiceUnitTest extends UnitTestAbstract
                  ->getMockForAbstractClass();
 
         $this->fetchProjectEntities =
-            $this->getMockBuilder(FetchProjectEntitiesService::class)
+            $this->getMockBuilder(FetchProjectEntitiesServiceInterface::class)
                  ->disableOriginalConstructor()
                  ->setMethods(['execute'])
                  ->getMock();

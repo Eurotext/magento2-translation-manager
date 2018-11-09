@@ -13,7 +13,7 @@ use Eurotext\TranslationManager\Receiver\EntityReceiverPool;
 use Magento\Store\Model\StoreManagerInterface;
 use Psr\Log\LoggerInterface;
 
-class FetchProjectEntitiesService
+class FetchProjectEntitiesService implements FetchProjectEntitiesServiceInterface
 {
     /**
      * @var EntityReceiverPool
