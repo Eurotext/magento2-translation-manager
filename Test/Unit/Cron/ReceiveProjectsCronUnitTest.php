@@ -50,13 +50,14 @@ class ReceiveProjectsCronUnitTest extends UnitTestAbstract
                  ->disableOriginalConstructor()
                  ->getMock();
 
-        $this->projectRepository = $this->getMockBuilder(ProjectRepositoryInterface::class)->getMock();
+        $this->projectRepository =
+            $this->getMockBuilder(ProjectRepositoryInterface::class)
+                 ->getMockForAbstractClass();
 
         $this->receiveProjectService =
             $this->getMockBuilder(ReceiveProjectServiceInterface::class)
-                 ->disableOriginalConstructor()
                  ->setMethods(['execute'])
-                 ->getMock();
+                 ->getMockForAbstractClass();
 
         $this->logger = $this->getMockBuilder(LoggerInterface::class)->getMock();
 

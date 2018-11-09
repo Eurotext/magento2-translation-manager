@@ -49,9 +49,8 @@ class ReceiveProjectServiceUnitTest extends UnitTestAbstract
 
         $this->fetchProjectEntities =
             $this->getMockBuilder(FetchProjectEntitiesServiceInterface::class)
-                 ->disableOriginalConstructor()
                  ->setMethods(['execute'])
-                 ->getMock();
+                 ->getMockForAbstractClass();
 
         $this->projectStateMachine =
             $this->getMockBuilder(ProjectStateMachine::class)

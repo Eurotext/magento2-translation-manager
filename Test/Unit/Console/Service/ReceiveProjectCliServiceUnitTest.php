@@ -39,13 +39,12 @@ class ReceiveProjectCliServiceUnitTest extends UnitTestAbstract
 
         $this->receiveProject =
             $this->getMockBuilder(ReceiveProjectServiceInterface::class)
-                 ->disableOriginalConstructor()
                  ->setMethods(['execute'])
-                 ->getMock();
+                 ->getMockForAbstractClass();
 
         $this->projectRepository =
             $this->getMockBuilder(ProjectRepositoryInterface::class)
-                 ->getMock();
+                 ->getMockForAbstractClass();
 
         $this->projectStatusValidator =
             $this->getMockBuilder(ProjectStatusValidator::class)

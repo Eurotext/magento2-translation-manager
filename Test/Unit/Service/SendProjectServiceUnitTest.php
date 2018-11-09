@@ -52,21 +52,18 @@ class SendProjectServiceUnitTest extends UnitTestAbstract
 
         $this->createProject =
             $this->getMockBuilder(CreateProjectServiceInterface::class)
-                 ->disableOriginalConstructor()
                  ->setMethods(['execute'])
-                 ->getMock();
+                 ->getMockForAbstractClass();
 
         $this->createProjectEntities =
             $this->getMockBuilder(CreateProjectEntitiesServiceInterface::class)
-                 ->disableOriginalConstructor()
                  ->setMethods(['execute'])
-                 ->getMock();
+                 ->getMockForAbstractClass();
 
         $this->transitionProject =
             $this->getMockBuilder(TransitionProjectServiceInterface::class)
-                 ->disableOriginalConstructor()
                  ->setMethods(['execute'])
-                 ->getMock();
+                 ->getMockForAbstractClass();
 
         $this->projectStateMachine =
             $this->getMockBuilder(ProjectStateMachine::class)
