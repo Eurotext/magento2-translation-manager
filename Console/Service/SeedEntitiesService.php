@@ -57,16 +57,16 @@ class SeedEntitiesService
             try {
                 $entitySeeder = $this->entitySeederPool->getByCode($entityCode);
             } catch (\Exception $e) {
-                $output->writeln(sprintf('%s: seeder not found', $entityCode));
+                $output->writeln(sprintf('<error>%s: seeder not found</error>', $entityCode));
                 continue;
             }
 
             $result = $entitySeeder->seed($project);
 
             if ($result === true) {
-                $output->writeln(sprintf('%s: seeding successful', $entityCode));
+                $output->writeln(sprintf('<info>%s: seeding successful</info>', $entityCode));
             } else {
-                $output->writeln(sprintf('%s: seeding not successful', $entityCode));
+                $output->writeln(sprintf('<error>%s: seeding not successful</error>', $entityCode));
             }
         }
 

@@ -62,7 +62,7 @@ class NewProjectService
 
         $id = $project->getId();
 
-        $output->writeln(sprintf('project "%s" created, id: %d', $name, $id));
+        $output->writeln(sprintf('<info>project "%s" created, id: %d</info>', $name, $id));
 
         return $project;
     }
