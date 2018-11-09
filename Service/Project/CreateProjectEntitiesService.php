@@ -12,7 +12,7 @@ use Eurotext\TranslationManager\Api\Data\ProjectInterface;
 use Eurotext\TranslationManager\Sender\EntitySenderPool;
 use Psr\Log\LoggerInterface;
 
-class CreateProjectEntitiesService
+class CreateProjectEntitiesService implements CreateProjectEntitiesServiceInterface
 {
     /**
      * @var \Eurotext\TranslationManager\Sender\EntitySenderPool

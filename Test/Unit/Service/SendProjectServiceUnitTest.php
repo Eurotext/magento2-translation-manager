@@ -15,6 +15,7 @@ use Eurotext\TranslationManager\Exception\InvalidProjectStatusException;
 use Eurotext\TranslationManager\Model\Project;
 use Eurotext\TranslationManager\Repository\ProjectRepository;
 use Eurotext\TranslationManager\Service\Project\CreateProjectEntitiesService;
+use Eurotext\TranslationManager\Service\Project\CreateProjectEntitiesServiceInterface;
 use Eurotext\TranslationManager\Service\Project\CreateProjectService;
 use Eurotext\TranslationManager\Service\Project\TransitionProjectService;
 use Eurotext\TranslationManager\Service\SendProjectService;
@@ -29,7 +30,7 @@ class SendProjectServiceUnitTest extends UnitTestAbstract
     /** @var CreateProjectService|\PHPUnit_Framework_MockObject_MockObject */
     private $createProject;
 
-    /** @var CreateProjectEntitiesService|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var CreateProjectEntitiesServiceInterface|\PHPUnit_Framework_MockObject_MockObject */
     private $createProjectEntities;
 
     /** @var ProjectRepository|\PHPUnit_Framework_MockObject_MockObject */
