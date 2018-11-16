@@ -36,17 +36,20 @@ class NewProjectServiceIntegrationTest extends IntegrationTestAbstract
     }
 
     /**
+     * @magentoDataFixture loadFixtures
      * @test
      */
     public function itShouldCreateANewProject()
     {
         $name      = 'my first project with a name';
         $storeSrc  = 1;
-        $storeDest = 2;
+        $storeDest = 3;
+        $storeSrcCode  = 'default';
+        $storeDestCode = 'store_dest';
 
         $input = $this->builder->buildConsoleInputMock();
         $input->expects($this->exactly(3))
-              ->method('getArgument')->willReturnOnConsecutiveCalls($name, $storeSrc, $storeDest);
+              ->method('getArgument')->willReturnOnConsecutiveCalls($name, $storeSrcCode, $storeDestCode);
 
         $output = new \Symfony\Component\Console\Tests\Fixtures\DummyOutput();
 
@@ -58,4 +61,8 @@ class NewProjectServiceIntegrationTest extends IntegrationTestAbstract
         $this->assertEquals($storeDest, $project->getStoreviewDst());
     }
 
+    public static function loadFixtures()
+    {
+        include __DIR__ . '/../../_fixtures/provide_store.php';
+    }
 }
