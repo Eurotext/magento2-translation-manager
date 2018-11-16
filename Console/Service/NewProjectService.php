@@ -12,14 +12,15 @@ use Eurotext\TranslationManager\Api\Data\ProjectInterface;
 use Eurotext\TranslationManager\Api\ProjectRepositoryInterface;
 use Eurotext\TranslationManager\Model\Project;
 use Eurotext\TranslationManager\Model\ProjectFactory;
+use Magento\Store\Api\StoreRepositoryInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class NewProjectService
 {
-    const ARG_NAME          = 'name';
-    const ARG_STORE_ID_SRC  = 'store_id_src';
-    const ARG_STORE_ID_DEST = 'store_id_dest';
+    const ARG_NAME       = 'name';
+    const ARG_STORE_SRC  = 'store_src';
+    const ARG_STORE_DEST = 'store_dest';
 
     /**
      * @var \Eurotext\TranslationManager\Model\ProjectFactory
@@ -31,12 +32,19 @@ class NewProjectService
      */
     private $projectRepository;
 
+    /**
+     * @var StoreRepositoryInterface
+     */
+    private $storeRepository;
+
     public function __construct(
         ProjectFactory $projectFactory,
-        ProjectRepositoryInterface $projectRepository
+        ProjectRepositoryInterface $projectRepository,
+        StoreRepositoryInterface $storeRepository
     ) {
         $this->projectFactory    = $projectFactory;
         $this->projectRepository = $projectRepository;
+        $this->storeRepository   = $storeRepository;
     }
 
     /**
@@ -44,12 +52,16 @@ class NewProjectService
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @return \Eurotext\TranslationManager\Api\Data\ProjectInterface
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $name        = (string)$input->getArgument(self::ARG_NAME);
-        $storeIdSrc  = (int)$input->getArgument(self::ARG_STORE_ID_SRC);
-        $storeIdDest = (int)$input->getArgument(self::ARG_STORE_ID_DEST);
+        $name      = (string)$input->getArgument(self::ARG_NAME);
+        $storeSrc  = (string)$input->getArgument(self::ARG_STORE_SRC);
+        $storeDest = (string)$input->getArgument(self::ARG_STORE_DEST);
+
+        $storeIdSrc  = $this->getStoreIdByStoreCode($storeSrc);
+        $storeIdDest = $this->getStoreIdByStoreCode($storeDest);
 
         /** @var Project $project */
         $project = $this->projectFactory->create();
@@ -65,5 +77,18 @@ class NewProjectService
         $output->writeln(sprintf('<info>project "%s" created, id: %d</info>', $name, $id));
 
         return $project;
+    }
+
+    /**
+     * @param string $storeCode
+     *
+     * @return int
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     */
+    private function getStoreIdByStoreCode(string $storeCode): int
+    {
+        $store = $this->storeRepository->get($storeCode);
+
+        return (int)$store->getId();
     }
 }

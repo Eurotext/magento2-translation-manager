@@ -17,8 +17,10 @@ use Eurotext\TranslationManager\Seeder\EntitySeederPool;
 use Eurotext\TranslationManager\Test\Builder\ConsoleMockBuilder;
 use Eurotext\TranslationManager\Test\Builder\ProjectMockBuilder;
 use Eurotext\TranslationManager\Test\Unit\UnitTestAbstract;
+use Magento\Store\Api\Data\StoreInterface;
+use Magento\Store\Api\StoreRepositoryInterface;
 
-class CreateProjectServiceUnitTest extends UnitTestAbstract
+class NewProjectServiceUnitTest extends UnitTestAbstract
 {
     /** @var ProjectFactory|\PHPUnit_Framework_MockObject_MockObject */
     protected $projectFactory;
@@ -41,6 +43,9 @@ class CreateProjectServiceUnitTest extends UnitTestAbstract
     /** @var ConsoleMockBuilder */
     protected $consoleMockBuilder;
 
+    /** @var StoreRepositoryInterface|\PHPUnit_Framework_MockObject_MockObject */
+    protected $storeRepository;
+
     protected function setUp()
     {
         parent::setUp();
@@ -50,12 +55,14 @@ class CreateProjectServiceUnitTest extends UnitTestAbstract
 
         $this->projectFactory    = $this->projectMockBuilder->buildProjectFactoryMock();
         $this->projectRepository = $this->projectMockBuilder->buildProjectRepositoryMock();
+        $this->storeRepository   = $this->getMockBuilder(StoreRepositoryInterface::class)->getMock();
 
         $this->sut = $this->objectManager->getObject(
             NewProjectService::class,
             [
                 'projectFactory'    => $this->projectFactory,
                 'projectRepository' => $this->projectRepository,
+                'storeRepository'   => $this->storeRepository,
             ]
         );
     }
@@ -65,15 +72,27 @@ class CreateProjectServiceUnitTest extends UnitTestAbstract
      */
     public function itShouldCreateANewProject()
     {
-        $name      = 'my first project with a name';
-        $storeSrc  = 1;
-        $storeDest = 2;
+        $name        = 'my first project with a name';
+        $storeSrc    = 'source';
+        $storeDest   = 'dest';
+        $storeSrcId  = 1;
+        $storeDestId = 3;
 
         $project = $this->objectManager->getObject(Project::class);
 
         $this->projectFactory->expects($this->once())->method('create')->willReturn($project);
 
         $this->projectRepository->expects($this->once())->method('save')->willReturn($project);
+
+        $stockSrcObj = $this->getMockBuilder(StoreInterface::class)->getMock();
+        $stockSrcObj->expects($this->once())->method('getId')->willReturn($storeSrcId);
+
+        $stockDestObj = $this->getMockBuilder(StoreInterface::class)->getMock();
+        $stockDestObj->expects($this->once())->method('getId')->willReturn($storeDestId);
+
+        $this->storeRepository->expects($this->exactly(2))
+                              ->method('get')
+                              ->willReturnOnConsecutiveCalls($stockSrcObj, $stockDestObj);
 
         $input = $this->consoleMockBuilder->buildConsoleInputMock();
         $input->expects($this->any())

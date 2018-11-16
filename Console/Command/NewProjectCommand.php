@@ -36,12 +36,12 @@ class NewProjectCommand extends Command
             'the project name'
         );
         $this->addArgument(
-            NewProjectService::ARG_STORE_ID_SRC, InputArgument::REQUIRED,
-            'the store-view id that is used as source'
+            NewProjectService::ARG_STORE_SRC, InputArgument::REQUIRED,
+            'the store-view code that is used as source'
         );
         $this->addArgument(
-            NewProjectService::ARG_STORE_ID_DEST, InputArgument::REQUIRED,
-            'the store-view id that the translation is for'
+            NewProjectService::ARG_STORE_DEST, InputArgument::REQUIRED,
+            'the store-view code that the translation is for'
         );
 
         parent::configure();
