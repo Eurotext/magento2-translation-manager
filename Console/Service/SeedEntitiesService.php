@@ -22,9 +22,10 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class SeedEntitiesService
 {
-    const ARG_PROJECT_ID  = 'project-id';
-    const ARG_ENTITIES    = 'entities';
-    const ARG_ENTITY_DESC = 'Comma seperated list of entity-types, type overview with command etm:entity:types';
+    const ARG_PROJECT_ID      = 'project-id';
+    const ARG_ENTITIES        = 'entities';
+    const ARG_PROJECT_ID_DESC = 'the project id';
+    const ARG_ENTITY_DESC     = 'Comma seperated list of entity-types, type overview with command etm:entity:types';
 
     /**
      * @var EntitySeederPool

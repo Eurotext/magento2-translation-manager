@@ -32,7 +32,7 @@ class SetStatusTransferCommand extends Command
     {
         $this->setName(self::COMMAND_NAME);
         $this->setDescription(self::COMMAND_DESCRIPTION);
-        $this->addArgument(self::ARG_ID, InputArgument::REQUIRED, 'Magento project-id');
+        $this->addArgument(self::ARG_ID, InputArgument::REQUIRED, 'the project-id');
 
         parent::configure();
     }

@@ -31,9 +31,18 @@ class NewProjectCommand extends Command
         $this->setName(self::COMMAND_NAME);
         $this->setDescription(self::COMMAND_DESCRIPTION);
 
-        $this->addArgument(NewProjectService::ARG_NAME, InputArgument::REQUIRED);
-        $this->addArgument(NewProjectService::ARG_STORE_ID_SRC, InputArgument::REQUIRED);
-        $this->addArgument(NewProjectService::ARG_STORE_ID_DEST, InputArgument::REQUIRED);
+        $this->addArgument(
+            NewProjectService::ARG_NAME, InputArgument::REQUIRED,
+            'the project name'
+        );
+        $this->addArgument(
+            NewProjectService::ARG_STORE_ID_SRC, InputArgument::REQUIRED,
+            'the store-view id that is used as source'
+        );
+        $this->addArgument(
+            NewProjectService::ARG_STORE_ID_DEST, InputArgument::REQUIRED,
+            'the store-view id that the translation is for'
+        );
 
         parent::configure();
     }

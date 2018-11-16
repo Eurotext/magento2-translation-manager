@@ -58,7 +58,7 @@ class CheckStatusCommand extends Command
         $this->setName(self::COMMAND_NAME);
         $this->setDescription(self::COMMAND_DESCRIPTION);
 
-        $this->addArgument(self::ARG_ID, InputArgument::OPTIONAL);
+        $this->addArgument(self::ARG_ID, InputArgument::OPTIONAL, 'the project id');
 
         parent::configure();
     }

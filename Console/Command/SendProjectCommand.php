@@ -59,7 +59,7 @@ class SendProjectCommand extends Command
         $this->setName(self::COMMAND_NAME);
         $this->setDescription(self::COMMAND_DESCRIPTION);
 
-        $this->addArgument(self::ARG_ID, InputArgument::REQUIRED);
+        $this->addArgument(self::ARG_ID, InputArgument::REQUIRED, 'the project id');
 
         parent::configure();
     }

@@ -41,8 +41,8 @@ class RetrieveProjectCommand extends Command
         parent::__construct();
 
         $this->retrieveProject = $retrieveProject;
-        $this->pushConsoleLog = $pushConsoleLog;
-        $this->appState       = $appState;
+        $this->pushConsoleLog  = $pushConsoleLog;
+        $this->appState        = $appState;
     }
 
     protected function configure()
@@ -50,7 +50,7 @@ class RetrieveProjectCommand extends Command
         $this->setName(self::COMMAND_NAME);
         $this->setDescription(self::COMMAND_DESCRIPTION);
 
-        $this->addArgument(self::ARG_ID, InputArgument::REQUIRED);
+        $this->addArgument(self::ARG_ID, InputArgument::REQUIRED, 'the project id');
 
         parent::configure();
     }

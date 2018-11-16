@@ -40,11 +40,11 @@ class SeedEntitiesCommand extends Command
         $this->setName(self::NAME);
         $this->setDescription(self::DESCRIPTION);
 
-        $this->addArgument(SeedEntitiesService::ARG_PROJECT_ID, InputArgument::REQUIRED);
         $this->addArgument(
-            SeedEntitiesService::ARG_ENTITIES,
-            InputArgument::REQUIRED,
-            SeedEntitiesService::ARG_ENTITY_DESC
+            SeedEntitiesService::ARG_PROJECT_ID, InputArgument::REQUIRED, SeedEntitiesService::ARG_PROJECT_ID_DESC
+        );
+        $this->addArgument(
+            SeedEntitiesService::ARG_ENTITIES, InputArgument::REQUIRED, SeedEntitiesService::ARG_ENTITY_DESC
         );
 
         parent::configure();
