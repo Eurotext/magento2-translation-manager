@@ -48,8 +48,8 @@ class ProjectRepositoryIntegrationTest extends IntegrationTestAbstract
 
         $projectRead = $this->sut->getById($id);
 
-        $this->assertSame($id, $projectRead->getId());
-        $this->assertSame($code, $projectRead->getCode());
+        $this->assertEquals($id, $projectRead->getId());
+        $this->assertEquals($code, $projectRead->getCode());
     }
 
     /**

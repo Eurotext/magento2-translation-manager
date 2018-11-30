@@ -17,6 +17,8 @@
 
     <preference for="Eurotext\RestApiClient\Validator\ProjectStatusValidatorInterface" type="Eurotext\RestApiClient\Validator\ProjectStatusValidator" />
 
+    <preference for="Eurotext\TranslationManager\Setup\Service\AddEntityTableColumnsInterface" type="Eurotext\TranslationManager\Setup\Service\AddEntityTableColumns" />
+
     <!-- COMMANDS -->
     <type name="Eurotext\TranslationManager\Console\Command\NewProjectCommand">
         <arguments>

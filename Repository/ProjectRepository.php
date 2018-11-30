@@ -7,86 +7,100 @@ use Eurotext\TranslationManager\Api\Data\ProjectInterface;
 use Eurotext\TranslationManager\Api\ProjectRepositoryInterface;
 use Eurotext\TranslationManager\Model\Project;
 use Eurotext\TranslationManager\Model\ProjectFactory;
-use Eurotext\TranslationManager\Repository\Service\GetProjectListService;
+use Eurotext\TranslationManager\Model\ResourceModel\ProjectCollectionFactory;
+use Eurotext\TranslationManager\Model\ResourceModel\ProjectResource;
 use Magento\Framework\Api\SearchCriteriaInterface;
 use Magento\Framework\Api\SearchResultsInterface;
+use Magento\Framework\Api\SearchResultsInterfaceFactory;
+use Magento\Framework\Api\SortOrder;
 use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
 
 class ProjectRepository implements ProjectRepositoryInterface
 {
-    const CODE_UNIQUE_ID_PREFIX = 'etm2_project_';
-
     /**
-     * @var \Eurotext\TranslationManager\Model\ProjectFactory
+     * @var ProjectFactory
      */
     protected $projectFactory;
 
     /**
-     * @var \Eurotext\TranslationManager\Repository\Service\GetProjectListService
+     * @var ProjectResource
      */
-    private $getProjectList;
+    private $projectResource;
+
+    /**
+     * @var ProjectCollectionFactory
+     */
+    private $collectionFactory;
+
+    /**
+     * @var SearchResultsInterfaceFactory
+     */
+    private $searchResultsFactory;
 
     public function __construct(
-        GetProjectListService $getProjectList,
-        ProjectFactory $projectFactory
+        ProjectResource $productResource,
+        ProjectFactory $projectFactory,
+        ProjectCollectionFactory $collectionFactory,
+        SearchResultsInterfaceFactory $searchResultsFactory
     ) {
-        $this->projectFactory = $projectFactory;
-        $this->getProjectList = $getProjectList;
+        $this->projectFactory       = $projectFactory;
+        $this->projectResource      = $productResource;
+        $this->collectionFactory    = $collectionFactory;
+        $this->searchResultsFactory = $searchResultsFactory;
     }
 
     /**
-     * @param \Eurotext\TranslationManager\Api\Data\ProjectInterface $project
+     * @param ProjectInterface $object
      *
-     * @return \Eurotext\TranslationManager\Api\Data\ProjectInterface
-     * @throws \Magento\Framework\Exception\CouldNotSaveException
+     * @return ProjectInterface
+     * @throws CouldNotSaveException
      */
-    public function save(ProjectInterface $project): ProjectInterface
+    public function save(ProjectInterface $object): ProjectInterface
     {
-        if ($project->getCode() === '') {
-            $project->setCode(uniqid(self::CODE_UNIQUE_ID_PREFIX, true));
-        }
-
         try {
-            /** @var Project $project */
-            $project->save();
+            if (empty($object->getCode())) {
+                $object->setCode(sprintf('project-%s', md5($object->getName())));
+            }
+            /** @var Project $object */
+            $this->projectResource->save($object);
         } catch (\Exception $e) {
             throw new CouldNotSaveException(__($e->getMessage()));
         }
 
-        return $project;
+        return $object;
     }
 
     /**
      * @param int $id
      *
-     * @return mixed
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @return ProjectInterface
+     * @throws NoSuchEntityException
      */
     public function getById(int $id): ProjectInterface
     {
-        /** @var Project $project */
-        $project = $this->projectFactory->create();
-        $project->load($id);
-        if (!$project->getId()) {
+        /** @var Project $object */
+        $object = $this->projectFactory->create();
+        $this->projectResource->load($object, $id);
+        if (!$object->getId()) {
             throw new NoSuchEntityException(__('Project with id "%1" does not exist.', $id));
         }
 
-        return $project;
+        return $object;
     }
 
     /**
-     * @param \Eurotext\TranslationManager\Api\Data\ProjectInterface $project
+     * @param ProjectInterface $object
      *
      * @return bool
-     * @throws \Magento\Framework\Exception\CouldNotDeleteException
+     * @throws CouldNotDeleteException
      */
-    public function delete(ProjectInterface $project): bool
+    public function delete(ProjectInterface $object): bool
     {
         try {
-            /** @var Project $project */
-            $project->delete();
+            /** @var Project $object */
+            $this->projectResource->delete($object);
         } catch (\Exception $exception) {
             throw new CouldNotDeleteException(__($exception->getMessage()));
         }
@@ -98,18 +112,54 @@ class ProjectRepository implements ProjectRepositoryInterface
      * @param int $id
      *
      * @return bool
-     * @throws \Magento\Framework\Exception\CouldNotDeleteException
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws CouldNotDeleteException
+     * @throws NoSuchEntityException
      */
     public function deleteById(int $id): bool
     {
-        $project = $this->getById($id);
+        $object = $this->getById($id);
 
-        return $this->delete($project);
+        return $this->delete($object);
     }
 
     public function getList(SearchCriteriaInterface $criteria): SearchResultsInterface
     {
-        return $this->getProjectList->execute($criteria);
+        /** @var \Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection $collection */
+        $collection = $this->collectionFactory->create();
+        foreach ($criteria->getFilterGroups() as $filterGroup) {
+            $fields     = [];
+            $conditions = [];
+            foreach ($filterGroup->getFilters() as $filter) {
+                $condition    = $filter->getConditionType() ?: 'eq';
+                $fields[]     = $filter->getField();
+                $conditions[] = [$condition => $filter->getValue()];
+            }
+            if ($fields) {
+                $collection->addFieldToFilter($fields, $conditions);
+            }
+        }
+        $sortOrders = $criteria->getSortOrders();
+        if ($sortOrders) {
+            /** @var SortOrder $sortOrder */
+            foreach ($sortOrders as $sortOrder) {
+                $direction = ($sortOrder->getDirection() === SortOrder::SORT_ASC) ? 'ASC' : 'DESC';
+                $collection->addOrder($sortOrder->getField(), $direction);
+            }
+        }
+        $collection->setCurPage($criteria->getCurrentPage());
+        $collection->setPageSize($criteria->getPageSize());
+
+        $objects = [];
+        foreach ($collection as $objectModel) {
+            $objects[] = $objectModel;
+        }
+
+        /** @var \Magento\Framework\Api\SearchResultsInterface $searchResults */
+        $searchResults = $this->searchResultsFactory->create();
+        $searchResults->setSearchCriteria($criteria);
+        $searchResults->setTotalCount($collection->getSize());
+        $searchResults->setItems($objects);
+
+        return $searchResults;
     }
 }
