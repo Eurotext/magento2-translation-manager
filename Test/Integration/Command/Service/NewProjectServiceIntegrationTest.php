@@ -11,6 +11,7 @@ namespace Eurotext\TranslationManager\Test\Integration\Command\Service;
 use Eurotext\TranslationManager\Console\Service\NewProjectService;
 use Eurotext\TranslationManager\Test\Builder\ConsoleMockBuilder;
 use Eurotext\TranslationManager\Test\Integration\IntegrationTestAbstract;
+use Magento\Store\Model\Store;
 use Magento\TestFramework\Helper\Bootstrap;
 
 class NewProjectServiceIntegrationTest extends IntegrationTestAbstract
@@ -41,11 +42,16 @@ class NewProjectServiceIntegrationTest extends IntegrationTestAbstract
      */
     public function itShouldCreateANewProject()
     {
-        $name      = 'my first project with a name';
-        $storeSrc  = 1;
-        $storeDest = 3;
+        $name          = 'my first project with a name';
+        $storeSrcId    = 1;
         $storeSrcCode  = 'default';
         $storeDestCode = 'store_dest';
+
+        /** @var Store $storeDest */
+        $storeDest = $this->objectManager->create(Store::class);
+        $storeDest->load($storeDestCode, 'code');
+
+        $storeDestId = $storeDest->getStoreId();
 
         $input = $this->builder->buildConsoleInputMock();
         $input->expects($this->exactly(3))
@@ -57,8 +63,8 @@ class NewProjectServiceIntegrationTest extends IntegrationTestAbstract
 
         $this->assertNotEmpty($project->getId());
         $this->assertNotEmpty($project->getCode());
-        $this->assertEquals($storeSrc, $project->getStoreviewSrc());
-        $this->assertEquals($storeDest, $project->getStoreviewDst());
+        $this->assertEquals($storeSrcId, $project->getStoreviewSrc());
+        $this->assertEquals($storeDestId, $project->getStoreviewDst());
     }
 
     public static function loadFixtures()
