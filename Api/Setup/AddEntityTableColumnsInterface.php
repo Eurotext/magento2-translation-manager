@@ -5,7 +5,7 @@
  * @see PROJECT_LICENSE.txt
  */
 
-namespace Eurotext\TranslationManager\Setup\Service;
+namespace Eurotext\TranslationManager\Api\Setup;
 
 use Magento\Framework\DB\Ddl\Table as DbDdlTable;
 use Magento\Framework\Setup\SchemaSetupInterface;
