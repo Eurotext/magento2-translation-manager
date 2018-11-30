@@ -8,7 +8,7 @@ declare(strict_types=1);
 
 namespace Eurotext\TranslationManager\Test\Integration\Repository;
 
-use Eurotext\TranslationManager\Model\Project;
+use Eurotext\TranslationManager\Api\Data\ProjectInterface;
 use Eurotext\TranslationManager\Repository\ProjectRepository;
 use Eurotext\TranslationManager\Test\Integration\IntegrationTestAbstract;
 use Eurotext\TranslationManager\Test\Integration\Provider\ProjectProvider;
@@ -37,10 +37,10 @@ class ProjectRepositoryIntegrationTest extends IntegrationTestAbstract
      */
     public function testItShouldCreateAProjectAndGetItById()
     {
-        $name = 'integration-test-project-1';
+        $name    = 'integration-test-project-1';
         $project = $this->projectProvider->createProject($name);
 
-        $id = $project->getId();
+        $id   = $project->getId();
         $code = $project->getCode();
 
         $this->assertTrue($id > 0);
@@ -59,7 +59,7 @@ class ProjectRepositoryIntegrationTest extends IntegrationTestAbstract
      */
     public function testItShouldDeleteProjects()
     {
-        $name = 'integration-test-project-for-deletion';
+        $name    = 'integration-test-project-for-deletion';
         $project = $this->projectProvider->createProject($name);
 
         $id = $project->getId();
@@ -82,7 +82,9 @@ class ProjectRepositoryIntegrationTest extends IntegrationTestAbstract
      */
     public function testItShouldReturnAListOfProjects()
     {
-        $names = ['integration-test-project-1'];
+        $projectName = 'integration-test-project-1';
+
+        $names = [$projectName];
 
         $projects = [];
         foreach ($names as $name) {
@@ -97,6 +99,16 @@ class ProjectRepositoryIntegrationTest extends IntegrationTestAbstract
         $searchResults = $this->sut->getList($searchCriteria);
 
         $items = $searchResults->getItems();
-        $this->assertTrue(count($items) >= count($projects));
+
+        $result = false;
+        foreach ($items as $item) {
+            /** @var $item ProjectInterface */
+            $result = $item->getName() === $projectName;
+            if ($result === true) {
+                break;
+            }
+        }
+
+        $this->assertTrue($result, 'Project was not returned by the repository');
     }
 }

@@ -36,7 +36,7 @@ class ProjectProvider
     public function createProject(string $name, string $status = Project::STATUS_TRANSFER)
     {
         /** @var Project $project */
-        $project = $this->objectManager->get(Project::class);
+        $project = $this->objectManager->create(Project::class);
         $project->setName($name);
         $project->setStatus($status);
 
