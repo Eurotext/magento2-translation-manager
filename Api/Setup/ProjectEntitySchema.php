@@ -6,7 +6,7 @@ declare(strict_types=1);
  * @see PROJECT_LICENSE.txt
  */
 
-namespace Eurotext\TranslationManager\Setup\EntitySchema;
+namespace Eurotext\TranslationManager\Api\Setup;
 
 interface ProjectEntitySchema
 {

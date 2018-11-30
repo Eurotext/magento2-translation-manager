@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Eurotext\TranslationManager\Model;
 
 use Eurotext\TranslationManager\Api\Data\ProjectEntityInterface;
-use Eurotext\TranslationManager\Setup\EntitySchema\ProjectEntitySchema;
+use Eurotext\TranslationManager\Api\Setup\ProjectEntitySchema;
 use Magento\Framework\DataObject\IdentityInterface;
 use Magento\Framework\Model\AbstractModel;
 
