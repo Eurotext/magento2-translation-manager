@@ -101,7 +101,9 @@ class RetrieveProjectService implements RetrieveProjectServiceInterface
         }
 
         // set Eurotext project status = imported
-        $resultTransition = $this->transitionProject->execute($project, ProjectStatusEnum::IMPORTED());
+        // ETM2-33: the final transition has been disabled since it is not supported right now
+        // $resultTransition = $this->transitionProject->execute($project, ProjectStatusEnum::IMPORTED());
+        $resultTransition = true;
 
         // save project to store possible errors
         $this->projectRepository->save($project);

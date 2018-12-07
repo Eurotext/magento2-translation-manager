@@ -97,7 +97,8 @@ class RetrieveProjectServiceUnitTest extends UnitTestAbstract
             [EntityRetrieverInterface::class => true]
         );
 
-        $this->transitionProject->expects($this->once())->method('execute')->willReturn(true);
+        // ETM2-33: the final transition has been disabled since it is not supported right now
+        $this->transitionProject->expects($this->never())->method('execute')->willReturn(true);
 
         $result = $this->sut->executeById($projectId);
 
