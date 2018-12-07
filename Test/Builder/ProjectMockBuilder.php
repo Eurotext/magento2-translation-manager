@@ -11,7 +11,6 @@ namespace Eurotext\TranslationManager\Test\Builder;
 use Eurotext\TranslationManager\Api\Data\ProjectInterface;
 use Eurotext\TranslationManager\Api\EntitySeederInterface;
 use Eurotext\TranslationManager\Api\ProjectRepositoryInterface;
-use Eurotext\TranslationManager\Model\Project;
 use Eurotext\TranslationManager\Model\ProjectFactory;
 use PHPUnit\Framework\TestCase;
 
@@ -32,10 +31,9 @@ class ProjectMockBuilder
      */
     public function buildProjectMock(): \PHPUnit_Framework_MockObject_MockObject
     {
-        return $this->getMockBuilder(Project::class)
-                    ->disableOriginalConstructor()
-                    // ->setMethods(['getId', ])
-                    ->getMock();
+        return $this->getMockBuilder(ProjectInterface::class)
+                    ->setMethods(['getProjectId'])
+                    ->getMockForAbstractClass();
     }
 
     /**
