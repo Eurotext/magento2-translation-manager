@@ -70,9 +70,6 @@ class NewProjectServiceIntegrationTest extends IntegrationTestAbstract
 
     public static function loadFixtures()
     {
-//        include __DIR__ . '/../../_fixtures/provide_store.php';
-        /** @var StoreProvider $storeProvider */
-        $storeProvider = Bootstrap::getObjectManager()->get(StoreProvider::class);
-        $storeProvider->createStore('store_dest');
+        StoreProvider::createStore('store_dest');
     }
 }

@@ -13,17 +13,9 @@ use Magento\TestFramework\Helper\Bootstrap;
 
 class StoreProvider
 {
-    /** @var \Magento\Framework\ObjectManagerInterface */
-    protected $objectManager;
-
-    public function __construct()
+    public static function createStore(string $code): Store
     {
-        $this->objectManager = Bootstrap::getObjectManager();
-    }
-
-    public function createStore(string $code): Store
-    {
-        $store = $this->objectManager->create(Store::class);
+        $store = Bootstrap::getObjectManager()->create(Store::class);
         $store->isObjectNew(true);
         $store->setName($code);
         $store->setCode($code);
@@ -33,5 +25,4 @@ class StoreProvider
 
         return $store;
     }
-
 }
