@@ -30,11 +30,7 @@ class NewProjectCommandUnitTest extends TestCase
 
         $this->builder = new ConsoleMockBuilder($this);
 
-        $this->newProjectService =
-            $this->getMockBuilder(NewProjectService::class)
-                 ->setMethods(['execute'])
-                 ->disableOriginalConstructor()
-                 ->getMock();
+        $this->newProjectService = $this->createMock(NewProjectService::class);
 
         $this->sut = new NewProjectCommand($this->newProjectService);
     }

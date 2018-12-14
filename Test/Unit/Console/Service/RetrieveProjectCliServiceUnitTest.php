@@ -37,31 +37,15 @@ class RetrieveProjectCliServiceUnitTest extends UnitTestAbstract
     {
         parent::setUp();
 
-        $this->retrieveProject =
-            $this->getMockBuilder(RetrieveProjectServiceInterface::class)
-                 ->setMethods(['execute'])
-                 ->getMockForAbstractClass();
-
-        $this->projectRepository =
-            $this->getMockBuilder(ProjectRepositoryInterface::class)
-                 ->getMockForAbstractClass();
-
-        $this->projectStatusValidator =
-            $this->getMockBuilder(ProjectStatusValidator::class)
-                 ->disableOriginalConstructor()
-                 ->setMethods(['validate'])
-                 ->getMock();
-
-        $this->projectStateMachine =
-            $this->getMockBuilder(ProjectStateMachine::class)
-                 ->disableOriginalConstructor()
-                 ->setMethods(['apply'])
-                 ->getMock();
+        $this->retrieveProject        = $this->createMock(RetrieveProjectServiceInterface::class);
+        $this->projectRepository      = $this->createMock(ProjectRepositoryInterface::class);
+        $this->projectStatusValidator = $this->createMock(ProjectStatusValidator::class);
+        $this->projectStateMachine    = $this->createMock(ProjectStateMachine::class);
 
         $this->sut = $this->objectManager->getObject(
             RetrieveProjectCliService::class,
             [
-                'retrieveProject'         => $this->retrieveProject,
+                'retrieveProject'        => $this->retrieveProject,
                 'projectRepository'      => $this->projectRepository,
                 'projectStatusValidator' => $this->projectStatusValidator,
                 'projectStateMachine'    => $this->projectStateMachine,
@@ -77,7 +61,7 @@ class RetrieveProjectCliServiceUnitTest extends UnitTestAbstract
     {
         $projectId = 1;
 
-        $project = $this->getMockBuilder(ProjectInterface::class)->getMock();
+        $project = $this->createMock(ProjectInterface::class);
         /** @var ProjectInterface $project */
 
         $this->projectRepository->expects($this->once())->method('getById')->willReturn($project);
@@ -103,7 +87,7 @@ class RetrieveProjectCliServiceUnitTest extends UnitTestAbstract
     {
         $projectId = 1;
 
-        $project = $this->getMockBuilder(ProjectInterface::class)->getMock();
+        $project = $this->createMock(ProjectInterface::class);
         /** @var ProjectInterface $project */
 
         $this->projectRepository->expects($this->once())->method('getById')->willReturn($project);

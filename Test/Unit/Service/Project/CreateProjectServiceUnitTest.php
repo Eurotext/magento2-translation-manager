@@ -10,6 +10,7 @@ namespace Eurotext\TranslationManager\Test\Unit\Service;
 
 use Eurotext\RestApiClient\Api\ProjectV1Api;
 use Eurotext\RestApiClient\Response\ProjectPostResponse;
+use Eurotext\TranslationManager\Api\Data\ProjectInterface;
 use Eurotext\TranslationManager\Api\EntitySenderInterface;
 use Eurotext\TranslationManager\Api\ProjectRepositoryInterface;
 use Eurotext\TranslationManager\Mapper\ProjectPostMapper;
@@ -39,20 +40,9 @@ class CreateProjectServiceUnitTest extends UnitTestAbstract
     {
         parent::setUp();
 
-        $this->projectRepository =
-            $this->getMockBuilder(ProjectRepositoryInterface::class)
-                 ->setMethods(['getById'])
-                 ->getMockForAbstractClass();
-
-        $this->projectApi =
-            $this->getMockBuilder(ProjectV1Api::class)
-                 ->setMethods(['post'])
-                 ->getMock();
-
-        $this->entitySender =
-            $this->getMockBuilder(EntitySenderInterface::class)
-                 ->setMethods(['send'])
-                 ->getMockForAbstractClass();
+        $this->projectRepository = $this->createMock(ProjectRepositoryInterface::class);
+        $this->projectApi        = $this->createMock(ProjectV1Api::class);
+        $this->entitySender      = $this->createMock(EntitySenderInterface::class);
 
         $this->projectPostMapper = new ProjectPostMapper();
 
@@ -71,11 +61,7 @@ class CreateProjectServiceUnitTest extends UnitTestAbstract
         $projectId    = 1;
         $projectExtId = 100;
 
-        $project = $this->getMockBuilder(Project::class)
-                        ->disableOriginalConstructor()
-                        ->setMethods(['getExtId'])
-                        ->getMock();
-
+        $project = $this->createMock(ProjectInterface::class);
         $project->expects($this->once())->method('getExtId')->willReturn(0);
         /** @var Project $project */
 
@@ -96,10 +82,7 @@ class CreateProjectServiceUnitTest extends UnitTestAbstract
     {
         $projectId = 1;
 
-        $project = $this->getMockBuilder(Project::class)
-                        ->disableOriginalConstructor()
-                        ->setMethods(['getExtId'])
-                        ->getMock();
+        $project = $this->createMock(ProjectInterface::class);
         $project->expects($this->once())->method('getExtId')->willReturn(0);
         /** @var Project $project */
 
@@ -115,16 +98,11 @@ class CreateProjectServiceUnitTest extends UnitTestAbstract
         $this->assertFalse($result);
     }
 
-
     public function testItShouldStopWhenProjectAlreadyHasExtId()
     {
         $projectExtId = 100;
 
-        $project = $this->getMockBuilder(Project::class)
-                        ->disableOriginalConstructor()
-                        ->setMethods(['getExtId'])
-                        ->getMock();
-
+        $project = $this->createMock(ProjectInterface::class);
         $project->expects($this->once())->method('getExtId')->willReturn($projectExtId);
         /** @var Project $project */
 

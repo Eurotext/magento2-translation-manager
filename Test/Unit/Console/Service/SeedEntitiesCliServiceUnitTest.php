@@ -61,10 +61,10 @@ class SeedEntitiesCliServiceUnitTest extends UnitTestAbstract
         $this->projectRepository->expects($this->once())->method('getById')->willReturn($project);
 
         // Prepare Seeder & SeederPool
-        $seeder = $this->getMockBuilder(EntitySeederInterface::class)->getMock();
+        $seeder = $this->createMock(EntitySeederInterface::class);
         $seeder->expects($this->once())->method('seed')->with($project)->willReturn(true);
 
-        $seederFailing = $this->getMockBuilder(EntitySeederInterface::class)->getMock();
+        $seederFailing = $this->createMock(EntitySeederInterface::class);
         $seederFailing->expects($this->once())->method('seed')->with($project)->willReturn(false);
 
         $this->projectSeederPool = new EntitySeederPool([$entityCode => $seeder, $failingCode => $seederFailing]);

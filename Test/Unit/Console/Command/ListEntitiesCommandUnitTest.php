@@ -30,7 +30,7 @@ class ListEntitiesCommandUnitTest extends TestCase
 
         $this->builder = new ConsoleMockBuilder($this);
 
-        $entityType = $this->getMockBuilder(EntityTypeInterface::class)->getMock();
+        $entityType = $this->createMock(EntityTypeInterface::class);
         $entityType->expects($this->once())->method('getCode')->willReturn('some-code');
         $entityType->expects($this->once())->method('getDescription')->willReturn('some-desc');
 
@@ -49,7 +49,7 @@ class ListEntitiesCommandUnitTest extends TestCase
         $input  = $this->builder->buildConsoleInputMock();
         $output = $this->builder->buildConsoleOutputMock();
 
-        $outputFormatter = $this->getMockBuilder(OutputFormatterInterface::class)->getMock();
+        $outputFormatter = $this->createMock(OutputFormatterInterface::class);
         $output->method('getFormatter')->willReturn($outputFormatter);
 
         $this->sut->run($input, $output);

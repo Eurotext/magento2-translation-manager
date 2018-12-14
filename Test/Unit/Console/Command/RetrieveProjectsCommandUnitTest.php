@@ -31,11 +31,7 @@ class RetrieveProjectsCommandUnitTest extends UnitTestAbstract
 
         $this->builder = new ConsoleMockBuilder($this);
 
-        $this->retrieveProjectsCron =
-            $this->getMockBuilder(RetrieveProjectsCron::class)
-                 ->disableOriginalConstructor()
-                 ->setMethods(['execute'])
-                 ->getMock();
+        $this->retrieveProjectsCron = $this->createMock(RetrieveProjectsCron::class);
 
         $this->sut = $this->objectManager->getObject(
             RetrieveProjectsCommand::class,
@@ -50,7 +46,7 @@ class RetrieveProjectsCommandUnitTest extends UnitTestAbstract
         $input  = $this->builder->buildConsoleInputMock();
         $output = $this->builder->buildConsoleOutputMock();
 
-        $outputFormatter = $this->getMockBuilder(OutputFormatterInterface::class)->getMock();
+        $outputFormatter = $this->createMock(OutputFormatterInterface::class);
         $output->method('getFormatter')->willReturn($outputFormatter);
 
         $this->retrieveProjectsCron->expects($this->once())->method('execute');

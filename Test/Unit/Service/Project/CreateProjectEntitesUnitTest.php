@@ -32,10 +32,7 @@ class CreateProjectEntitesUnitTest extends UnitTestAbstract
     {
         parent::setUp();
 
-        $this->entitySender =
-            $this->getMockBuilder(EntitySenderInterface::class)
-                 ->setMethods(['send'])
-                 ->getMockForAbstractClass();
+        $this->entitySender = $this->createMock(EntitySenderInterface::class);
 
         $this->entitySenderPool = new EntitySenderPool([self::ENTITY_SENDER_KEY => $this->entitySender]);
 
@@ -53,9 +50,7 @@ class CreateProjectEntitesUnitTest extends UnitTestAbstract
     public function testItShouldSendProjectPostRequestWithEntitySenders()
     {
         /** @var ProjectInterface $project */
-        $project = $this->getMockBuilder(Project::class)
-                        ->disableOriginalConstructor()
-                        ->getMock();
+        $project = $this->createMock(ProjectInterface::class);
 
         $this->entitySender->expects($this->once())->method('send')->with($project);
 
@@ -76,9 +71,7 @@ class CreateProjectEntitesUnitTest extends UnitTestAbstract
         $exceptionMessage = 'There was was an error during Sender exceution';
 
         /** @var ProjectInterface $project */
-        $project = $this->getMockBuilder(Project::class)
-                        ->disableOriginalConstructor()
-                        ->getMock();
+        $project = $this->createMock(ProjectInterface::class);
 
         $this->entitySender->expects($this->once())
                            ->method('send')

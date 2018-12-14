@@ -46,21 +46,10 @@ class CheckProjectStatusUnitTest extends UnitTestAbstract
 
         $this->projectMockBuilder = new ProjectMockBuilder($this);
 
-        $this->projectRepository = $this->getMockBuilder(ProjectRepositoryInterface::class)->getMock();
-
-        $this->projectStatusValidator =
-            $this->getMockBuilder(ProjectStatusValidator::class)
-                 ->disableOriginalConstructor()
-                 ->setMethods(['validate'])
-                 ->getMock();
-
-        $this->projectStateMachine =
-            $this->getMockBuilder(ProjectStateMachine::class)
-                 ->disableOriginalConstructor()
-                 ->setMethods(['apply'])
-                 ->getMock();
-
-        $this->logger = $this->getMockBuilder(LoggerInterface::class)->getMock();
+        $this->projectRepository      = $this->createMock(ProjectRepositoryInterface::class);
+        $this->projectStatusValidator = $this->createMock(ProjectStatusValidator::class);
+        $this->projectStateMachine    = $this->createMock(ProjectStateMachine::class);
+        $this->logger                 = $this->createMock(LoggerInterface::class);
 
         $this->sut = $this->objectManager->getObject(
             CheckProjectStatusService::class,

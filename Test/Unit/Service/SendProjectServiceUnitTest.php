@@ -45,31 +45,11 @@ class SendProjectServiceUnitTest extends UnitTestAbstract
     {
         parent::setUp();
 
-        $this->projectRepository =
-            $this->getMockBuilder(ProjectRepositoryInterface::class)
-                 ->setMethods(['getById'])
-                 ->getMockForAbstractClass();
-
-        $this->createProject =
-            $this->getMockBuilder(CreateProjectServiceInterface::class)
-                 ->setMethods(['execute'])
-                 ->getMockForAbstractClass();
-
-        $this->createProjectEntities =
-            $this->getMockBuilder(CreateProjectEntitiesServiceInterface::class)
-                 ->setMethods(['execute'])
-                 ->getMockForAbstractClass();
-
-        $this->transitionProject =
-            $this->getMockBuilder(TransitionProjectServiceInterface::class)
-                 ->setMethods(['execute'])
-                 ->getMockForAbstractClass();
-
-        $this->projectStateMachine =
-            $this->getMockBuilder(ProjectStateMachine::class)
-                 ->disableOriginalConstructor()
-                 ->setMethods(['apply'])
-                 ->getMock();
+        $this->projectRepository     = $this->createMock(ProjectRepositoryInterface::class);
+        $this->createProject         = $this->createMock(CreateProjectServiceInterface::class);
+        $this->createProjectEntities = $this->createMock(CreateProjectEntitiesServiceInterface::class);
+        $this->transitionProject     = $this->createMock(TransitionProjectServiceInterface::class);
+        $this->projectStateMachine   = $this->createMock(ProjectStateMachine::class);
 
         $this->sut = $this->objectManager->getObject(
             SendProjectService::class,
@@ -88,10 +68,7 @@ class SendProjectServiceUnitTest extends UnitTestAbstract
         $projectId = 1;
 
         /** @var ProjectInterface|\PHPUnit_Framework_MockObject_MockObject $project */
-        $project = $this->getMockBuilder(Project::class)
-                        ->setMethods(['getStatus'])
-                        ->disableOriginalConstructor()
-                        ->getMock();
+        $project = $this->createMock(ProjectInterface::class);
         $project->method('getStatus')->willReturn(ProjectInterface::STATUS_TRANSFER);
 
         $this->projectRepository->expects($this->once())->method('getById')->with($projectId)->willReturn($project);
@@ -116,10 +93,7 @@ class SendProjectServiceUnitTest extends UnitTestAbstract
         $projectId = 1;
 
         /** @var ProjectInterface|\PHPUnit_Framework_MockObject_MockObject $project */
-        $project = $this->getMockBuilder(Project::class)
-                        ->setMethods(['getStatus'])
-                        ->disableOriginalConstructor()
-                        ->getMock();
+        $project = $this->createMock(ProjectInterface::class);
         $project->method('getStatus')->willReturn(ProjectInterface::STATUS_NEW);
 
         $this->projectRepository->expects($this->once())
@@ -140,10 +114,7 @@ class SendProjectServiceUnitTest extends UnitTestAbstract
         $projectId = 1;
 
         /** @var ProjectInterface|\PHPUnit_Framework_MockObject_MockObject $project */
-        $project = $this->getMockBuilder(Project::class)
-                        ->setMethods(['getStatus'])
-                        ->disableOriginalConstructor()
-                        ->getMock();
+        $project = $this->createMock(ProjectInterface::class);
         $project->method('getStatus')->willReturn(ProjectInterface::STATUS_TRANSFER);
 
         $this->projectRepository->expects($this->once())
@@ -165,10 +136,7 @@ class SendProjectServiceUnitTest extends UnitTestAbstract
         $projectId = 1;
 
         /** @var ProjectInterface|\PHPUnit_Framework_MockObject_MockObject $project */
-        $project = $this->getMockBuilder(Project::class)
-                        ->setMethods(['getStatus'])
-                        ->disableOriginalConstructor()
-                        ->getMock();
+        $project = $this->createMock(ProjectInterface::class);
         $project->method('getStatus')
                 ->willReturnOnConsecutiveCalls(ProjectInterface::STATUS_TRANSFER, ProjectInterface::STATUS_ERROR);
 

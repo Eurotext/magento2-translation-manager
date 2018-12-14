@@ -8,11 +8,8 @@ declare(strict_types=1);
 
 namespace Eurotext\TranslationManager\Test\Unit\Cron;
 
-use Eurotext\TranslationManager\Api\Data\ProjectInterface;
 use Eurotext\TranslationManager\Api\ProjectRepositoryInterface;
 use Eurotext\TranslationManager\Cron\CheckProjectStatusCron;
-use Eurotext\TranslationManager\Exception\IllegalProjectStatusChangeException;
-use Eurotext\TranslationManager\Exception\InvalidProjectStatusException;
 use Eurotext\TranslationManager\Service\Project\CheckProjectStatusServiceInterface;
 use Eurotext\TranslationManager\Test\Builder\ProjectMockBuilder;
 use Eurotext\TranslationManager\Test\Unit\UnitTestAbstract;
@@ -43,15 +40,9 @@ class CheckProjectStatusCronUnitTest extends UnitTestAbstract
 
         $this->projectMockBuilder = new ProjectMockBuilder($this);
 
-        $this->criteriaBuilder =
-            $this->getMockBuilder(SearchCriteriaBuilder::class)
-                 ->setMethods(['create', 'addFilter'])
-                 ->disableOriginalConstructor()
-                 ->getMock();
-
-        $this->projectRepository = $this->getMockBuilder(ProjectRepositoryInterface::class)->getMock();
-
-        $this->checkProjectStatus = $this->getMockBuilder(CheckProjectStatusServiceInterface::class)->getMock();
+        $this->criteriaBuilder    = $this->createMock(SearchCriteriaBuilder::class);
+        $this->projectRepository  = $this->createMock(ProjectRepositoryInterface::class);
+        $this->checkProjectStatus = $this->createMock(CheckProjectStatusServiceInterface::class);
 
         $this->sut = $this->objectManager->getObject(
             CheckProjectStatusCron::class,

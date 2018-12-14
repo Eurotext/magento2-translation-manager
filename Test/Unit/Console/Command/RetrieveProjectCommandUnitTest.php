@@ -38,24 +38,15 @@ class RetrieveProjectCommandUnitTest extends UnitTestAbstract
 
         $this->builder = new ConsoleMockBuilder($this);
 
-        $this->retrieveProject =
-            $this->getMockBuilder(RetrieveProjectCliService::class)
-                 ->setMethods(['executeById'])
-                 ->disableOriginalConstructor()
-                 ->getMock();
-
-        $this->pushConsoleLog =
-            $this->getMockBuilder(PushConsoleLogHandler::class)
-                 ->disableOriginalConstructor()
-                 ->getMock();
-
-        $this->appState = $this->getMockBuilder(State::class)->disableOriginalConstructor()->getMock();
+        $this->retrieveProject = $this->createMock(RetrieveProjectCliService::class);
+        $this->pushConsoleLog  = $this->createMock(PushConsoleLogHandler::class);
+        $this->appState        = $this->createMock(State::class);
 
         $this->sut = $this->objectManager->getObject(
             RetrieveProjectCommand::class, [
                 'retrieveProject' => $this->retrieveProject,
-                'pushConsoleLog' => $this->pushConsoleLog,
-                'appState'       => $this->appState,
+                'pushConsoleLog'  => $this->pushConsoleLog,
+                'appState'        => $this->appState,
             ]
         );
     }
@@ -65,7 +56,7 @@ class RetrieveProjectCommandUnitTest extends UnitTestAbstract
         $projectId = 1;
 
         $this->retrieveProject->expects($this->once())->method('executeById')
-                             ->with($projectId)->willReturn(['project' => 1]);
+                              ->with($projectId)->willReturn(['project' => 1]);
 
         $input = $this->builder->buildConsoleInputMock();
         $input->expects($this->once())->method('getArgument')->willReturn($projectId);
@@ -84,7 +75,7 @@ class RetrieveProjectCommandUnitTest extends UnitTestAbstract
                        ->willThrowException($exception);
 
         $this->retrieveProject->expects($this->once())->method('executeById')
-                             ->with($projectId)->willReturn(['project' => 1]);
+                              ->with($projectId)->willReturn(['project' => 1]);
 
         $input = $this->builder->buildConsoleInputMock();
         $input->expects($this->once())->method('getArgument')->willReturn($projectId);

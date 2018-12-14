@@ -55,7 +55,7 @@ class NewProjectServiceUnitTest extends UnitTestAbstract
 
         $this->projectFactory    = $this->projectMockBuilder->buildProjectFactoryMock();
         $this->projectRepository = $this->projectMockBuilder->buildProjectRepositoryMock();
-        $this->storeRepository   = $this->getMockBuilder(StoreRepositoryInterface::class)->getMock();
+        $this->storeRepository   = $this->createMock(StoreRepositoryInterface::class);
 
         $this->sut = $this->objectManager->getObject(
             NewProjectService::class,
@@ -84,10 +84,10 @@ class NewProjectServiceUnitTest extends UnitTestAbstract
 
         $this->projectRepository->expects($this->once())->method('save')->willReturn($project);
 
-        $stockSrcObj = $this->getMockBuilder(StoreInterface::class)->getMock();
+        $stockSrcObj = $this->createMock(StoreInterface::class);
         $stockSrcObj->expects($this->once())->method('getId')->willReturn($storeSrcId);
 
-        $stockDestObj = $this->getMockBuilder(StoreInterface::class)->getMock();
+        $stockDestObj = $this->createMock(StoreInterface::class);
         $stockDestObj->expects($this->once())->method('getId')->willReturn($storeDestId);
 
         $this->storeRepository->expects($this->exactly(2))

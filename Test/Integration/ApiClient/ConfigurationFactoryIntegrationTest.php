@@ -30,7 +30,7 @@ class ConfigurationFactoryIntegrationTest extends IntegrationTestAbstract
 
         $this->configWriter = $this->objectManager->get(StorageWriter::class);
 
-        $this->metadata = $this->getMockBuilder(ProductMetadataInterface::class)->getMock();
+        $this->metadata = $this->createMock(ProductMetadataInterface::class);
 
         $this->sut = $this->objectManager->create(ConfigurationFactory::class, ['magentoMetadata'=> $this->metadata]);
     }

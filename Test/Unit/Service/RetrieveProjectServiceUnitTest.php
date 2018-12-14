@@ -42,27 +42,10 @@ class RetrieveProjectServiceUnitTest extends UnitTestAbstract
     {
         parent::setUp();
 
-        $this->projectRepository =
-            $this->getMockBuilder(ProjectRepositoryInterface::class)
-                 ->setMethods(['getById'])
-                 ->getMockForAbstractClass();
-
-        $this->fetchProjectEntities =
-            $this->getMockBuilder(FetchProjectEntitiesServiceInterface::class)
-                 ->setMethods(['execute'])
-                 ->getMockForAbstractClass();
-
-        $this->projectStateMachine =
-            $this->getMockBuilder(ProjectStateMachine::class)
-                 ->disableOriginalConstructor()
-                 ->setMethods(['apply'])
-                 ->getMock();
-
-        $this->transitionProject =
-            $this->getMockBuilder(TransitionProjectService::class)
-                 ->disableOriginalConstructor()
-                 ->setMethods(['execute'])
-                 ->getMock();
+        $this->projectRepository    = $this->createMock(ProjectRepositoryInterface::class);
+        $this->fetchProjectEntities = $this->createMock(FetchProjectEntitiesServiceInterface::class);
+        $this->projectStateMachine  = $this->createMock(ProjectStateMachine::class);
+        $this->transitionProject    = $this->createMock(TransitionProjectService::class);
 
         $this->sut = $this->objectManager->getObject(
             RetrieveProjectService::class,
@@ -80,10 +63,7 @@ class RetrieveProjectServiceUnitTest extends UnitTestAbstract
         $projectId = 1;
 
         /** @var ProjectInterface|\PHPUnit_Framework_MockObject_MockObject $project */
-        $project = $this->getMockBuilder(Project::class)
-                        ->setMethods(['getStatus'])
-                        ->disableOriginalConstructor()
-                        ->getMock();
+        $project = $this->createMock(ProjectInterface::class);
         $project->method('getStatus')->willReturn(ProjectInterface::STATUS_ACCEPTED);
 
         $this->projectRepository->expects($this->once())->method('getById')->with($projectId)->willReturn($project);
@@ -113,10 +93,7 @@ class RetrieveProjectServiceUnitTest extends UnitTestAbstract
         $projectId = 1;
 
         /** @var ProjectInterface|\PHPUnit_Framework_MockObject_MockObject $project */
-        $project = $this->getMockBuilder(Project::class)
-                        ->setMethods(['getStatus'])
-                        ->disableOriginalConstructor()
-                        ->getMock();
+        $project = $this->createMock(ProjectInterface::class);
         $project->method('getStatus')->willReturn(ProjectInterface::STATUS_EXPORTED);
 
         $this->projectRepository->expects($this->once())->method('getById')->with($projectId)->willReturn($project);
@@ -136,10 +113,7 @@ class RetrieveProjectServiceUnitTest extends UnitTestAbstract
         $projectId = 1;
 
         /** @var ProjectInterface|\PHPUnit_Framework_MockObject_MockObject $project */
-        $project = $this->getMockBuilder(Project::class)
-                        ->setMethods(['getStatus'])
-                        ->disableOriginalConstructor()
-                        ->getMock();
+        $project = $this->createMock(ProjectInterface::class);
         $project->method('getStatus')
                 ->willReturnOnConsecutiveCalls(ProjectInterface::STATUS_ACCEPTED, ProjectInterface::STATUS_ERROR);
 

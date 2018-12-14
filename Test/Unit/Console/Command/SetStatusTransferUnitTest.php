@@ -32,11 +32,7 @@ class SetStatusTransferUnitTest extends UnitTestAbstract
 
         $this->builder = new ConsoleMockBuilder($this);
 
-        $this->projectStateMachine =
-            $this->getMockBuilder(ProjectStateMachine::class)
-                 ->disableOriginalConstructor()
-                 ->setMethods(['applyById'])
-                 ->getMock();
+        $this->projectStateMachine = $this->createMock(ProjectStateMachine::class);
 
         $this->sut = $this->objectManager->getObject(
             SetStatusTransferCommand::class,
@@ -53,7 +49,7 @@ class SetStatusTransferUnitTest extends UnitTestAbstract
         $input  = $this->builder->buildConsoleInputMock();
         $output = $this->builder->buildConsoleOutputMock();
 
-        $outputFormatter = $this->getMockBuilder(OutputFormatterInterface::class)->getMock();
+        $outputFormatter = $this->createMock(OutputFormatterInterface::class);
         $output->method('getFormatter')->willReturn($outputFormatter);
         $output->expects($this->once())->method('writeln');
 
@@ -73,7 +69,7 @@ class SetStatusTransferUnitTest extends UnitTestAbstract
         $input  = $this->builder->buildConsoleInputMock();
         $output = $this->builder->buildConsoleOutputMock();
 
-        $outputFormatter = $this->getMockBuilder(OutputFormatterInterface::class)->getMock();
+        $outputFormatter = $this->createMock(OutputFormatterInterface::class);
         $output->method('getFormatter')->willReturn($outputFormatter);
         $output->expects($this->never())->method('writeln');
 

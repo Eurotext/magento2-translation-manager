@@ -32,11 +32,7 @@ class SendProjectsCommandUnitTest extends UnitTestAbstract
 
         $this->builder = new ConsoleMockBuilder($this);
 
-        $this->sendProjectsCron =
-            $this->getMockBuilder(SendProjectsCron::class)
-                 ->disableOriginalConstructor()
-                 ->setMethods(['execute'])
-                 ->getMock();
+        $this->sendProjectsCron = $this->createMock(SendProjectsCron::class);
 
         $this->sut = $this->objectManager->getObject(
             SendProjectsCommand::class,
@@ -51,7 +47,7 @@ class SendProjectsCommandUnitTest extends UnitTestAbstract
         $input  = $this->builder->buildConsoleInputMock();
         $output = $this->builder->buildConsoleOutputMock();
 
-        $outputFormatter = $this->getMockBuilder(OutputFormatterInterface::class)->getMock();
+        $outputFormatter = $this->createMock(OutputFormatterInterface::class);
         $output->method('getFormatter')->willReturn($outputFormatter);
 
         $this->sendProjectsCron->expects($this->once())->method('execute');

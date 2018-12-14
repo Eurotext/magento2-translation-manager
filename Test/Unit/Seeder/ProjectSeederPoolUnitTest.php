@@ -19,9 +19,7 @@ class ProjectSeederPoolUnitTest extends TestCase
      */
     public function itShouldReturnAnArrayOfSeeders()
     {
-        $seederMock = $this->getMockBuilder(EntitySeederInterface::class)
-            ->setMethods(['seed'])
-            ->getMockForAbstractClass();
+        $seederMock = $this->createMock(EntitySeederInterface::class);
 
         $sut = new EntitySeederPool([$seederMock]);
 

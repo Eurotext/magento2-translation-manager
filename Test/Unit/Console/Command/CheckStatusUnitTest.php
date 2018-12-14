@@ -35,16 +35,8 @@ class CheckStatusUnitTest extends UnitTestAbstract
 
         $this->builder = new ConsoleMockBuilder($this);
 
-        $this->checkProjectStatus =
-            $this->getMockBuilder(CheckProjectStatusServiceInterface::class)
-                 ->setMethods(['executeById'])
-                 ->getMockForAbstractClass();
-
-        $this->checkProjectStatusCron =
-            $this->getMockBuilder(CheckProjectStatusCron::class)
-                 ->disableOriginalConstructor()
-                 ->setMethods(['execute'])
-                 ->getMock();
+        $this->checkProjectStatus     = $this->createMock(CheckProjectStatusServiceInterface::class);
+        $this->checkProjectStatusCron = $this->createMock(CheckProjectStatusCron::class);
 
         $this->sut = $this->objectManager->getObject(
             CheckStatusCommand::class,
@@ -62,7 +54,7 @@ class CheckStatusUnitTest extends UnitTestAbstract
         $input  = $this->builder->buildConsoleInputMock();
         $output = $this->builder->buildConsoleOutputMock();
 
-        $outputFormatter = $this->getMockBuilder(OutputFormatterInterface::class)->getMock();
+        $outputFormatter = $this->createMock(OutputFormatterInterface::class);
         $output->method('getFormatter')->willReturn($outputFormatter);
 
         $input->expects($this->once())->method('getArgument')->willReturn($projectId);
@@ -79,7 +71,7 @@ class CheckStatusUnitTest extends UnitTestAbstract
         $input  = $this->builder->buildConsoleInputMock();
         $output = $this->builder->buildConsoleOutputMock();
 
-        $outputFormatter = $this->getMockBuilder(OutputFormatterInterface::class)->getMock();
+        $outputFormatter = $this->createMock(OutputFormatterInterface::class);
         $output->method('getFormatter')->willReturn($outputFormatter);
 
         $input->expects($this->once())->method('getArgument')->willReturn('');

@@ -44,22 +44,11 @@ class SendProjectsCronUnitTest extends UnitTestAbstract
 
         $this->projectMockBuilder = new ProjectMockBuilder($this);
 
-        $this->criteriaBuilder =
-            $this->getMockBuilder(SearchCriteriaBuilder::class)
-                 ->setMethods(['create', 'addFilter'])
-                 ->disableOriginalConstructor()
-                 ->getMock();
+        $this->criteriaBuilder    = $this->createMock(SearchCriteriaBuilder::class);
+        $this->projectRepository  = $this->createMock(ProjectRepositoryInterface::class);
+        $this->sendProjectService = $this->createMock(SendProjectServiceInterface::class);
 
-        $this->projectRepository =
-            $this->getMockBuilder(ProjectRepositoryInterface::class)
-                 ->getMockForAbstractClass();
-
-        $this->sendProjectService =
-            $this->getMockBuilder(SendProjectServiceInterface::class)
-                 ->setMethods(['execute'])
-                 ->getMockForAbstractClass();
-
-        $this->logger = $this->getMockBuilder(LoggerInterface::class)->getMock();
+        $this->logger = $this->createMock(LoggerInterface::class);
 
         $this->sut = $this->objectManager->getObject(
             SendProjectsCron::class,

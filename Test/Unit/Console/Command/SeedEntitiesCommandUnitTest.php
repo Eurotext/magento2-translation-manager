@@ -37,13 +37,8 @@ class SeedEntitiesCommandUnitTest extends UnitTestAbstract
 
         $this->builder = new ConsoleMockBuilder($this);
 
-        $this->seedEntitiesService =
-            $this->getMockBuilder(SeedEntitiesService::class)
-                 ->setMethods(['execute'])
-                 ->disableOriginalConstructor()
-                 ->getMock();
-
-        $this->appState = $this->getMockBuilder(State::class)->disableOriginalConstructor()->getMock();
+        $this->seedEntitiesService = $this->createMock(SeedEntitiesService::class);
+        $this->appState            = $this->createMock(State::class);
 
         $this->sut = $this->objectManager->getObject(
             SeedEntitiesCommand::class, [

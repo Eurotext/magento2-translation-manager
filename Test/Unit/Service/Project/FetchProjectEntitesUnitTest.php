@@ -41,23 +41,20 @@ class FetchProjectEntitesUnitTest extends UnitTestAbstract
     {
         parent::setUp();
 
-        $this->entityRetriever =
-            $this->getMockBuilder(EntityRetrieverInterface::class)
-                 ->setMethods(['retrieve'])
-                 ->getMockForAbstractClass();
+        $this->entityRetriever = $this->createMock(EntityRetrieverInterface::class);
 
         $this->entitySenderPool = new EntityRetrieverPool([self::ENTITY_RECEIVER_KEY => $this->entityRetriever]);
 
-        $this->store = $this->getMockBuilder(StoreInterface::class)->getMock();
+        $this->store = $this->createMock(StoreInterface::class);
 
-        $this->storeManager = $this->getMockBuilder(StoreManagerInterface::class)->getMock();
+        $this->storeManager = $this->createMock(StoreManagerInterface::class);
         $this->storeManager->expects($this->once())->method('getStore')->willReturn($this->store);
 
         $this->sut = $this->objectManager->getObject(
             FetchProjectEntitiesService::class,
             [
                 'entityRetrieverPool' => $this->entitySenderPool,
-                'storeManager'       => $this->storeManager,
+                'storeManager'        => $this->storeManager,
             ]
         );
     }
@@ -65,10 +62,7 @@ class FetchProjectEntitesUnitTest extends UnitTestAbstract
     public function testItShouldRetrieveItemGetRequestWithEntityRetrievers()
     {
         /** @var ProjectInterface $project */
-        $project = $this->getMockBuilder(Project::class)
-                        ->disableOriginalConstructor()
-                        ->getMock();
-
+        $project = $this->createMock(ProjectInterface::class);
         $this->entityRetriever->expects($this->once())->method('retrieve')->with($project);
 
         $result = $this->sut->execute($project);
@@ -85,14 +79,11 @@ class FetchProjectEntitesUnitTest extends UnitTestAbstract
         $exceptionMessage = 'There was was an error during Retriever exceution';
 
         /** @var ProjectInterface $project */
-        $project = $this->getMockBuilder(Project::class)
-                        ->disableOriginalConstructor()
-                        ->getMock();
-
+        $project = $this->createMock(ProjectInterface::class);
         $this->entityRetriever->expects($this->once())
-                             ->method('retrieve')
-                             ->with($project)
-                             ->willThrowException(new \Exception($exceptionMessage));
+                              ->method('retrieve')
+                              ->with($project)
+                              ->willThrowException(new \Exception($exceptionMessage));
 
         $result = $this->sut->execute($project);
 

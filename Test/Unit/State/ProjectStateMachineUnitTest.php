@@ -27,7 +27,7 @@ class ProjectStateMachineUnitTest extends UnitTestAbstract
     {
         parent::setUp();
 
-        $this->projectRepository = $this->getMockBuilder(ProjectRepositoryInterface::class)->getMock();
+        $this->projectRepository = $this->createMock(ProjectRepositoryInterface::class);
 
         $this->sut = new ProjectStateMachine($this->projectRepository);
     }
@@ -44,7 +44,7 @@ class ProjectStateMachineUnitTest extends UnitTestAbstract
     public function testAllowedStatusTransitions(string $currentStatus, string $newStatus)
     {
         /** @var ProjectInterface|\PHPUnit_Framework_MockObject_MockObject $project */
-        $project = $this->getMockBuilder(ProjectInterface::class)->getMock();
+        $project = $this->createMock(ProjectInterface::class);
         $project->expects($this->once())->method('getStatus')->willReturn($currentStatus);
         $project->expects($this->once())->method('setStatus')->with($newStatus);
 
@@ -58,7 +58,7 @@ class ProjectStateMachineUnitTest extends UnitTestAbstract
         $data = [];
 
         /** @var ProjectRepositoryInterface|\PHPUnit_Framework_MockObject_MockObject $projectRepository */
-        $projectRepository = $this->getMockBuilder(ProjectRepositoryInterface::class)->getMock();
+        $projectRepository = $this->createMock(ProjectRepositoryInterface::class);
 
         $projectStateMachine = new ProjectStateMachine($projectRepository);
 
@@ -85,7 +85,7 @@ class ProjectStateMachineUnitTest extends UnitTestAbstract
         $newStatus     = ProjectInterface::STATUS_IMPORTED;
 
         /** @var ProjectInterface|\PHPUnit_Framework_MockObject_MockObject $project */
-        $project = $this->getMockBuilder(ProjectInterface::class)->getMock();
+        $project = $this->createMock(ProjectInterface::class);
         $project->expects($this->once())->method('getStatus')->willReturn($currentStatus);
         $project->expects($this->never())->method('setStatus');
 
@@ -102,7 +102,7 @@ class ProjectStateMachineUnitTest extends UnitTestAbstract
         $newStatus     = ProjectInterface::STATUS_EXPORTED;
 
         /** @var ProjectInterface|\PHPUnit_Framework_MockObject_MockObject $project */
-        $project = $this->getMockBuilder(ProjectInterface::class)->getMock();
+        $project = $this->createMock(ProjectInterface::class);
         $project->expects($this->once())->method('getStatus')->willReturn($currentStatus);
         $project->expects($this->never())->method('setStatus');
 

@@ -33,9 +33,9 @@ class ConfigurationFactoryUnitTest extends UnitTestAbstract
     {
         parent::setUp();
 
-        $this->scopeConfig     = $this->getMockBuilder(ScopeConfigInterface::class)->getMock();
-        $this->moduleList      = $this->getMockBuilder(ModuleListInterface::class)->getMock();
-        $this->magentoMetadata = $this->getMockBuilder(ProductMetadataInterface::class)->getMock();
+        $this->scopeConfig     = $this->createMock(ScopeConfigInterface::class);
+        $this->moduleList      = $this->createMock(ModuleListInterface::class);
+        $this->magentoMetadata = $this->createMock(ProductMetadataInterface::class);
 
         $this->sut = $this->objectManager->getObject(
             ConfigurationFactory::class,

@@ -11,6 +11,7 @@ namespace Eurotext\TranslationManager\Test\Unit\Service;
 use Eurotext\RestApiClient\Api\ProjectV1Api;
 use Eurotext\RestApiClient\Enum\ProjectStatusEnum;
 use Eurotext\RestApiClient\Response\ProjectTransitionResponse;
+use Eurotext\TranslationManager\Api\Data\ProjectInterface;
 use Eurotext\TranslationManager\Model\Project;
 use Eurotext\TranslationManager\Service\Project\TransitionProjectService;
 use Eurotext\TranslationManager\Test\Unit\UnitTestAbstract;
@@ -28,10 +29,7 @@ class TransitionProjectUnitTest extends UnitTestAbstract
     {
         parent::setUp();
 
-        $this->projectApi =
-            $this->getMockBuilder(ProjectV1Api::class)
-                 ->setMethods(['transition'])
-                 ->getMock();
+        $this->projectApi = $this->createMock(ProjectV1Api::class);
 
         $this->sut = $this->objectManager->getObject(
             TransitionProjectService::class,
@@ -45,15 +43,12 @@ class TransitionProjectUnitTest extends UnitTestAbstract
     {
         $projectExtId = 10;
 
-        $project = $this->getMockBuilder(Project::class)
-                        ->disableOriginalConstructor()
-                        ->setMethods(['getExtId', 'setLastError'])
-                        ->getMock();
+        $project = $this->createMock(ProjectInterface::class);
         $project->expects($this->once())->method('getExtId')->willReturn($projectExtId);
         $project->expects($this->never())->method('setLastError');
         /** @var Project $project */
 
-        $httpResponse = $this->getMockBuilder(ResponseInterface::class)->getMockForAbstractClass();
+        $httpResponse = $this->createMock(ResponseInterface::class);
         $httpResponse->expects($this->once())->method('getStatusCode')->willReturn(200);
         /** @var ResponseInterface $httpResponse */
 
@@ -71,15 +66,12 @@ class TransitionProjectUnitTest extends UnitTestAbstract
     {
         $projectExtId = 10;
 
-        $project = $this->getMockBuilder(Project::class)
-                        ->disableOriginalConstructor()
-                        ->setMethods(['getExtId', 'setLastError'])
-                        ->getMock();
+        $project = $this->createMock(ProjectInterface::class);
         $project->expects($this->once())->method('getExtId')->willReturn($projectExtId);
         $project->expects($this->once())->method('setLastError');
         /** @var Project $project */
 
-        $httpResponse = $this->getMockBuilder(ResponseInterface::class)->getMockForAbstractClass();
+        $httpResponse = $this->createMock(ResponseInterface::class);
         $httpResponse->expects($this->once())->method('getStatusCode')->willReturn(404);
         /** @var ResponseInterface $httpResponse */
 
@@ -97,10 +89,7 @@ class TransitionProjectUnitTest extends UnitTestAbstract
     {
         $projectExtId = 10;
 
-        $project = $this->getMockBuilder(Project::class)
-                        ->disableOriginalConstructor()
-                        ->setMethods(['getExtId', 'setLastError'])
-                        ->getMock();
+        $project = $this->createMock(ProjectInterface::class);
         $project->expects($this->once())->method('getExtId')->willReturn($projectExtId);
         $project->expects($this->once())->method('setLastError');
         /** @var Project $project */

@@ -38,17 +38,9 @@ class SendProjectCommandUnitTest extends UnitTestAbstract
 
         $this->builder = new ConsoleMockBuilder($this);
 
-        $this->sendProjectService =
-            $this->getMockBuilder(SendProjectServiceInterface::class)
-                 ->setMethods(['executeById'])
-                 ->getMockForAbstractClass();
-
-        $this->pushConsoleLog =
-            $this->getMockBuilder(PushConsoleLogHandler::class)
-                 ->disableOriginalConstructor()
-                 ->getMock();
-
-        $this->appState = $this->getMockBuilder(State::class)->disableOriginalConstructor()->getMock();
+        $this->sendProjectService = $this->createMock(SendProjectServiceInterface::class);
+        $this->pushConsoleLog     = $this->createMock(PushConsoleLogHandler::class);
+        $this->appState           = $this->createMock(State::class);
 
         $this->sut = $this->objectManager->getObject(
             SendProjectCommand::class, [

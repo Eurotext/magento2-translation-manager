@@ -44,30 +44,19 @@ class RetrieveProjectsCronUnitTest extends UnitTestAbstract
 
         $this->projectMockBuilder = new ProjectMockBuilder($this);
 
-        $this->criteriaBuilder =
-            $this->getMockBuilder(SearchCriteriaBuilder::class)
-                 ->setMethods(['create', 'addFilter'])
-                 ->disableOriginalConstructor()
-                 ->getMock();
+        $this->criteriaBuilder        = $this->createMock(SearchCriteriaBuilder::class);
+        $this->projectRepository      = $this->createMock(ProjectRepositoryInterface::class);
+        $this->retrieveProjectService = $this->createMock(RetrieveProjectServiceInterface::class);
 
-        $this->projectRepository =
-            $this->getMockBuilder(ProjectRepositoryInterface::class)
-                 ->getMockForAbstractClass();
-
-        $this->retrieveProjectService =
-            $this->getMockBuilder(RetrieveProjectServiceInterface::class)
-                 ->setMethods(['execute'])
-                 ->getMockForAbstractClass();
-
-        $this->logger = $this->getMockBuilder(LoggerInterface::class)->getMock();
+        $this->logger = $this->createMock(LoggerInterface::class);
 
         $this->sut = $this->objectManager->getObject(
             RetrieveProjectsCron::class,
             [
-                'projectRepository'     => $this->projectRepository,
-                'criteriaBuilder'       => $this->criteriaBuilder,
+                'projectRepository'      => $this->projectRepository,
+                'criteriaBuilder'        => $this->criteriaBuilder,
                 'retrieveProjectService' => $this->retrieveProjectService,
-                'logger'                => $this->logger,
+                'logger'                 => $this->logger,
             ]
         );
     }
