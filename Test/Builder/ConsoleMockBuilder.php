@@ -49,9 +49,9 @@ class ConsoleMockBuilder
         return $input;
     }
 
-    protected function getMockBuilder($className): \PHPUnit_Framework_MockObject_MockBuilder
+    protected function getMockBuilder($className): \PHPUnit\Framework\MockObject\MockBuilder
     {
-        return new \PHPUnit_Framework_MockObject_MockBuilder($this->testCase, $className);
+        return new \PHPUnit\Framework\MockObject\MockBuilder($this->testCase, $className);
     }
 
 }
