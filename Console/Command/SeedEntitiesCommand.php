@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Eurotext\TranslationManager\Console\Command;
 
 use Eurotext\TranslationManager\Console\Service\SeedEntitiesService;
+use Eurotext\TranslationManager\Logger\PushConsoleLogHandler;
 use Magento\Framework\App\State as AppState;
 use Magento\Framework\Exception\LocalizedException;
 use Symfony\Component\Console\Command\Command;
@@ -26,13 +27,20 @@ class SeedEntitiesCommand extends Command
      */
     private $appState;
 
+    /**
+     * @var PushConsoleLogHandler
+     */
+    private $pushConsoleLog;
+
     public function __construct(
         SeedEntitiesService $seedEntitiesService,
+        PushConsoleLogHandler $pushConsoleLog,
         AppState $appState
     ) {
         parent::__construct();
         $this->seedEntitiesService = $seedEntitiesService;
         $this->appState            = $appState;
+        $this->pushConsoleLog      = $pushConsoleLog;
     }
 
     protected function configure()
@@ -57,6 +65,8 @@ class SeedEntitiesCommand extends Command
         } catch (LocalizedException $e) {
             // the area code is already set
         }
+
+        $this->pushConsoleLog->push($output);
 
         $this->seedEntitiesService->execute($input, $output);
     }
