@@ -151,6 +151,7 @@
                 <item name="etm_project_status_check" xsi:type="object">Eurotext\TranslationManager\Console\Command\CheckStatusCommand</item>
                 <item name="etm_entity_types" xsi:type="object">Eurotext\TranslationManager\Console\Command\ListEntitiesCommand</item>
                 <item name="etm_entity_seed" xsi:type="object">Eurotext\TranslationManager\Console\Command\SeedEntitiesCommand</item>
+                <item name="etm_entity_add" xsi:type="object">Eurotext\TranslationManager\Console\Command\AddEntityCommand</item>
             </argument>
         </arguments>
     </type>

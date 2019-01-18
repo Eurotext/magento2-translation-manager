@@ -13,13 +13,6 @@ use Eurotext\TranslationManager\Seeder\EntitySeederPool;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * SeedEntitiesService
- *
- * This service was mainly created due it having dependencies which require an installed Magento2 instance
- * Furthermore the Proxy Pattern is used which only works for classes
- * not having return type definitions in the method signature
- */
 class SeedEntitiesService
 {
     const ARG_PROJECT_ID      = 'project-id';
