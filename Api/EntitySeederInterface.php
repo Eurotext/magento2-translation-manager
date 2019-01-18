@@ -12,5 +12,5 @@ use Eurotext\TranslationManager\Api\Data\ProjectInterface;
 
 interface EntitySeederInterface
 {
-    public function seed(ProjectInterface $project): bool;
+    public function seed(ProjectInterface $project, array $entities = []): bool;
 }
