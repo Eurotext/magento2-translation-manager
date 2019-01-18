@@ -40,6 +40,11 @@
             <argument name="appState" xsi:type="object">Magento\Framework\App\State\Proxy</argument>
         </arguments>
     </type>
+    <type name="Eurotext\TranslationManager\Console\Command\AddEntityCommand">
+        <arguments>
+            <argument name="appState" xsi:type="object">Magento\Framework\App\State\Proxy</argument>
+        </arguments>
+    </type>
 
     <type name="Eurotext\TranslationManager\Console\Command\SendProjectCommand">
         <arguments>
