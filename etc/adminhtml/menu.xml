@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Eurotext_TranslationManager::translationmanager"
+             title="TranslationManager" translate="title"
+             sortOrder="100"
+             module="Eurotext_TranslationManager" parent="Magento_Backend::stores"
+             resource="Eurotext_TranslationManager::translationmanager" />
+        <add id="Eurotext_TranslationManager::project"
+             title="Projects" translate="title"
+             sortOrder="10"
+             module="Eurotext_TranslationManager" parent="Eurotext_TranslationManager::translationmanager"
+             action="eurotext_translationmanager/project/index"
+             resource="Eurotext_TranslationManager::project" />
+    </menu>
+</config>
