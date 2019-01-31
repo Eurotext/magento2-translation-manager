@@ -14,7 +14,7 @@
     <settings>
         <buttons>
             <button name="add">
-                <url path="*/*/new"/>
+                <url path="*/*/new" />
                 <class>primary</class>
                 <label translate="true">Add New Project</label>
             </button>
@@ -42,7 +42,24 @@
         </settings>
         <bookmark name="bookmarks" />
         <columnsControls name="columns_controls" />
-        <filters name="listing_filters" />
+        <filters name="listing_filters">
+            <filterSelect name="storeview_src" provider="${ $.parentName }">
+                <settings>
+                    <options class="Magento\Store\Ui\Component\Listing\Column\Store\Options" />
+                    <caption translate="true">All Store Views</caption>
+                    <label translate="true">Source</label>
+                    <dataScope>storeview_src</dataScope>
+                </settings>
+            </filterSelect>
+            <filterSelect name="storeview_dst" provider="${ $.parentName }">
+                <settings>
+                    <options class="Magento\Store\Ui\Component\Listing\Column\Store\Options" />
+                    <caption translate="true">All Store Views</caption>
+                    <label translate="true">Destination</label>
+                    <dataScope>storeview_dst</dataScope>
+                </settings>
+            </filterSelect>
+        </filters>
         <paging name="listing_paging" />
     </listingToolbar>
     <columns name="project_columns" class="Magento\Ui\Component\Listing\Columns">
@@ -92,18 +109,20 @@
                 <label translate="true">Code</label>
             </settings>
         </column>
-        <column name="storeview_src" sortOrder="50">
+        <column name="storeview_src" sortOrder="50" class="Magento\Store\Ui\Component\Listing\Column\Store">
             <settings>
                 <addField>true</addField>
-                <filter>textRange</filter>
                 <label translate="true">Source</label>
+                <bodyTmpl>ui/grid/cells/html</bodyTmpl>
+                <sortable>false</sortable>
             </settings>
         </column>
-        <column name="storeview_dst" sortOrder="60">
+        <column name="storeview_dst" sortOrder="60" class="Magento\Store\Ui\Component\Listing\Column\Store">
             <settings>
                 <addField>true</addField>
-                <filter>textRange</filter>
                 <label translate="true">Destination</label>
+                <bodyTmpl>ui/grid/cells/html</bodyTmpl>
+                <sortable>false</sortable>
             </settings>
         </column>
         <column name="status" component="Magento_Ui/js/grid/columns/select" sortOrder="90">
@@ -113,6 +132,22 @@
                 <filter>select</filter>
                 <dataType>select</dataType>
                 <label translate="true">Status</label>
+            </settings>
+        </column>
+        <column name="created_at" class="Magento\Ui\Component\Listing\Columns\Date" component="Magento_Ui/js/grid/columns/date">
+            <settings>
+                <filter>dateRange</filter>
+                <dataType>date</dataType>
+                <label translate="true">Created At</label>
+                <visible>false</visible>
+            </settings>
+        </column>
+        <column name="updated_at" class="Magento\Ui\Component\Listing\Columns\Date" component="Magento_Ui/js/grid/columns/date">
+            <settings>
+                <filter>dateRange</filter>
+                <dataType>date</dataType>
+                <label translate="true">Updated At</label>
+                <visible>false</visible>
             </settings>
         </column>
         <actionsColumn name="actions" class="Eurotext\TranslationManager\Ui\Component\Listing\Columns\ProjectActions" sortOrder="200">

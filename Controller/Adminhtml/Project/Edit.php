@@ -53,7 +53,7 @@ class Edit extends Action
             $resultRedirect = $this->resultRedirectFactory->create();
             $this->messageManager->addErrorMessage(__('Project does not exist'));
 
-            return $resultRedirect->setPath('eurotext_translationmanager/project');
+            return $resultRedirect->setPath('*/*');
         }
 
         /** @var Page $result */

@@ -17,7 +17,7 @@
     <settings>
         <buttons>
             <button name="back">
-                <url path="*/*/index"/>
+                <url path="*/*/index" />
                 <class>back</class>
                 <label translate="true">Back</label>
             </button>
@@ -41,7 +41,7 @@
             </item>
         </argument>
         <settings>
-            <submitUrl path="eurotext_translationmanager/project/save"/>
+            <submitUrl path="eurotext_translationmanager/project/save" />
         </settings>
         <dataProvider class="Eurotext\TranslationManager\Ui\DataProvider\ProjectEditDataProvider" name="eurotext_project_form_data_source">
             <settings>
@@ -81,6 +81,52 @@
                 <dataType>text</dataType>
                 <label translate="true">Customer Comment</label>
             </settings>
+        </field>
+        <field name="storeview_src" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">project</item>
+                    <item name="default" xsi:type="number">0</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>int</dataType>
+                <label translate="true">Store View Source</label>
+                <dataScope>storeview_src</dataScope>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Magento\Store\Ui\Component\Listing\Column\Store\Options"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="storeview_dst" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">project</item>
+                    <item name="default" xsi:type="number">0</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>int</dataType>
+                <label translate="true">Store View Destination</label>
+                <dataScope>storeview_dst</dataScope>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Magento\Store\Ui\Component\Listing\Column\Store\Options"/>
+                    </settings>
+                </select>
+            </formElements>
         </field>
     </fieldset>
     <fieldset name="products" sortOrder="20">
