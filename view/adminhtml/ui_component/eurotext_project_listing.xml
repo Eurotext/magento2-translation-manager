@@ -12,6 +12,13 @@
         </item>
     </argument>
     <settings>
+        <buttons>
+            <button name="add">
+                <url path="*/*/new"/>
+                <class>primary</class>
+                <label translate="true">Add New Project</label>
+            </button>
+        </buttons>
         <spinner>project_columns</spinner>
         <deps>
             <dep>eurotext_project_listing.eurotext_project_listing_data_source</dep>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">eurotext_project_form.eurotext_project_form_data_source</item>
+            <item name="namespace" xsi:type="string">eurotext_project_form</item>
+        </item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+        <item name="childrenFromMeta" xsi:type="boolean">true</item>
+    </argument>
+    <settings>
+        <buttons>
+            <button name="back">
+                <url path="*/*/index"/>
+                <class>back</class>
+                <label translate="true">Back</label>
+            </button>
+            <button name="reset">
+                <class>reset</class>
+                <label translate="true">Reset</label>
+            </button>
+            <button name="delete" class="Eurotext\TranslationManager\Ui\Component\Button\DeleteButton" />
+            <button name="save" class="Eurotext\TranslationManager\Ui\Component\Button\SaveButton" />
+        </buttons>
+        <namespace>eurotext_project_form</namespace>
+        <dataScope>data</dataScope>
+        <deps>
+            <dep>eurotext_project_form.eurotext_project_form_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="eurotext_project_form_data_source">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+        <settings>
+            <submitUrl path="eurotext_translationmanager/project/save"/>
+        </settings>
+        <dataProvider class="Eurotext\TranslationManager\Ui\DataProvider\ProjectEditDataProvider" name="eurotext_project_form_data_source">
+            <settings>
+                <requestFieldName>id</requestFieldName>
+                <primaryFieldName>id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <fieldset name="general" sortOrder="1">
+        <settings>
+            <label translate="true">General</label>
+            <collapsible>false</collapsible>
+            <opened>true</opened>
+            <dataScope>general</dataScope>
+        </settings>
+        <field name="code" formElement="input" sortOrder="10">
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Code</label>
+            </settings>
+        </field>
+        <field name="name" formElement="input" sortOrder="20">
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Name</label>
+                <dataScope>name</dataScope>
+            </settings>
+        </field>
+        <field name="customer_comment" formElement="textarea" sortOrder="30">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Customer Comment</label>
+            </settings>
+        </field>
+    </fieldset>
+    <fieldset name="products" sortOrder="20">
+        <settings>
+            <label translate="true">Products</label>
+            <collapsible>true</collapsible>
+            <opened>false</opened>
+            <dataScope>products</dataScope>
+        </settings>
+        <field name="name" formElement="input" sortOrder="10">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Name</label>
+            </settings>
+        </field>
+    </fieldset>
+</form>
