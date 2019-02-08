@@ -9,7 +9,6 @@
     <argument name="data" xsi:type="array">
         <item name="js_config" xsi:type="array">
             <item name="provider" xsi:type="string">eurotext_project_form.eurotext_project_form_data_source</item>
-            <item name="namespace" xsi:type="string">eurotext_project_form</item>
         </item>
         <item name="template" xsi:type="string">templates/form/collapsible</item>
         <item name="childrenFromMeta" xsi:type="boolean">true</item>
@@ -29,7 +28,8 @@
             <button name="save" class="Eurotext\TranslationManager\Ui\Component\Button\SaveButton" />
         </buttons>
         <namespace>eurotext_project_form</namespace>
-        <dataScope>data</dataScope>
+        <!--<dataScope>data</dataScope>-->
+        <dataScope />
         <deps>
             <dep>eurotext_project_form.eurotext_project_form_data_source</dep>
         </deps>
@@ -50,12 +50,12 @@
             </settings>
         </dataProvider>
     </dataSource>
-    <fieldset name="general" sortOrder="1">
+    <fieldset name="project" sortOrder="1">
         <settings>
-            <label translate="true">General</label>
+            <label />
             <collapsible>false</collapsible>
             <opened>true</opened>
-            <dataScope>general</dataScope>
+            <dataScope>data.project</dataScope>
         </settings>
         <field name="code" formElement="input" sortOrder="10">
             <settings>
@@ -100,7 +100,7 @@
             <formElements>
                 <select>
                     <settings>
-                        <options class="Magento\Store\Ui\Component\Listing\Column\Store\Options"/>
+                        <options class="Magento\Store\Ui\Component\Listing\Column\Store\Options" />
                     </settings>
                 </select>
             </formElements>
@@ -123,24 +123,10 @@
             <formElements>
                 <select>
                     <settings>
-                        <options class="Magento\Store\Ui\Component\Listing\Column\Store\Options"/>
+                        <options class="Magento\Store\Ui\Component\Listing\Column\Store\Options" />
                     </settings>
                 </select>
             </formElements>
-        </field>
-    </fieldset>
-    <fieldset name="products" sortOrder="20">
-        <settings>
-            <label translate="true">Products</label>
-            <collapsible>true</collapsible>
-            <opened>false</opened>
-            <dataScope>products</dataScope>
-        </settings>
-        <field name="name" formElement="input" sortOrder="10">
-            <settings>
-                <dataType>text</dataType>
-                <label translate="true">Name</label>
-            </settings>
         </field>
     </fieldset>
 </form>

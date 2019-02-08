@@ -63,17 +63,17 @@ class Save extends Action
 
         $requestData = $request->getPost()->toArray();
 
-        if (empty($requestData['general']) || !$request->isPost()) {
+        if (empty($requestData['project']) || !$request->isPost()) {
             $this->messageManager->addErrorMessage(__('invalid request.'));
 
             return $this->redirectAfterFailure();
         }
 
-        $requestGeneral = $requestData['general'];
+        $requestGeneral = $requestData['project'];
 
         $id = 0;
         if (isset($requestGeneral['id'])) {
-            $id = (int)$requestData['general']['id'];
+            $id = (int)$requestGeneral['id'];
         }
 
         try {
