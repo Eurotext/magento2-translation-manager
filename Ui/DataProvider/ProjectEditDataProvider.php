@@ -34,34 +34,28 @@ class ProjectEditDataProvider extends AbstractDataProvider
             $item = $data['items'][0];
 
             $products = [
-                1 => [
+                0 => [
                     'entity_id' => 1,
                     'id'        => 1,
                     'sku'       => '234234234',
                     'name'      => 'Hans',
-                    'status'    => 'enabled',
                     'position'  => '1',
                 ],
-                2 => [
+                1 => [
                     'entity_id' => 2,
                     'id'        => 2,
-                    'sku'       => '234234234',
-                    'name'      => 'Hans',
-                    'status'    => 'enabled',
+                    'sku'       => '234234235555',
+                    'name'      => 'Hansi',
                     'position'  => '1',
                 ],
             ];
 
             $item['products'] = $products;
 
-//            $item['eurotext_project_product_listing'] = $products;
-
             $data = [
                 $item['id'] => [
                     'project'  => $item,
                     'products' => $products,
-
-//                    'eurotext_project_product_listing' => $products,
                 ],
             ];
         }
