@@ -50,8 +50,6 @@ class ProjectEditDataProvider extends AbstractDataProvider
                 ],
             ];
 
-            $item['products'] = $products;
-
             $data = [
                 $item['id'] => [
                     'project'  => $item,
