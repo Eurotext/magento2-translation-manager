@@ -8,16 +8,14 @@ declare(strict_types=1);
 
 namespace Eurotext\TranslationManager\Controller\Adminhtml\Project;
 
-use Eurotext\TranslationManager\Api\Data\ProjectInterface;
-use Eurotext\TranslationManager\Api\ProjectRepositoryInterface;
-use Eurotext\TranslationManager\Model\ProjectFactory;
-use Exception;
+use Eurotext\TranslationManager\Exception\InvalidRequestException;
+use Eurotext\TranslationManager\Exception\PersistanceException;
+use Eurotext\TranslationManager\Service\SaveProjectServiceInterface;
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
+use Magento\Framework\App\Request\Http as HttpRequest;
 use Magento\Framework\Controller\Result\Redirect as RedirectResult;
 use Magento\Framework\Controller\ResultInterface;
-use Magento\Framework\Exception\CouldNotSaveException;
-use Magento\Framework\Exception\NoSuchEntityException;
 
 /**
  * Save Controller
@@ -27,30 +25,14 @@ class Save extends Action
     const ADMIN_RESOURCE = 'Eurotext_Translationmanager::project';
 
     /**
-     * @var ProjectRepositoryInterface
+     * @var SaveProjectServiceInterface
      */
-    private $projectRepository;
+    private $saveProjectService;
 
-    /**
-     * @var ProjectFactory
-     */
-    private $projectFactory;
-
-    /**
-     * @var \Magento\Framework\Api\DataObjectHelper
-     */
-    private $dataObjectHelper;
-
-    public function __construct(
-        Context $context,
-        ProjectRepositoryInterface $projectRepository,
-        ProjectFactory $projectFactory,
-        \Magento\Framework\Api\DataObjectHelper $dataObjectHelper
-    ) {
+    public function __construct(Context $context, SaveProjectServiceInterface $saveProjectService)
+    {
         parent::__construct($context);
-        $this->projectRepository = $projectRepository;
-        $this->projectFactory    = $projectFactory;
-        $this->dataObjectHelper  = $dataObjectHelper;
+        $this->saveProjectService = $saveProjectService;
     }
 
     /**
@@ -58,46 +40,20 @@ class Save extends Action
      */
     public function execute(): ResultInterface
     {
-        /** @var \Magento\Framework\App\Request\Http $request */
+        /** @var HttpRequest $request */
         $request = $this->getRequest();
 
-        $requestData = $request->getPost()->toArray();
-
-        if (empty($requestData['project']) || !$request->isPost()) {
-            $this->messageManager->addErrorMessage(__('invalid request.'));
-
-            return $this->redirectAfterFailure();
-        }
-
-        $requestGeneral = $requestData['project'];
-
-        $id = 0;
-        if (isset($requestGeneral['id'])) {
-            $id = (int)$requestGeneral['id'];
-        }
-
         try {
-            if ($id > 0) {
-                $project = $this->projectRepository->getById($id);
-            } else {
-                $project = $this->projectFactory->create($request->getParams());
-            }
-            // @todo optimize Processing of Project save
-            $this->dataObjectHelper->populateWithArray($project, $requestGeneral, ProjectInterface::class);
-
-            $this->projectRepository->save($project);
+            $project = $this->saveProjectService->saveByRequest($request);
 
             $this->messageManager->addSuccessMessage(__('The Project has been saved.'));
             $result = $this->redirectAfterSuccess($project->getId());
-        } catch (NoSuchEntityException $e) {
-            $this->messageManager->addErrorMessage(__('The Project does not exist.'));
+        } catch (InvalidRequestException $e) {
+            $this->messageManager->addErrorMessage(__($e->getMessage()));
             $result = $this->redirectAfterFailure();
-        } catch (CouldNotSaveException $e) {
-            $this->messageManager->addErrorMessage($e->getMessage());
-            $result = $this->redirectAfterFailure($id);
-        } catch (Exception $e) {
-            $this->messageManager->addErrorMessage(__('Project could not be saved.'));
-            $result = $this->redirectAfterFailure($id);
+        } catch (PersistanceException $e) {
+            $this->messageManager->addErrorMessage(__($e->getMessage()));
+            $result = $this->redirectAfterFailure($e->getEntityId());
         }
 
         return $result;
