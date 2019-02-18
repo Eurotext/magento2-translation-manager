@@ -6,7 +6,7 @@ declare(strict_types=1);
  * @see PROJECT_LICENSE.txt
  */
 
-namespace Eurotext\TranslationManager\Ui\EntityDataLoader;
+namespace Eurotext\TranslationManager\Entity;
 
 class EntityDataLoaderPool
 {

@@ -8,8 +8,8 @@ declare(strict_types=1);
 
 namespace Eurotext\TranslationManager\Ui\DataProvider;
 
+use Eurotext\TranslationManager\Entity\EntityDataLoaderPool;
 use Eurotext\TranslationManager\Model\ResourceModel\ProjectCollectionFactory;
-use Eurotext\TranslationManager\Ui\EntityDataLoader\EntityDataLoaderPool;
 use Magento\Ui\DataProvider\AbstractDataProvider;
 
 class ProjectEditDataProvider extends AbstractDataProvider
