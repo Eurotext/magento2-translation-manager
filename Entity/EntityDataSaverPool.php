@@ -8,15 +8,15 @@ declare(strict_types=1);
 
 namespace Eurotext\TranslationManager\Entity;
 
-class EntityDataLoaderPool
+class EntityDataSaverPool
 {
     /**
-     * @var \Eurotext\TranslationManager\Api\EntityDataLoaderInterface[]
+     * @var \Eurotext\TranslationManager\Api\EntityDataSaverInterface[]
      */
     private $items;
 
     /**
-     * @param \Eurotext\TranslationManager\Api\EntityDataLoaderInterface[] $items
+     * @param \Eurotext\TranslationManager\Api\EntityDataSaverInterface[] $items
      */
     public function __construct(array $items)
     {
@@ -24,7 +24,7 @@ class EntityDataLoaderPool
     }
 
     /**
-     * @return \Eurotext\TranslationManager\Api\EntityDataLoaderInterface[]
+     * @return \Eurotext\TranslationManager\Api\EntityDataSaverInterface[]
      */
     public function getItems(): array
     {

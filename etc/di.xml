@@ -152,6 +152,13 @@
         </arguments>
     </type>
 
+    <type name="Eurotext\TranslationManager\Entity\EntityDataSaverPool">
+        <arguments>
+            <argument name="items" xsi:type="array">
+            </argument>
+        </arguments>
+    </type>
+
     <type name="Magento\Framework\Console\CommandList">
         <arguments>
             <argument name="commands" xsi:type="array">
