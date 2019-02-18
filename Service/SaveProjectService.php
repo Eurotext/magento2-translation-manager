@@ -10,6 +10,7 @@ namespace Eurotext\TranslationManager\Service;
 
 use Eurotext\TranslationManager\Api\Data\ProjectInterface;
 use Eurotext\TranslationManager\Api\ProjectRepositoryInterface;
+use Eurotext\TranslationManager\Entity\EntityDataSaverPool;
 use Eurotext\TranslationManager\Exception\InvalidRequestException;
 use Eurotext\TranslationManager\Exception\PersistanceException;
 use Eurotext\TranslationManager\Model\ProjectFactory;
@@ -35,20 +36,43 @@ class SaveProjectService implements SaveProjectServiceInterface
      */
     private $dataObjectHelper;
 
+    /**
+     * @var EntityDataSaverPool
+     */
+    private $entityDataSaverPool;
+
     public function __construct(
         ProjectRepositoryInterface $projectRepository,
         ProjectFactory $projectFactory,
+        EntityDataSaverPool $entityDataSaverPool,
         DataObjectHelper $dataObjectHelper
     ) {
-        $this->projectRepository = $projectRepository;
-        $this->projectFactory    = $projectFactory;
-        $this->dataObjectHelper  = $dataObjectHelper;
+        $this->projectRepository   = $projectRepository;
+        $this->projectFactory      = $projectFactory;
+        $this->dataObjectHelper    = $dataObjectHelper;
+        $this->entityDataSaverPool = $entityDataSaverPool;
     }
 
     /**
      * @inheritdoc
      */
     public function saveByRequest(HttpRequest $request): ProjectInterface
+    {
+        $project = $this->saveProject($request);
+
+        $this->saveEntitiesData($project, $request);
+
+        return $project;
+    }
+
+    /**
+     * @param HttpRequest $request
+     *
+     * @return ProjectInterface
+     * @throws InvalidRequestException
+     * @throws PersistanceException
+     */
+    private function saveProject(HttpRequest $request): ProjectInterface
     {
         $requestData = $request->getParams();
 
@@ -63,6 +87,7 @@ class SaveProjectService implements SaveProjectServiceInterface
             $id = (int)$requestGeneral['id'];
         }
 
+        // Save Project
         try {
             if ($id > 0) {
                 $project = $this->projectRepository->getById($id);
@@ -83,6 +108,34 @@ class SaveProjectService implements SaveProjectServiceInterface
         }
 
         return $project;
+    }
+
+    /**
+     * @param ProjectInterface $project
+     * @param HttpRequest $request
+     *
+     * @throws PersistanceException
+     */
+    private function saveEntitiesData(ProjectInterface $project, HttpRequest $request)
+    {
+        $requestData = $request->getParams();
+
+        $errors = [];
+        foreach ($this->entityDataSaverPool->getItems() as $entityType => $entityDataSaver) {
+            try {
+                $result = $entityDataSaver->save($project, $requestData);
+
+                if ($result === false) {
+                    $errors[$entityType] = $entityType . ': errors during persistance, see log for further details';
+                }
+            } catch (\Exception $e) {
+                $errors[$entityType] = $entityType . ': ' . $e->getMessage();
+            }
+        }
+
+        if (count($errors)) {
+            throw new PersistanceException($project->getId(), implode("\n", $errors));
+        }
     }
 
 }
