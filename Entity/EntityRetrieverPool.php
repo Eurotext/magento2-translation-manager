@@ -6,12 +6,14 @@ declare(strict_types=1);
  * @see PROJECT_LICENSE.txt
  */
 
-namespace Eurotext\TranslationManager\Sender;
+namespace Eurotext\TranslationManager\Entity;
 
-class EntitySenderPool
+use Eurotext\TranslationManager\Api\EntityRetrieverInterface;
+
+class EntityRetrieverPool
 {
     /**
-     * @var \Eurotext\TranslationManager\Api\EntitySenderInterface[]
+     * @var EntityRetrieverInterface[]
      */
     private $items;
 
@@ -21,7 +23,7 @@ class EntitySenderPool
     }
 
     /**
-     * @return \Eurotext\TranslationManager\Api\EntitySenderInterface[]
+     * @return EntityRetrieverInterface[]
      */
     public function getItems(): array
     {

@@ -9,7 +9,7 @@ declare(strict_types=1);
 namespace Eurotext\TranslationManager\Console\Service;
 
 use Eurotext\TranslationManager\Api\ProjectRepositoryInterface;
-use Eurotext\TranslationManager\Seeder\EntitySeederPool;
+use Eurotext\TranslationManager\Entity\EntitySeederPool;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 

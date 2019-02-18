@@ -9,7 +9,7 @@ declare(strict_types=1);
 namespace Eurotext\TranslationManager\Service\Project;
 
 use Eurotext\TranslationManager\Api\Data\ProjectInterface;
-use Eurotext\TranslationManager\Retriever\EntityRetrieverPool;
+use Eurotext\TranslationManager\Entity\EntityRetrieverPool;
 use Magento\Store\Model\StoreManagerInterface;
 use Psr\Log\LoggerInterface;
 

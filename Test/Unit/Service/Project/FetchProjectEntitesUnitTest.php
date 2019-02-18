@@ -10,9 +10,8 @@ namespace Eurotext\TranslationManager\Test\Unit\Service;
 
 use Eurotext\TranslationManager\Api\Data\ProjectInterface;
 use Eurotext\TranslationManager\Api\EntityRetrieverInterface;
-use Eurotext\TranslationManager\Model\Project;
-use Eurotext\TranslationManager\Retriever\EntityRetrieverPool;
-use Eurotext\TranslationManager\Sender\EntitySenderPool;
+use Eurotext\TranslationManager\Entity\EntityRetrieverPool;
+use Eurotext\TranslationManager\Entity\EntitySenderPool;
 use Eurotext\TranslationManager\Service\Project\FetchProjectEntitiesService;
 use Eurotext\TranslationManager\Test\Unit\UnitTestAbstract;
 use Magento\Store\Api\Data\StoreInterface;

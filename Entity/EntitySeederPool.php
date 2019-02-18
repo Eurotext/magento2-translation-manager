@@ -6,7 +6,7 @@ declare(strict_types=1);
  * @see PROJECT_LICENSE.txt
  */
 
-namespace Eurotext\TranslationManager\Seeder;
+namespace Eurotext\TranslationManager\Entity;
 
 use Eurotext\TranslationManager\Api\EntitySeederInterface;
 

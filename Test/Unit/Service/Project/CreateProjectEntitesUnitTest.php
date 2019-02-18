@@ -10,8 +10,7 @@ namespace Eurotext\TranslationManager\Test\Unit\Service;
 
 use Eurotext\TranslationManager\Api\Data\ProjectInterface;
 use Eurotext\TranslationManager\Api\EntitySenderInterface;
-use Eurotext\TranslationManager\Model\Project;
-use Eurotext\TranslationManager\Sender\EntitySenderPool;
+use Eurotext\TranslationManager\Entity\EntitySenderPool;
 use Eurotext\TranslationManager\Service\Project\CreateProjectEntitiesService;
 use Eurotext\TranslationManager\Test\Unit\UnitTestAbstract;
 

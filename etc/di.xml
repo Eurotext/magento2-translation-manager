@@ -117,21 +117,21 @@
     <!-- MISC -->
     <type name="Eurotext\TranslationManager\Logger\ApiLogger" shared="true" />
 
-    <type name="Eurotext\TranslationManager\Seeder\EntitySeederPool">
+    <type name="Eurotext\TranslationManager\Entity\EntitySeederPool">
         <arguments>
             <argument name="items" xsi:type="array">
             </argument>
         </arguments>
     </type>
 
-    <type name="Eurotext\TranslationManager\Sender\EntitySenderPool">
+    <type name="Eurotext\TranslationManager\Entity\EntitySenderPool">
         <arguments>
             <argument name="items" xsi:type="array">
             </argument>
         </arguments>
     </type>
 
-    <type name="Eurotext\TranslationManager\Retriever\EntityRetrieverPool">
+    <type name="Eurotext\TranslationManager\Entity\EntityRetrieverPool">
         <arguments>
             <argument name="items" xsi:type="array">
             </argument>

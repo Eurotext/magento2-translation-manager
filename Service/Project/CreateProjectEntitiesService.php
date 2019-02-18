@@ -9,13 +9,13 @@ declare(strict_types=1);
 namespace Eurotext\TranslationManager\Service\Project;
 
 use Eurotext\TranslationManager\Api\Data\ProjectInterface;
-use Eurotext\TranslationManager\Sender\EntitySenderPool;
+use Eurotext\TranslationManager\Entity\EntitySenderPool;
 use Psr\Log\LoggerInterface;
 
 class CreateProjectEntitiesService implements CreateProjectEntitiesServiceInterface
 {
     /**
-     * @var \Eurotext\TranslationManager\Sender\EntitySenderPool
+     * @var \Eurotext\TranslationManager\Entity\EntitySenderPool
      */
     private $entitySenderPool;
 

@@ -9,7 +9,7 @@ declare(strict_types=1);
 namespace Eurotext\TranslationManager\Test\Unit\Seeder;
 
 use Eurotext\TranslationManager\Api\EntitySeederInterface;
-use Eurotext\TranslationManager\Seeder\EntitySeederPool;
+use Eurotext\TranslationManager\Entity\EntitySeederPool;
 use PHPUnit\Framework\TestCase;
 
 class ProjectSeederPoolUnitTest extends TestCase
