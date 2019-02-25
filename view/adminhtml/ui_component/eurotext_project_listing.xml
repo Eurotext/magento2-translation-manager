@@ -49,6 +49,9 @@
                     <caption translate="true">All Store Views</caption>
                     <label translate="true">Source</label>
                     <dataScope>storeview_src</dataScope>
+                    <imports>
+                        <link name="visible">componentType = column, index = ${ $.index }:visible</link>
+                    </imports>
                 </settings>
             </filterSelect>
             <filterSelect name="storeview_dst" provider="${ $.parentName }">
@@ -57,6 +60,9 @@
                     <caption translate="true">All Store Views</caption>
                     <label translate="true">Destination</label>
                     <dataScope>storeview_dst</dataScope>
+                    <imports>
+                        <link name="visible">componentType = column, index = ${ $.index }:visible</link>
+                    </imports>
                 </settings>
             </filterSelect>
         </filters>
@@ -109,17 +115,15 @@
                 <label translate="true">Code</label>
             </settings>
         </column>
-        <column name="storeview_src" sortOrder="50" class="Magento\Store\Ui\Component\Listing\Column\Store">
+        <column name="storeview_src" sortOrder="50" class="Eurotext\TranslationManager\Ui\Component\Listing\Columns\StoreColumn">
             <settings>
-                <addField>true</addField>
                 <label translate="true">Source</label>
                 <bodyTmpl>ui/grid/cells/html</bodyTmpl>
                 <sortable>false</sortable>
             </settings>
         </column>
-        <column name="storeview_dst" sortOrder="60" class="Magento\Store\Ui\Component\Listing\Column\Store">
+        <column name="storeview_dst" sortOrder="60" class="Eurotext\TranslationManager\Ui\Component\Listing\Columns\StoreColumn">
             <settings>
-                <addField>true</addField>
                 <label translate="true">Destination</label>
                 <bodyTmpl>ui/grid/cells/html</bodyTmpl>
                 <sortable>false</sortable>
