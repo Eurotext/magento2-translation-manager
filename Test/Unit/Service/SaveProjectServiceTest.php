@@ -173,7 +173,7 @@ class SaveProjectServiceTest extends UnitTestAbstract
         $entitySaverTwo = $this->createMock(EntityDataSaverInterface::class);
         $entitySaverTwo->expects($this->once())->method('save')->willReturn(true);
 
-        $entitySavers = [$entitySaver, $entitySaverTwo];
+        $entitySavers = ['saver_1' => $entitySaver, 'saver_2' => $entitySaverTwo];
         $this->entityDataSaverPool->expects($this->once())->method('getItems')->willReturn($entitySavers);
 
         $result = $this->sut->saveByRequest($request);
@@ -239,7 +239,8 @@ class SaveProjectServiceTest extends UnitTestAbstract
         $entitySaver = $this->createMock(EntityDataSaverInterface::class);
         $entitySaver->expects($this->once())->method('save')->with($project, $requestParams)->willReturn(true);
 
-        $this->entityDataSaverPool->expects($this->once())->method('getItems')->willReturn([$entitySaver]);
+        $entitySavers = ['saver_1' => $entitySaver];
+        $this->entityDataSaverPool->expects($this->once())->method('getItems')->willReturn($entitySavers);
 
         $result = $this->sut->saveByRequest($request);
 
