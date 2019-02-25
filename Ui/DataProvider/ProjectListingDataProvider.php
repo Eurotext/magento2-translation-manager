@@ -31,19 +31,14 @@ class ProjectListingDataProvider extends AbstractDataProvider
      *
      * @return array
      */
-    public function __getData()
+    public function getData()
     {
         if (!$this->getCollection()->isLoaded()) {
+            $this->collection->addFieldToSelect('*');
             $this->getCollection()->load();
         }
-        $items = $this->getCollection()->toArray();
 
-        $data = [
-            'totalRecords' => $this->getCollection()->getSize(),
-            'items'        => array_values($items),
-        ];
-
-        return $data;
+        return $this->getCollection()->toArray();
     }
 
 }
