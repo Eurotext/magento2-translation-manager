@@ -88,9 +88,9 @@ class ProjectActions extends Column
                     ['id' => $id, 'status' => ProjectInterface::STATUS_ACCEPTED]
                 );
 
-                $item[$name]['transfer'] = [
+                $item[$name]['accepted'] = [
                     'href'   => $transferUrl,
-                    'label'  => __('Approve Transfer'),
+                    'label'  => __('Approve Translation'),
                     'hidden' => false,
                 ];
             }
