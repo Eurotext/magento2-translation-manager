@@ -93,6 +93,7 @@ class SaveProjectService implements SaveProjectServiceInterface
                 $project = $this->projectRepository->getById($id);
             } else {
                 $project = $this->projectFactory->create($request->getParams());
+                $project->setStatus(ProjectInterface::STATUS_NEW);
             }
 
             $this->dataObjectHelper->populateWithArray($project, $requestGeneral, ProjectInterface::class);
