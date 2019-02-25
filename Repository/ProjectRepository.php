@@ -63,6 +63,9 @@ class ProjectRepository implements ProjectRepositoryInterface
             if (empty($object->getCode())) {
                 $object->setCode(sprintf('project-%s', md5($object->getName())));
             }
+            if (empty($object->getCreatedAt())) {
+                $object->setCreatedAt(date('Y-m-d H:i:s'));
+            }
             /** @var Project $object */
             $this->projectResource->save($object);
         } catch (\Exception $e) {
