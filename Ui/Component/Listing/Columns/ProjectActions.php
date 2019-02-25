@@ -8,6 +8,7 @@ declare(strict_types=1);
 
 namespace Eurotext\TranslationManager\Ui\Component\Listing\Columns;
 
+use Eurotext\TranslationManager\Api\Data\ProjectInterface;
 use Magento\Framework\UrlInterface;
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
 use Magento\Framework\View\Element\UiComponentFactory;
@@ -51,13 +52,49 @@ class ProjectActions extends Column
             return $dataSource;
         }
         foreach ($dataSource['data']['items'] as &$item) {
-            $url = $this->urlBuilder->getUrl('eurotext_translationmanager/project/edit', ['id' => $item['id']]);
+            $name   = $this->getData('name');
+            $status = $item['status'];
+            $id     = $item['id'];
 
-            $item[$this->getData('name')]['edit'] = [
-                'href'   => $url,
+            // Edit
+            $editUrl = $this->urlBuilder->getUrl('eurotext_translationmanager/project/edit', ['id' => $id]);
+
+            $item[$name]['edit'] = [
+                'href'   => $editUrl,
                 'label'  => __('Edit'),
                 'hidden' => false,
             ];
+
+            // Set Status Transfer
+            if ($status === ProjectInterface::STATUS_NEW) {
+                $transferUrl = $this->urlBuilder->getUrl(
+                    'eurotext_translationmanager/project/setStatus',
+                    ['id' => $id, 'status' => ProjectInterface::STATUS_TRANSFER]
+                );
+
+                $item[$name]['transfer'] = [
+                    'href'     => $transferUrl,
+                    'label'    => __('Approve Transfer'),
+                    'hidden'   => false,
+                    'disable'  => true,
+                    'disabled' => true,
+                ];
+            }
+
+            // Set Status Accepted
+            if ($status === ProjectInterface::STATUS_TRANSLATED) {
+                $transferUrl = $this->urlBuilder->getUrl(
+                    'eurotext_translationmanager/project/setStatus',
+                    ['id' => $id, 'status' => ProjectInterface::STATUS_ACCEPTED]
+                );
+
+                $item[$name]['transfer'] = [
+                    'href'   => $transferUrl,
+                    'label'  => __('Approve Transfer'),
+                    'hidden' => false,
+                ];
+            }
+
         }
 
         return $dataSource;
