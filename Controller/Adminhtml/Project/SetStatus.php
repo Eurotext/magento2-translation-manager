@@ -14,9 +14,6 @@ use Magento\Backend\App\Action\Context;
 use Magento\Framework\App\Request\Http as HttpRequest;
 use Magento\Framework\Controller\ResultInterface;
 
-/**
- * Save Controller
- */
 class SetStatus extends Action
 {
     const ADMIN_RESOURCE = 'Eurotext_TranslationManager::project';

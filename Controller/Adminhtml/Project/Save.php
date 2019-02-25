@@ -17,9 +17,6 @@ use Magento\Framework\App\Request\Http as HttpRequest;
 use Magento\Framework\Controller\Result\Redirect as RedirectResult;
 use Magento\Framework\Controller\ResultInterface;
 
-/**
- * Save Controller
- */
 class Save extends Action
 {
     const ADMIN_RESOURCE = 'Eurotext_Translationmanager::project';
