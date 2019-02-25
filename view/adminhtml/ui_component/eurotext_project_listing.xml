@@ -66,6 +66,22 @@
                 </settings>
             </filterSelect>
         </filters>
+        <massaction name="listing_massaction">
+            <action name="set_status_transfer">
+                <settings>
+                    <url path="eurotext_translationmanager/project/massSetStatus/status/transfer"/>
+                    <type>set_status_transfer</type>
+                    <label translate="true">Approve Transfer</label>
+                </settings>
+            </action>
+            <action name="set_status_approved">
+                <settings>
+                    <url path="eurotext_translationmanager/project/massSetStatus/status/approved" />
+                    <type>set_status_approved</type>
+                    <label translate="true">Approve Translation</label>
+                </settings>
+            </action>
+        </massaction>
         <paging name="listing_paging" />
     </listingToolbar>
     <columns name="project_columns" class="Magento\Ui\Component\Listing\Columns">
