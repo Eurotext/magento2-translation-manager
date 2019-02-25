@@ -100,11 +100,11 @@ class SaveProjectService implements SaveProjectServiceInterface
             $this->projectRepository->save($project);
 
         } catch (NoSuchEntityException $e) {
-            throw new PersistanceException($id, 'The Project does not exist.');
+            throw new PersistanceException($id, 'The Project does not exist.', $e->getCode(), $e);
         } catch (CouldNotSaveException $e) {
-            throw new PersistanceException($id, $e->getMessage());
+            throw new PersistanceException($id, $e->getMessage(), $e->getCode(), $e->getPrevious());
         } catch (\Exception $e) {
-            throw new PersistanceException($id, 'Project could not be saved.');
+            throw new PersistanceException($id, 'Project could not be saved.', $e->getCode(), $e);
         }
 
         return $project;
@@ -126,7 +126,8 @@ class SaveProjectService implements SaveProjectServiceInterface
                 $result = $entityDataSaver->save($project, $requestData);
 
                 if ($result === false) {
-                    $errors[$entityType] = $entityType . ': errors during persistance, see log for further details';
+                    $errors[$entityType] = ucfirst($entityType) .
+                        ': Errors during persistance, see var/log/eurotext_api.log for further details.';
                 }
             } catch (\Exception $e) {
                 $errors[$entityType] = $entityType . ': ' . $e->getMessage();
