@@ -10,6 +10,7 @@ namespace Eurotext\TranslationManager\Setup\Service;
 
 use Eurotext\TranslationManager\Api\Setup\AddEntityTableColumnsInterface;
 use Eurotext\TranslationManager\Api\Setup\ProjectEntitySchema;
+use Eurotext\TranslationManager\Setup\EntitySchema\ProjectSchema;
 use Magento\Framework\DB\Ddl\Table as DbDdlTable;
 use Magento\Framework\Setup\SchemaSetupInterface;
 
@@ -89,6 +90,11 @@ class AddEntityTableColumns implements AddEntityTableColumnsInterface
 
         $idxName = $setup->getIdxName($table->getName(), [ProjectEntitySchema::ENTITY_ID]);
         $table->addIndex($idxName, [ProjectEntitySchema::ENTITY_ID]);
+
+        $idxName = $setup->getIdxName($table->getName(), [ProjectEntitySchema::ENTITY_ID]);
+        $table->addForeignKey(
+            $idxName, ProjectEntitySchema::PROJECT_ID, ProjectSchema::TABLE_NAME, ProjectSchema::ID, 'CASCADE'
+        );
 
         return $table;
     }
