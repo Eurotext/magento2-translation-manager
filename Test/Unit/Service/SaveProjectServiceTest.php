@@ -22,6 +22,7 @@ use Magento\Framework\Api\DataObjectHelper;
 use Magento\Framework\App\Request\Http as HttpRequest;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\Phrase;
 use PHPUnit\Framework\MockObject\MockObject;
 
 class SaveProjectServiceTest extends UnitTestAbstract
@@ -289,9 +290,10 @@ class SaveProjectServiceTest extends UnitTestAbstract
         /** @var ProjectInterface|MockObject $project */
         $project = $this->createMock(ProjectInterface::class);
 
+        $exception = new CouldNotSaveException($this->createMock(Phrase::class));
         $this->projectRepository->expects($this->once())->method('getById')->with($projectId)->willReturn($project);
         $this->projectRepository->expects($this->once())->method('save')
-                                ->with($project)->willThrowException(new CouldNotSaveException('asdf'));
+                                ->with($project)->willThrowException($exception);
 
         $this->dataObjectHelper->expects($this->once())->method('populateWithArray')
                                ->with($project, $requestParams['project']);
