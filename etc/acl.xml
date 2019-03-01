@@ -6,11 +6,11 @@
                 <resource id="Magento_Backend::stores">
                     <resource id="Magento_Backend::stores_settings">
                         <resource id="Magento_Config::config">
-                            <resource id="Eurotext_TranslationManager::config_eurotext" title="Eurotext TranslationManager" translate="title" />
+                            <resource id="Eurotext_TranslationManager::config_eurotext" title="Eurotext translationMANAGER" translate="title" />
                         </resource>
                     </resource>
-                    <resource id="Eurotext_TranslationManager::translationmanager" title="Eurotext TranslationManager" translate="title" >
-                        <resource id="Eurotext_TranslationManager::project" title="Eurotext TranslationManager Project" translate="title" />
+                    <resource id="Eurotext_TranslationManager::translationmanager" title="Eurotext translationMANAGER" translate="title" >
+                        <resource id="Eurotext_TranslationManager::project" title="Eurotext translationMANAGER Project" translate="title" />
                     </resource>
                 </resource>
             </resource>
