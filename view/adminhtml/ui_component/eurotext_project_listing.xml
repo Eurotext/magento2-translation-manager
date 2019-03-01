@@ -74,11 +74,11 @@
                     <label translate="true">Approve Transfer</label>
                 </settings>
             </action>
-            <action name="set_status_approved">
+            <action name="set_status_accepted">
                 <settings>
-                    <url path="eurotext_translationmanager/project/massSetStatus/status/approved" />
-                    <type>set_status_approved</type>
-                    <label translate="true">Approve Translation</label>
+                    <url path="eurotext_translationmanager/project/massSetStatus/status/accepted" />
+                    <type>set_status_accepted</type>
+                    <label translate="true">Accept Translation</label>
                 </settings>
             </action>
         </massaction>
