@@ -56,11 +56,17 @@ class Edit extends Action
             return $resultRedirect->setPath('*/*');
         }
 
+        if ($project->getExtId() > 0) {
+            $this->messageManager->addWarningMessage(
+                'This Project cannot be edited. It has already been transfered to Eurotext.'
+            );
+        }
+
         /** @var Page $result */
         $result = $this->resultFactory->create($this->resultFactory::TYPE_PAGE);
 
         $result->setActiveMenu('Eurotext_TranslationManager::project');
-        $result->getConfig()->getTitle()->prepend(__('Eurotext TranslationManager - Projects'));
+        $result->getConfig()->getTitle()->prepend(__('Eurotext translationMANAGER - Projects'));
         $result->getConfig()->getTitle()->prepend($project->getName());
 
         return $result;

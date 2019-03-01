@@ -91,6 +91,12 @@ class SaveProjectService implements SaveProjectServiceInterface
         try {
             if ($id > 0) {
                 $project = $this->projectRepository->getById($id);
+                if ($project->getExtId() > 0) {
+                    throw new CouldNotSaveException(
+                        __('This Project cannot be saved. It has already been transfered to Eurotext.')
+                    );
+                }
+
             } else {
                 $project = $this->projectFactory->create($request->getParams());
                 $project->setStatus(ProjectInterface::STATUS_NEW);
@@ -127,8 +133,10 @@ class SaveProjectService implements SaveProjectServiceInterface
                 $result = $entityDataSaver->save($project, $requestData);
 
                 if ($result === false) {
-                    $errors[$entityType] = ucfirst($entityType) .
-                        ': Errors during persistance, see var/log/eurotext_api.log for further details.';
+                    $errors[$entityType] = sprintf(
+                        'Some %s items could not be saved, see var/log/eurotext_api.log for further details.',
+                        $entityType
+                    );
                 }
             } catch (\Exception $e) {
                 $errors[$entityType] = $entityType . ': ' . $e->getMessage();
