@@ -55,7 +55,7 @@ class AddEntityCommand extends Command
             AddEntityService::ARG_ENTITY_TYPE, InputArgument::REQUIRED, AddEntityService::ARG_ENTITY_TYPE_DESC
         );
         $this->addArgument(
-            AddEntityService::ARG_ENTITY_ID, InputArgument::REQUIRED, AddEntityService::ARG_ENTITY_ID_DESC
+            AddEntityService::ARG_ENTITY_IDENTIFIER, InputArgument::REQUIRED, AddEntityService::ARG_ENTITY_ID_DESC
         );
 
         parent::configure();

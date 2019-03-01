@@ -10,13 +10,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class AddEntityService
 {
-    const ARG_PROJECT_ID  = 'project-id';
-    const ARG_ENTITY_TYPE = 'entity-type';
-    const ARG_ENTITY_ID   = 'entity-id';
+    const ARG_PROJECT_ID        = 'project-id';
+    const ARG_ENTITY_TYPE       = 'entity-type';
+    const ARG_ENTITY_IDENTIFIER = 'entity-identifier';
 
     const ARG_PROJECT_ID_DESC  = 'the project id';
     const ARG_ENTITY_TYPE_DESC = 'the entity-type you want to import, type overview with command etm:entity:types';
-    const ARG_ENTITY_ID_DESC   = 'Comma seperated list of entities to add. Depending on the entity-type the data provided may vary.';
+    const ARG_ENTITY_ID_DESC   = 'Comma seperated list of entities to add. Depending on the entity-type the identifier provided may vary (sku, code, id, …).';
 
     /**
      * @var ProjectRepositoryInterface
@@ -38,7 +38,7 @@ class AddEntityService
     {
         $projectId  = (int)$input->getArgument(self::ARG_PROJECT_ID);
         $entityCode = (string)$input->getArgument(self::ARG_ENTITY_TYPE);
-        $entityId   = (string)$input->getArgument(self::ARG_ENTITY_ID);
+        $entityId   = (string)$input->getArgument(self::ARG_ENTITY_IDENTIFIER);
 
         $entities = explode(',', $entityId);
 
