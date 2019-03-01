@@ -20,7 +20,7 @@ class Index extends Action
         /** @var Page $result */
         $result = $this->resultFactory->create($this->resultFactory::TYPE_PAGE);
         $result->setActiveMenu('Eurotext_TranslationManager::project');
-        $result->getConfig()->getTitle()->prepend(__('Eurotext TranslationManager - Projects'));
+        $result->getConfig()->getTitle()->prepend(__('Eurotext translationMANAGER - Projects'));
 
         return $result;
     }
