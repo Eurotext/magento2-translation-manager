@@ -69,7 +69,7 @@
         <massaction name="listing_massaction">
             <action name="set_status_transfer">
                 <settings>
-                    <url path="eurotext_translationmanager/project/massSetStatus/status/transfer"/>
+                    <url path="eurotext_translationmanager/project/massSetStatus/status/transfer" />
                     <type>set_status_transfer</type>
                     <label translate="true">Approve Transfer</label>
                 </settings>
@@ -104,7 +104,6 @@
         </selectionsColumn>
         <column name="id" sortOrder="10">
             <settings>
-                <addField>true</addField>
                 <filter>textRange</filter>
                 <label translate="true">ID</label>
                 <sorting>asc</sorting>
@@ -112,21 +111,18 @@
         </column>
         <column name="ext_id" sortOrder="20">
             <settings>
-                <addField>true</addField>
                 <filter>textRange</filter>
                 <label translate="true">External ID</label>
             </settings>
         </column>
         <column name="name" sortOrder="30">
             <settings>
-                <addField>true</addField>
                 <filter>text</filter>
                 <label translate="true">Name</label>
             </settings>
         </column>
         <column name="code" sortOrder="40">
             <settings>
-                <addField>true</addField>
                 <filter>text</filter>
                 <label translate="true">Code</label>
             </settings>
@@ -147,7 +143,6 @@
         </column>
         <column name="status" component="Magento_Ui/js/grid/columns/select" sortOrder="90">
             <settings>
-                <addField>true</addField>
                 <options class="Eurotext\TranslationManager\System\Source\ProjectStatusSource" />
                 <filter>select</filter>
                 <dataType>select</dataType>
