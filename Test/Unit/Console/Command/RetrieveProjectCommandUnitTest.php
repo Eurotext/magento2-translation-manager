@@ -70,7 +70,7 @@ class RetrieveProjectCommandUnitTest extends UnitTestAbstract
     {
         $projectId = 1;
 
-        $exception = new LocalizedException(new \Magento\Framework\Phrase('some error'));
+        $exception = new LocalizedException($this->createMock(\Magento\Framework\Phrase::class));
         $this->appState->expects($this->once())->method('setAreaCode')->with('adminhtml')
                        ->willThrowException($exception);
 

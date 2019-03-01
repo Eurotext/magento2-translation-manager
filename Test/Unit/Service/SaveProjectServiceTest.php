@@ -291,7 +291,7 @@ class SaveProjectServiceTest extends UnitTestAbstract
 
         $this->projectRepository->expects($this->once())->method('getById')->with($projectId)->willReturn($project);
         $this->projectRepository->expects($this->once())->method('save')
-                                ->with($project)->willThrowException(new CouldNotSaveException(__('asdf')));
+                                ->with($project)->willThrowException(new CouldNotSaveException('asdf'));
 
         $this->dataObjectHelper->expects($this->once())->method('populateWithArray')
                                ->with($project, $requestParams['project']);
