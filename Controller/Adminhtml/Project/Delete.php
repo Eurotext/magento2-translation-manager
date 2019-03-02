@@ -19,7 +19,7 @@ use Magento\Framework\Exception\CouldNotDeleteException;
  */
 class Delete extends Action
 {
-    const ADMIN_RESOURCE = 'Eurotext_Translationmanager::project';
+    const ADMIN_RESOURCE = 'Eurotext_TranslationManager::project';
 
     /**
      * @var ProjectRepositoryInterface

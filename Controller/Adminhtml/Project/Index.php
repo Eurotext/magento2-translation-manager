@@ -13,7 +13,7 @@ use Magento\Backend\Model\View\Result\Page;
 
 class Index extends Action
 {
-    const ADMIN_RESOURCE = 'Eurotext_Translationmanager::project';
+    const ADMIN_RESOURCE = 'Eurotext_TranslationManager::project';
 
     public function execute()
     {

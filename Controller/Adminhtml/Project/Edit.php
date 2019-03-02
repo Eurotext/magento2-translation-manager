@@ -16,6 +16,8 @@ use Magento\Framework\View\Result\Page;
 
 class Edit extends Action
 {
+    const ADMIN_RESOURCE = 'Eurotext_TranslationManager::project';
+
     /**
      * @var ProjectRepositoryInterface
      */

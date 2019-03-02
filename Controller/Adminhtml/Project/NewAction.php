@@ -15,7 +15,7 @@ use Magento\Framework\Controller\ResultInterface;
 
 class NewAction extends Action
 {
-    const ADMIN_RESOURCE = 'Eurotext_Translationmanager::project';
+    const ADMIN_RESOURCE = 'Eurotext_TranslationManager::project';
 
     public function execute(): ResultInterface
     {
