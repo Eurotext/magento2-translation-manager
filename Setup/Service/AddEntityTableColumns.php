@@ -71,7 +71,7 @@ class AddEntityTableColumns implements AddEntityTableColumnsInterface
             ProjectEntitySchema::CREATED_AT,
             DbDdlTable::TYPE_TIMESTAMP,
             null,
-            [],
+            ['default' => DbDdlTable::TIMESTAMP_INIT],
             'Created at'
         );
         $table->addColumn(
