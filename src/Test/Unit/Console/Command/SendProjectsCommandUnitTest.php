@@ -26,7 +26,7 @@ class SendProjectsCommandUnitTest extends UnitTestAbstract
     /** @var SendProjectsCron|\PHPUnit_Framework_MockObject_MockObject */
     protected $sendProjectsCron;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

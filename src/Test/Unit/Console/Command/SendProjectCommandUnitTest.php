@@ -32,7 +32,7 @@ class SendProjectCommandUnitTest extends UnitTestAbstract
 
     protected $pushConsoleLog;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

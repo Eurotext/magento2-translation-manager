@@ -42,7 +42,7 @@ class SaveProjectServiceTest extends UnitTestAbstract
     /** @var DataObjectHelper|MockObject */
     private $dataObjectHelper;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

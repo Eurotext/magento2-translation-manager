@@ -22,7 +22,7 @@ class CreateProjectServiceIntegrationTest extends IntegrationTestAbstract
     /** @var CreateProjectService */
     protected $sut;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

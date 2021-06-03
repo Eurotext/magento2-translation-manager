@@ -46,7 +46,7 @@ class NewProjectServiceUnitTest extends UnitTestAbstract
     /** @var StoreRepositoryInterface|\PHPUnit_Framework_MockObject_MockObject */
     protected $storeRepository;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

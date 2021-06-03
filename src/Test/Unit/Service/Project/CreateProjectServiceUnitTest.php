@@ -36,7 +36,7 @@ class CreateProjectServiceUnitTest extends UnitTestAbstract
     /** @var EntitySenderInterface|\PHPUnit_Framework_MockObject_MockObject */
     private $entitySender;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

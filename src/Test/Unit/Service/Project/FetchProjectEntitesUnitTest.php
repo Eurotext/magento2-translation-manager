@@ -36,7 +36,7 @@ class FetchProjectEntitesUnitTest extends UnitTestAbstract
     /** @var StoreInterface|\PHPUnit_Framework_MockObject_MockObject */
     private $store;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
