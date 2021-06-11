@@ -24,9 +24,9 @@ class ConfigurationMockBuilder
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Configuration
+     * @return \PHPUnit\Framework\MockObject\MockObject|Configuration
      */
-    public function buildConfiguration(): \PHPUnit_Framework_MockObject_MockObject
+    public function buildConfiguration(): \PHPUnit\Framework\MockObject\MockObject
     {
         $config = $this->testCase
             ->getMockBuilder(Configuration::class)

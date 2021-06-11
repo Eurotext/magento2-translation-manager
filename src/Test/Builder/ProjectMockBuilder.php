@@ -27,9 +27,9 @@ class ProjectMockBuilder
     }
 
     /**
-     * @return ProjectInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @return ProjectInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    public function buildProjectMock(): \PHPUnit_Framework_MockObject_MockObject
+    public function buildProjectMock(): \PHPUnit\Framework\MockObject\MockObject
     {
         return $this->getMockBuilder(ProjectInterface::class)
                     ->setMethods(['getProjectId'])
@@ -37,9 +37,9 @@ class ProjectMockBuilder
     }
 
     /**
-     * @return EntitySeederInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @return EntitySeederInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    public function buildProjectSeederMock(): \PHPUnit_Framework_MockObject_MockObject
+    public function buildProjectSeederMock(): \PHPUnit\Framework\MockObject\MockObject
     {
         return $this->getMockBuilder(EntitySeederInterface::class)
                     ->setMethods(['seed'])
@@ -47,9 +47,9 @@ class ProjectMockBuilder
     }
 
     /**
-     * @return ProjectRepositoryInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @return ProjectRepositoryInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    public function buildProjectRepositoryMock(): \PHPUnit_Framework_MockObject_MockObject
+    public function buildProjectRepositoryMock(): \PHPUnit\Framework\MockObject\MockObject
     {
         return $this->getMockBuilder(ProjectRepositoryInterface::class)
                     ->setMethods(['save', 'getList'])
@@ -58,9 +58,9 @@ class ProjectMockBuilder
     }
 
     /**
-     * @return ProjectFactory|\PHPUnit_Framework_MockObject_MockObject
+     * @return ProjectFactory|\PHPUnit\Framework\MockObject\MockObject
      */
-    public function buildProjectFactoryMock(): \PHPUnit_Framework_MockObject_MockObject
+    public function buildProjectFactoryMock(): \PHPUnit\Framework\MockObject\MockObject
     {
         return $this->getMockBuilder(ProjectFactory::class)
                     ->setMethods(['create'])
