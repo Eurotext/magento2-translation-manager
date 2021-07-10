@@ -29,7 +29,7 @@ class ConfigurationFactoryUnitTest extends UnitTestAbstract
     /** @var ProductMetadataInterface|\PHPUnit_Framework_MockObject_MockObject */
     private $magentoMetadata;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

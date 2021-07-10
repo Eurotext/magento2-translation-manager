@@ -16,7 +16,7 @@ class UnitTestAbstract extends TestCase
     /** @var ObjectManager */
     protected $objectManager;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

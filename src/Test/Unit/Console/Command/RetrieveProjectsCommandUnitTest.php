@@ -25,7 +25,7 @@ class RetrieveProjectsCommandUnitTest extends UnitTestAbstract
     /** @var RetrieveProjectsCron|\PHPUnit_Framework_MockObject_MockObject */
     protected $retrieveProjectsCron;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

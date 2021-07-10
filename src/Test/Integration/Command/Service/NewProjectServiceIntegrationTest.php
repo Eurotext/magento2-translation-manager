@@ -26,7 +26,7 @@ class NewProjectServiceIntegrationTest extends IntegrationTestAbstract
     /** @var ConsoleMockBuilder */
     protected $builder;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

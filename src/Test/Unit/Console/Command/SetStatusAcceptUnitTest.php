@@ -26,7 +26,7 @@ class SetStatusAcceptUnitTest extends UnitTestAbstract
     /** @var ProjectStateMachine|\PHPUnit_Framework_MockObject_MockObject */
     protected $projectStateMachine;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

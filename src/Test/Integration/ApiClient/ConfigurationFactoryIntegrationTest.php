@@ -24,7 +24,7 @@ class ConfigurationFactoryIntegrationTest extends IntegrationTestAbstract
     /** @var ProductMetadataInterface|\PHPUnit_Framework_MockObject_MockObject */
     private $metadata;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

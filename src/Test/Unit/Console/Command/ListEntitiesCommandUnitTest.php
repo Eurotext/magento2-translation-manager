@@ -24,7 +24,7 @@ class ListEntitiesCommandUnitTest extends TestCase
     /** @var ConsoleMockBuilder */
     protected $builder;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

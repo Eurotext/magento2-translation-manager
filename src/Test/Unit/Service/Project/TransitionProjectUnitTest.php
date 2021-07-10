@@ -25,7 +25,7 @@ class TransitionProjectUnitTest extends UnitTestAbstract
     /** @var ProjectV1Api|\PHPUnit_Framework_MockObject_MockObject */
     private $projectApi;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

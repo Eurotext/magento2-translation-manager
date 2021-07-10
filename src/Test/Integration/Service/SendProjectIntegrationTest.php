@@ -28,7 +28,7 @@ class SendProjectIntegrationTest extends IntegrationTestAbstract
     /** @var CreateProjectEntitiesService|\PHPUnit_Framework_MockObject_MockObject */
     private $createProjectEntities;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

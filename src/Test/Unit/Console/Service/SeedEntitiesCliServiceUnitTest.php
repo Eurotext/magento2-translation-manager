@@ -38,7 +38,7 @@ class SeedEntitiesCliServiceUnitTest extends UnitTestAbstract
     /** @var ConsoleMockBuilder */
     protected $consoleMockBuilder;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

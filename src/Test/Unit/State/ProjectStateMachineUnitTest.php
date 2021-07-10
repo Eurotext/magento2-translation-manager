@@ -23,7 +23,7 @@ class ProjectStateMachineUnitTest extends UnitTestAbstract
     /** @var ProjectRepositoryInterface|\PHPUnit_Framework_MockObject_MockObject */
     private $projectRepository;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

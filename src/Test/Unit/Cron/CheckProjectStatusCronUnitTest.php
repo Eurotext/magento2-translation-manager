@@ -34,7 +34,7 @@ class CheckProjectStatusCronUnitTest extends UnitTestAbstract
     /** @var SearchCriteriaBuilder|\PHPUnit_Framework_MockObject_MockObject */
     private $criteriaBuilder;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

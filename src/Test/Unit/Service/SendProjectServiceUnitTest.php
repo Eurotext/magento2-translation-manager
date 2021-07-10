@@ -41,7 +41,7 @@ class SendProjectServiceUnitTest extends UnitTestAbstract
     /** @var ProjectStateMachine|\PHPUnit_Framework_MockObject_MockObject */
     private $projectStateMachine;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
